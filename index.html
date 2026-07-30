@@ -141,19 +141,19 @@
                 const response = await fetch(`${WORKER_URL}${path}`);
                 const result = await response.json();
                 
-                // --- DEBUGGING ---
-                console.log("API Response:", result);
-                
                 // --- ROBUST DATA HANDLING ---
-                // If it's already an array, use it. 
-                // Otherwise, look for an array inside common result keys
+                // API structure is { code, message, data: { ... } }
                 let items = [];
-                if (Array.isArray(result)) {
-                    items = result;
-                } else if (result && typeof result === 'object') {
-                    // Try to find the first property that is an array
-                    const foundKey = Object.keys(result).find(k => Array.isArray(result[k]));
-                    items = foundKey ? result[foundKey] : [];
+                if (result && result.data) {
+                    // If result.data is already an array, use it
+                    if (Array.isArray(result.data)) {
+                        items = result.data;
+                    } 
+                    // If result.data is an object, look for an array property inside it
+                    else if (typeof result.data === 'object') {
+                        const foundKey = Object.keys(result.data).find(k => Array.isArray(result.data[k]));
+                        items = foundKey ? result.data[foundKey] : [];
+                    }
                 }
                 
                 renderCards(items);
@@ -166,19 +166,16 @@
         function renderCards(items) {
             const grid = document.getElementById('content-grid');
             
-            // --- FINAL GUARD ---
             if(!Array.isArray(items)) {
-                console.error("renderCards received non-array:", items);
-                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Data tidak ditemukan atau format salah. Cek Console (F12).</div>';
+                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Data tidak ditemukan.</div>';
                 return;
             }
 
             if(items.length === 0) { 
-                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Tidak ada data untuk ditampilkan.</div>'; 
+                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Tidak ada data.</div>'; 
                 return; 
             }
             
-            // Set Hero
             const hero = items[0];
             if(hero) {
                 document.getElementById('hero-img').src = hero.poster || 'https://placehold.co/600x400/121216/333?text=RAYLIZIIE';
@@ -199,9 +196,7 @@
             `).join('');
         }
 
-        function toggleSearch() {
-            // Future feature
-        }
+        function toggleSearch() {}
     </script>
 </body>
 </html>
