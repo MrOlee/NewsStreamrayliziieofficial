@@ -1,71 +1,144 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streaming Rayliziie Official</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rayliziie Official - Streaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f97316', // Crunchyroll Orange / Netflix hybrid accent
+                        darkbase: '#09090b',
+                        cardbg: '#121216',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: white; }
-        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); }
-        .thumbnail-card:hover .overlay { opacity: 1; }
-        .gradient-bg { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(10,10,10,1) 100%); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #09090b; color: #f4f4f5; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-nav { background: rgba(9, 9, 11, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        .hero-gradient { background: linear-gradient(0deg, #09090b 0%, rgba(9,9,11,0.6) 50%, rgba(9,9,11,0) 100%); }
     </style>
 </head>
-<body class="overflow-x-hidden">
+<body class="pb-24 selection:bg-primary selection:text-white">
 
-    <div id="app" class="flex min-h-screen">
-        
-        <!-- Sidebar Navigation -->
-        <nav class="w-64 glass fixed h-full border-r border-gray-800 hidden md:flex flex-col p-6">
-            <div class="mb-10 text-center">
-                <!-- GANTI URL LOGO DI BAWAH INI -->
-                <img src="https://placehold.co/200x200/1e293b/white?text=LOGO" alt="Logo" class="w-32 mx-auto rounded-lg mb-4">
-                <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">RAYLIZIIE</h1>
-            </div>
+    <!-- Top App Bar (Mobile Optimized) -->
+    <header class="sticky top-0 z-50 glass-nav border-b border-white/5 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-primary to-amber-500 flex items-center justify-center font-extrabold text-white text-sm shadow-lg shadow-primary/30">R</div>
+            <h1 class="font-extrabold tracking-wider text-lg bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">RAYLIZIIE</h1>
+        </div>
+        <div class="flex items-center gap-3">
+            <button onclick="toggleSearch()" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition">
+                <i class="ph ph-magnifying-glass text-lg"></i>
+            </button>
+        </div>
+    </header>
 
-            <div class="space-y-6">
-                <div id="nav-categories" class="space-y-2">
-                    <button onclick="navigate('anime')" class="w-full text-left p-3 rounded-lg hover:bg-blue-600 transition flex items-center gap-3"><i class="ph ph-sword"></i> Anime</button>
-                    <button onclick="navigate('donghua')" class="w-full text-left p-3 rounded-lg hover:bg-blue-600 transition flex items-center gap-3"><i class="ph ph-yin-yang"></i> Donghua</button>
-                    <button onclick="navigate('films')" class="w-full text-left p-3 rounded-lg hover:bg-blue-600 transition flex items-center gap-3"><i class="ph ph-popcorn"></i> Films</button>
-                    <button onclick="navigate('drakor')" class="w-full text-left p-3 rounded-lg hover:bg-blue-600 transition flex items-center gap-3"><i class="ph ph-heart"></i> Drakor</button>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="flex-1 md:ml-64 p-4 md:p-8">
-            <header class="flex justify-between items-center mb-8">
-                <h2 id="page-title" class="text-3xl font-bold">Selamat Datang</h2>
-                <div class="relative">
-                    <input type="text" id="search-input" placeholder="Cari tontonan..." class="bg-gray-900 border border-gray-700 px-4 py-2 rounded-full focus:outline-none focus:border-blue-500 w-64">
-                </div>
-            </header>
-
-            <!-- Submenu (Dynamic) -->
-            <div id="submenu" class="flex gap-4 mb-8 overflow-x-auto pb-2">
-                <!-- Rendered by JS -->
-            </div>
-
-            <!-- Content Grid -->
-            <div id="content-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                <p class="text-gray-400">Pilih kategori di menu untuk memulai...</p>
-            </div>
-        </main>
+    <!-- Search Overlay Bar (Hidden by Default) -->
+    <div id="search-container" class="fixed inset-x-0 top-14 z-40 bg-darkbase/95 p-4 border-b border-white/10 backdrop-blur-xl hidden transition-all duration-300">
+        <div class="relative">
+            <input type="text" id="search-input" placeholder="Cari anime, donghua, film, drakor..." class="w-full bg-cardbg border border-white/10 px-4 py-3 pl-11 rounded-xl text-sm focus:outline-none focus:border-primary text-white placeholder-gray-500 shadow-inner">
+            <i class="ph ph-magnifying-glass absolute left-4 top-3.5 text-gray-400 text-lg"></i>
+            <button onclick="toggleSearch()" class="absolute right-3 top-3 text-gray-400 hover:text-white text-sm font-semibold">Tutup</button>
+        </div>
     </div>
 
+    <!-- Main Content Area -->
+    <main class="px-4 pt-4">
+        
+        <!-- Netflix-style Hero Spotlight Banner -->
+        <div id="hero-spotlight" class="relative w-full h-72 rounded-2xl overflow-hidden mb-6 shadow-2xl bg-cardbg border border-white/5 flex items-end">
+            <div class="absolute inset-0">
+                <img id="hero-img" src="https://placehold.co/600x400/121216/333?text=RAYLIZIIE" class="w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 hero-gradient"></div>
+            </div>
+            <div class="relative p-5 w-full">
+                <span id="hero-badge" class="px-2.5 py-1 rounded-md bg-primary text-white text-xs font-bold uppercase tracking-wider mb-2 inline-block">Featured</span>
+                <h2 id="hero-title" class="text-xl font-bold text-white mb-1 line-clamp-1">Pilih Kategori untuk Memulai</h2>
+                <p id="hero-desc" class="text-xs text-gray-400 line-clamp-2 mb-3">Nikmati ribuan tontonan streaming berkualitas tinggi dengan update tercepat.</p>
+                <button onclick="alert('Fitur detail segera hadir!')" class="bg-white text-darkbase px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-gray-200 transition shadow-lg">
+                    <i class="ph ph-play-fill text-sm text-primary"></i> Tonton Sekarang
+                </button>
+            </div>
+        </div>
+
+        <!-- Submenu Horizontal Pills (Crunchyroll Style) -->
+        <div id="submenu" class="flex gap-2 mb-6 overflow-x-auto no-scrollbar pb-1">
+            <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Section Title -->
+        <div class="flex items-center justify-between mb-4">
+            <h3 id="section-title" class="font-bold text-base text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-primary"></span> Terpopuler
+            </h3>
+        </div>
+
+        <!-- Content Grid (Responsive Mobile Friendly Cards) -->
+        <div id="content-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
+            <div class="col-span-full py-16 text-center text-gray-500 text-sm">
+                Memuat konten...
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation Bar (Mobile Essential - Netflix & Crunchyroll Style) -->
+    <nav class="fixed bottom-0 inset-x-0 glass-nav border-t border-white/10 z-50 px-6 py-2 flex justify-between items-center max-w-lg mx-auto">
+        <button onclick="navigate('anime')" id="nav-btn-anime" class="nav-btn flex flex-col items-center gap-1 text-primary transition">
+            <i class="ph ph-sword text-2xl"></i>
+            <span class="text-[10px] font-semibold">Anime</span>
+        </button>
+        <button onclick="navigate('donghua')" id="nav-btn-donghua" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-white transition">
+            <i class="ph ph-yin-yang text-2xl"></i>
+            <span class="text-[10px] font-semibold">Donghua</span>
+        </button>
+        <button onclick="navigate('films')" id="nav-btn-films" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-white transition">
+            <i class="ph ph-popcorn text-2xl"></i>
+            <span class="text-[10px] font-semibold">Films</span>
+        </button>
+        <button onclick="navigate('drakor')" id="nav-btn-drakor" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-white transition">
+            <i class="ph ph-heart text-2xl"></i>
+            <span class="text-[10px] font-semibold">Drakor</span>
+        </button>
+    </nav>
+
+    <!-- Script Application Logic -->
     <script>
-        // --- KONFIGURASI ---
         const WORKER_URL = 'https://api-rayliziie.rayyankrens0304.workers.dev';
         let currentCategory = 'anime';
 
-        // --- NAVIGATION ---
+        // Inisialisasi awal saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            navigate('anime');
+        });
+
         function navigate(category) {
             currentCategory = category;
-            document.getElementById('page-title').innerText = category.toUpperCase();
+            
+            // Update active state di bottom nav
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-primary');
+                btn.classList.add('text-gray-400');
+            });
+            const activeBtn = document.getElementById(`nav-btn-${category}`);
+            if(activeBtn) {
+                activeBtn.classList.remove('text-gray-400');
+                activeBtn.classList.add('text-primary');
+            }
+
             renderSubmenu(category);
             fetchContent(`/${category}/home`);
         }
@@ -73,39 +146,75 @@
         function renderSubmenu(cat) {
             const subs = ['Home', 'Genre', 'Schedule', 'Ongoing', 'List'];
             const container = document.getElementById('submenu');
-            container.innerHTML = subs.map(item => `
-                <button onclick="fetchContent('/${cat}/${item.toLowerCase()}')" 
-                class="px-4 py-2 bg-gray-800 rounded-full hover:bg-blue-600 transition whitespace-nowrap">${item}</button>
+            container.innerHTML = subs.map((item, idx) => `
+                <button onclick="setActiveSub(this); fetchContent('/${cat}/${item.toLowerCase()}')" 
+                class="sub-pill px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition border ${idx === 0 ? 'bg-primary border-primary text-white shadow-md shadow-primary/20' : 'bg-cardbg border-white/5 text-gray-400 hover:bg-white/5'}">${item}</button>
             `).join('');
         }
 
-        // --- API HANDLER ---
+        function setActiveSub(el) {
+            document.querySelectorAll('.sub-pill').forEach(btn => {
+                btn.classList.remove('bg-primary', 'border-primary', 'text-white', 'shadow-md', 'shadow-primary/20');
+                btn.classList.add('bg-cardbg', 'border-white/5', 'text-gray-400');
+            });
+            el.classList.remove('bg-cardbg', 'border-white/5', 'text-gray-400');
+            el.classList.add('bg-primary', 'border-primary', 'text-white', 'shadow-md', 'shadow-primary/20');
+        }
+
         async function fetchContent(path) {
             const grid = document.getElementById('content-grid');
-            grid.innerHTML = '<p>Loading...</p>';
+            grid.innerHTML = `
+                <div class="col-span-full py-16 flex flex-col items-center justify-center gap-3">
+                    <div class="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-xs text-gray-500 font-medium">Memuat tayangan...</p>
+                </div>
+            `;
             
             try {
                 const response = await fetch(`${WORKER_URL}${path}`);
                 const data = await response.json();
                 renderCards(data);
             } catch (err) {
-                grid.innerHTML = `<p class="text-red-500">Gagal memuat data: ${err.message}</p>`;
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-red-400 text-xs font-medium">Gagal memuat data: ${err.message}</div>`;
             }
         }
 
-        // --- RENDER UI ---
         function renderCards(items) {
             const grid = document.getElementById('content-grid');
-            if(!items || items.length === 0) { grid.innerHTML = '<p>Data kosong.</p>'; return; }
+            if(!items || items.length === 0) { 
+                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Tidak ada tayangan tersedia.</div>'; 
+                return; 
+            }
             
+            // Set item pertama sebagai Hero Spotlight (Netflix style)
+            const hero = items[0];
+            if(hero) {
+                document.getElementById('hero-img').src = hero.poster || 'https://placehold.co/600x400/121216/333?text=RAYLIZIIE';
+                document.getElementById('hero-title').innerText = hero.title || 'Judul Tidak Diketahui';
+                document.getElementById('hero-badge').innerText = currentCategory.toUpperCase();
+            }
+
+            // Render sisa atau seluruh kartu ke grid
             grid.innerHTML = items.map(item => `
-                <div class="thumbnail-card relative overflow-hidden rounded-xl bg-gray-900 aspect-[2/3] group cursor-pointer">
-                    <img src="${item.poster || 'https://placehold.co/300x450/111/444?text=No+Image'}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black to-transparent w-full">
-                        <h3 class="font-bold truncate">${item.title || 'Unknown Title'}</h3>
+                <div class="group relative bg-cardbg rounded-xl overflow-hidden border border-white/5 shadow-md flex flex-col active:scale-95 transition duration-200">
+                    <div class="relative aspect-[3/4] w-full overflow-hidden bg-gray-900">
+                        <img src="${item.poster || 'https://placehold.co/300x450/111/444?text=No+Image'}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkbase via-transparent opacity-80"></div>
+                        <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur-md text-[10px] font-bold text-white uppercase tracking-wider border border-white/10">HD</span>
+                    </div>
+                    <div class="p-3 flex flex-col justify-between flex-1">
+                        <h3 class="font-bold text-xs text-white line-clamp-2 leading-snug group-hover:text-primary transition">${item.title || 'Unknown Title'}</h3>
                     </div>
                 </div>
             `).join('');
+        }
+
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-container');
+            searchBar.classList.toggle('hidden');
+            if(!searchBar.classList.contains('hidden')) {
+                document.getElementById('search-input').focus();
+            }
         }
     </script>
 </body>
