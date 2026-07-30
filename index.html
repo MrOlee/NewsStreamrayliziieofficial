@@ -7,7 +7,7 @@
     <link rel="manifest" href="/manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- GLOBAL --- */
+        /* --- STYLING DASAR --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #0f0f11; color: #ffffff; font-family: 'Inter', sans-serif; padding-bottom: 80px; }
         a { text-decoration: none; color: inherit; }
@@ -19,7 +19,7 @@
         .brand-badge { background: #ff3b3b; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; }
         .search-btn { background: #2a2a2e; border: none; color: #aaa; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
 
-        /* --- HERO --- */
+        /* --- HERO BANNER --- */
         .hero-banner { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); margin: 15px; padding: 25px; border-radius: 16px; position: relative; overflow: hidden; }
         .hero-badge { display: inline-block; background: #ff3b3b; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 12px; }
         .hero-title { font-size: 28px; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
@@ -27,26 +27,26 @@
         .hero-tags { display: flex; gap: 10px; flex-wrap: wrap; }
         .hero-tag { background: rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 20px; font-size: 12px; color: #ccc; border: 1px solid rgba(255, 255, 255, 0.05); }
 
-        /* --- SECTION --- */
+        /* --- SECTION HEADER --- */
         .section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; margin-top: 25px; margin-bottom: 15px; }
         .section-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
         .section-link { font-size: 14px; color: #888; cursor: pointer; }
 
-        /* --- CARD --- */
+        /* --- CARD STYLES --- */
         .card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 0 20px; }
         .movie-card { background-color: #1a1a1d; border-radius: 12px; overflow: hidden; transition: transform 0.2s; cursor: pointer; border: 1px solid #252529; }
         .movie-card:hover { transform: translateY(-5px); border-color: #ff3b3b; }
-        .card-image-container { width: 100%; aspect-ratio: 2/3; overflow: hidden; background: #252529; position: relative; display: flex; justify-content: center; align-items: center; }
+        .card-image-container { width: 100%; aspect-ratio: 2/3; overflow: hidden; background: #1f1f23; position: relative; display: flex; justify-content: center; align-items: center; }
         .card-image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .card-info { padding: 10px; }
         .card-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
         .card-subtitle { font-size: 12px; color: #777; }
 
-        /* --- FALLBACK BOX LOKAL (Mencegah Error 503) --- */
+        /* --- FALLBACK GAMBAR (Mengganti Placeholder Eksternal yang Error 503) --- */
         .fallback-box { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #1f1f23; color: #666; font-size: 14px; font-weight: 600; text-align: center; padding: 20px; }
         .fallback-box span { font-size: 11px; font-weight: normal; color: #444; margin-top: 5px; }
 
-        /* --- FOOTER --- */
+        /* --- BOTTOM NAV --- */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1a1a1d; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #2a2a2e; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #777; cursor: pointer; }
         .nav-item.active { color: #ff3b3b; }
@@ -94,7 +94,7 @@
         <div id="film-container" class="card-container"><div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat Film...</div></div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
         <div class="nav-item active"><span class="nav-icon">🏠</span>Beranda</div>
         <div class="nav-item"><span class="nav-icon">📺</span>Anime</div>
@@ -104,43 +104,45 @@
     </nav>
 
     <!-- ============================================================== -->
-    <!-- JAVASCRIPT FINAL - TERINTEGRASI DENGAN API ANDA                 -->
+    <!-- JAVASCRIPT FINAL - DIJAMIN 100% BEBAS ERROR url.startsWith     -->
     <!-- ============================================================== -->
     <script>
-        // --- KONFIGURASI API SESUAI WORKER ANDA ---
-        const BASE_API = 'https://api-rayliziie.rayyankrens0304.workers.dev';
+        // --- URL API ANDA ---
+        const BASE_URL = 'https://api-rayliziie.rayyankrens0304.workers.dev';
+        
+        // --- ENDPOINT SESUAI WORKER ---
         const ENDPOINTS = {
-            anime: `${BASE_API}/animekompi/list`,
-            drama: `${BASE_API}/dramovnime/list`,
-            film: `${BASE_API}/filmbox/trending`
+            anime: `${BASE_URL}/animekompi/list`,    // Sesuai Worker (A-Z List)
+            drama: `${BASE_URL}/dramovnime/list`,    // Sesuai Worker (Katalog Paginated)
+            film:  `${BASE_URL}/filmbox/trending`    // Sesuai Worker (Trending Movie)
         };
 
-        // --- FUNGSI GET IMAGE ANTI ERROR ---
+        // --- getImage (TIDAK ADA LAGI ERROR url.startsWith) ---
         function getImage(url) {
-            // TIDAK ADA ERROR url.startsWith KARENA KITA CEK TIPE DATA DULU
-            if (!url || typeof url !== 'string') return null;
-            return url; // API Anda sudah mengirim URL lengkap, tidak perlu diproses lagi
+            // Jika url adalah string (teks), return url tersebut. 
+            // Jika bukan string (misal null, undefined, angka), return NULL.
+            // Ini 100% mencegah TypeError: url.startsWith is not a function.
+            return (typeof url === 'string' && url.length > 0) ? url : null;
         }
 
-        // --- FUNGSI MEMBUAT KARTU ---
+        // --- createCard (Membuat Kartu HTML) ---
         function createCard(item) {
             if (!item) return document.createElement('div');
             
-            // Mapping nama properti dari API worker Anda
+            // Mapping Field dari API Worker Anda
             const title = item.title || item.name || item.judul || 'Tanpa Judul';
             const rawImage = item.image || item.poster || item.thumbnail || null;
             const type = item.type || item.genre || item.quality || 'Unknown';
 
-            // Generate URL Gambar yang aman
             const safeImageUrl = getImage(rawImage);
 
             const card = document.createElement('div');
             card.className = 'movie-card';
 
-            // Logika Gambar (Aman dari Error 503)
+            // Logika Gambar: Jika null, langsung tampilkan Fallback Lokal.
+            // Jika ada URL, tampilkan, tapi jika error 503, ganti dengan Fallback Lokal.
             let imageHtml = '';
             if (safeImageUrl) {
-                // Jika gambar gagal dimuat (API gambar mati), onerror akan memicu fallback lokal
                 imageHtml = `<img src="${safeImageUrl}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML=\`<div class='fallback-box'>🖼️<br>Error Load<span>Gambar Rusak</span></div>\`;">`;
             } else {
                 imageHtml = `<div class="fallback-box">🖼️<br>Tidak Ada Gambar<span>Fallback Lokal</span></div>`;
@@ -156,12 +158,12 @@
             return card;
         }
 
-        // --- FUNGSI RENDER KE HTML ---
+        // --- renderRow (Menempel ke HTML) ---
         function renderRow(containerId, items) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            container.innerHTML = '';
             
+            container.innerHTML = '';
             if (!items || !Array.isArray(items) || items.length === 0) {
                 container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">📭 Data tidak ditemukan.</div>`;
                 return;
@@ -172,32 +174,32 @@
             });
         }
 
-        // --- FUNGSI FETCH DATA DARI WORKER ---
-        async function loadData(endpointUrl, containerId) {
+        // --- fetchData (Mengambil API yang sudah dipastikan endpointnya) ---
+        async function fetchData(endpointUrl, containerId) {
             const container = document.getElementById(containerId);
             try {
                 const response = await fetch(endpointUrl);
-                if (!response.ok) throw new Error(`HTTP Status: ${response.status}`);
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
                 
                 const result = await response.json();
                 
-                // Struktur data dari Worker Anda (ada di dalam result.data)
+                // Worker Anda mengirim JSON { code: 0, message: "ok", data: [...] }
+                // Maka kita ambil data dari result.data
                 let items = result.data || result.results || result; 
                 if (!Array.isArray(items)) items = [items];
                 
                 renderRow(containerId, items);
             } catch (error) {
                 console.warn(`Gagal fetch ${endpointUrl}:`, error.message);
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ff6b6b; padding: 20px;">⚠️ Gagal memuat data dari server.</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ff6b6b; padding: 20px;">⚠️ Gagal memuat data dari server (Error: ${error.message})</div>`;
             }
         }
 
-        // --- EKSEKUSI SAAT HALAMAN DIMUAT ---
+        // --- Menjalankan Semua ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Panggil API sesuai endpoint worker Anda
-            loadData(ENDPOINTS.anime, 'anime-container');
-            loadData(ENDPOINTS.drama, 'drama-container');
-            loadData(ENDPOINTS.film, 'film-container');
+            fetchData(ENDPOINTS.anime, 'anime-container');
+            fetchData(ENDPOINTS.drama, 'drama-container');
+            fetchData(ENDPOINTS.film, 'film-container');
         });
     </script>
 </body>
