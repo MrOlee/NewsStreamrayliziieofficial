@@ -1,4 +1,5 @@
-const CACHE_NAME = 'raylizii-v2';
+// SW.js - HANYA UNTUK CACHE, TIDAK ADA LOGIKA DOM
+const CACHE_NAME = 'raylizii-final-v1';
 const urlsToCache = ['/', '/index.html', '/manifest.json'];
 
 self.addEventListener('install', event => {
