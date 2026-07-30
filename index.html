@@ -60,6 +60,7 @@
                 </a>
             </div>
 
+            <!-- Category Switcher Nav -->
             <nav class="hidden md:flex items-center bg-darkcard/80 p-1 rounded-xl border border-darkborder">
                 <button id="cat-btn-anime" onclick="switchCategory('anime')" class="px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 text-white bg-brand-600 shadow-lg">
                     <i class="ph ph-sword text-lg"></i> Anime
@@ -75,6 +76,7 @@
                 </button>
             </nav>
 
+            <!-- Search Bar -->
             <div class="flex items-center gap-3">
                 <div class="relative w-40 sm:w-64">
                     <input type="text" id="global-search-input" onkeyup="handleSearchInput(event)" placeholder="Cari tontonan..." 
@@ -130,6 +132,7 @@
         </aside>
 
         <main class="flex-1 min-w-0">
+            <!-- Hero Banner -->
             <div id="hero-banner" class="relative w-full h-64 sm:h-80 md:h-96 rounded-3xl overflow-hidden mb-8 border border-darkborder/80 shadow-2xl group">
                 <img id="hero-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-darkbg via-darkbg/50 to-transparent"></div>
@@ -143,6 +146,7 @@
                 </div>
             </div>
 
+            <!-- Content Grid Section -->
             <div class="space-y-6">
                 <div class="flex flex-col gap-4 pb-2 border-b border-darkborder/80">
                     <h3 id="current-view-title" class="text-xl sm:text-2xl font-black text-white flex items-center gap-3">
@@ -163,26 +167,33 @@
                 <i class="ph ph-x text-xl"></i>
             </button>
 
+            <!-- Video Player Area (Native DOM HTML5 Player) -->
             <div id="modal-player-container" class="relative aspect-video bg-black w-full overflow-hidden shrink-0">
-                <iframe id="modal-video-iframe" class="w-full h-full border-0 hidden" allowfullscreen></iframe>
+                <video id="main-video-player" controls playsinline class="w-full h-full object-contain hidden bg-black">
+                    <source id="video-source-element" src="" type="video/mp4">
+                    Browser Anda tidak mendukung player HTML5 video.
+                </video>
+                <iframe id="modal-video-iframe" class="w-full h-full border-0 hidden" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                
                 <div id="modal-poster-cover" class="w-full h-full relative">
                     <img id="modal-backdrop-img" src="" class="w-full h-full object-cover opacity-40 blur-sm">
                     <div class="absolute inset-0 bg-gradient-to-t from-darkcard via-darkcard/50 to-transparent"></div>
                     <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                        <button onclick="startVideoPlayer()" class="w-16 h-16 rounded-full bg-brand-600 text-white flex items-center justify-center text-3xl shadow-2xl hover:scale-110 transition">
-                            <i class="ph ph-play-fill translate-x-0.5"></i>
+                        <button onclick="startVideoPlayer()" class="w-16 h-16 rounded-full bg-brand-600 text-white flex items-center justify-center text-3xl shadow-2xl hover:scale-110 transition group">
+                            <i class="ph ph-play-fill translate-x-0.5 group-hover:scale-110 transition"></i>
                         </button>
                         <p class="text-xs text-gray-200 mt-3 font-semibold uppercase tracking-wider">Klik untuk Memutar Stream Video</p>
                     </div>
                 </div>
             </div>
 
+            <!-- Detail Info & Interactive Episode Grid -->
             <div class="p-6 sm:p-8 overflow-y-auto space-y-6">
                 <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-darkbg border border-darkborder/80">
                     <div class="flex items-center gap-2">
                         <span class="text-xs font-bold text-gray-400 uppercase">Server:</span>
-                        <select id="server-selector" class="bg-darkcard text-xs text-white px-3 py-1.5 rounded-lg border border-darkborder focus:outline-none focus:border-brand-500">
-                            <option value="s1">Server 1 (HD Auto)</option>
+                        <select id="server-selector" onchange="switchServer(this.value)" class="bg-darkcard text-xs text-white px-3 py-1.5 rounded-lg border border-darkborder focus:outline-none focus:border-brand-500">
+                            <option value="s1">Server 1 (HD Auto Stream)</option>
                             <option value="s2">Server 2 (Fast Stream)</option>
                             <option value="s3">Server 3 (VIP Sub Indo)</option>
                         </select>
@@ -190,7 +201,7 @@
                     <div class="flex items-center gap-2">
                         <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold border border-emerald-500/30">SUB INDO</span>
                         <span class="px-2 py-0.5 rounded bg-brand-500/20 text-indigo-300 text-[10px] font-bold border border-brand-500/30">1080p / 720p</span>
-                        <button onclick="alert('Permintaan Download telah dikirim!')" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1 transition">
+                        <button onclick="triggerDownload()" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1 transition">
                             <i class="ph ph-download-simple"></i> Download
                         </button>
                     </div>
@@ -233,8 +244,16 @@
         let currentFilterOption = '';
         let currentItems = [];
         let rawLastResponse = null;
+        let selectedEpisodeNum = 1;
 
         const FALLBACK_IMAGE = 'https://placehold.co/300x450/131722/6366f1?text=Rayliziie';
+
+        const SAMPLE_VIDEOS = [
+            'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+            'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+            'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+            'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+        ];
 
         window.addEventListener('DOMContentLoaded', () => {
             switchCategory('anime');
@@ -373,7 +392,7 @@
                             if (title && !seenTitles.has(title)) {
                                 seenTitles.add(title);
                                 collectedItems.push(item);
-                            } else if (!title && (item.cover_url || item.poster || item.poster_url || item.image)) {
+                            } else if (!title && (item.cover_url || item.poster || item.poster_url || item.image || item.thumbnail_url)) {
                                 collectedItems.push(item);
                             }
                         }
@@ -396,7 +415,7 @@
 
         function getBestPosterUrl(item) {
             if (!item) return FALLBACK_IMAGE;
-            const img = item.cover_url || item.poster_url || item.poster || item.image || item.image_url || item.cover || item.thumbnail_url || item.thumb;
+            const img = item.cover_url || item.poster_url || item.poster || item.image || item.image_url || item.cover || item.thumbnail_url || item.series_image_url || item.thumb;
             if (!img || typeof img !== 'string') return FALLBACK_IMAGE;
             if (img.startsWith('http://') || img.startsWith('https://')) return img;
             if (img.startsWith('//')) return 'https:' + img;
@@ -434,9 +453,9 @@
 
                 let items = extractArraySafely(rawData);
 
-                // STRICT FILTER UNTUK DONGHUA (Pembersih Anime Jepang)
+                // STRICT DONGHUA FILTERING (Cleans Japanese anime entries)
                 if (currentCategory === 'donghua') {
-                    const japaneseKeywords = ['boku', 'isekai', 'no tsugai', 'gaikotsu', 'seihantai', 'heroine', 'ossan', 'mrabito', 'subete', 'shingeki', 'jujutsu', 'kimetsu', 'yomi', 'kishi-sama'];
+                    const japaneseKeywords = ['boku', 'isekai', 'no tsugai', 'gaikotsu', 'seihantai', 'heroine', 'ossan', 'mrabito', 'subete', 'shingeki', 'jujutsu', 'kimetsu', 'yomi', 'kishi', 'suterare', 'gohan', 'tabi'];
                     items = items.filter(it => {
                         const title = (it.title || it.name || '').toLowerCase();
                         return !japaneseKeywords.some(kw => title.includes(kw));
@@ -531,7 +550,7 @@
                 
                 if (Array.isArray(epList) && epList.length > 0) {
                     epGrid.innerHTML = epList.map((ep, idx) => `
-                        <button onclick="playEpisode('${ep.id || idx}', ${idx + 1})" class="px-2 py-2 rounded-xl text-xs font-bold ${idx === 0 ? 'bg-brand-600 text-white' : 'bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500'}">
+                        <button id="ep-btn-${idx + 1}" onclick="playEpisode('${ep.id || idx}', ${idx + 1})" class="px-2 py-2 rounded-xl text-xs font-bold ${idx === 0 ? 'bg-brand-600 text-white' : 'bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500'}">
                             ${ep.title || `Ep ${idx + 1}`}
                         </button>
                     `).join('');
@@ -545,17 +564,22 @@
 
         function renderDefaultEpisodes(epGrid, item) {
             let epBtns = '';
-            const totalEp = parseInt(item.episode_count || 12);
+            const totalEp = parseInt(item.episode_count || 16);
             for(let i = 1; i <= Math.min(totalEp, 24); i++) {
-                epBtns += `<button onclick="playEpisode('ep-${i}', ${i})" class="px-2 py-2 rounded-xl text-xs font-bold ${i === 1 ? 'bg-brand-600 text-white' : 'bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500'}">Ep ${i}</button>`;
+                epBtns += `<button id="ep-btn-${i}" onclick="playEpisode('ep-${i}', ${i})" class="px-2 py-2 rounded-xl text-xs font-bold ${i === 1 ? 'bg-brand-600 text-white' : 'bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500'}">Ep ${i}</button>`;
             }
             epGrid.innerHTML = epBtns;
         }
 
         function closeDetailModalPlayer() {
+            const videoPlayer = document.getElementById('main-video-player');
             const iframe = document.getElementById('modal-video-iframe');
+            
+            videoPlayer.pause();
+            videoPlayer.classList.add('hidden');
             iframe.src = '';
             iframe.classList.add('hidden');
+            
             document.getElementById('modal-poster-cover').classList.remove('hidden');
         }
 
@@ -564,53 +588,111 @@
             document.getElementById('detail-modal').classList.add('hidden');
         }
 
-        async function playEpisode(epId, epNum) {
+        function playEpisode(epId, epNum) {
+            selectedEpisodeNum = epNum;
+            
+            const totalBtns = document.getElementById('modal-episodes-grid').children.length;
+            for (let i = 1; i <= totalBtns; i++) {
+                const btn = document.getElementById(`ep-btn-${i}`);
+                if (btn) {
+                    if (i === epNum) {
+                        btn.className = 'px-2 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-lg';
+                    } else {
+                        btn.className = 'px-2 py-2 rounded-xl text-xs font-bold bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500';
+                    }
+                }
+            }
+
+            const videoPlayer = document.getElementById('main-video-player');
+            const sourceElem = document.getElementById('video-source-element');
             const iframe = document.getElementById('modal-video-iframe');
             const posterCover = document.getElementById('modal-poster-cover');
             
             posterCover.classList.add('hidden');
-            iframe.classList.remove('hidden');
+            iframe.classList.add('hidden');
+            videoPlayer.classList.remove('hidden');
 
-            iframe.srcdoc = `
-                <html>
-                    <body style="margin:0;background:#0b0d14;display:flex;align-items:center;justify-content:center;height:100vh;color:#fff;font-family:sans-serif;">
-                        <div style="text-align:center;padding:20px;">
-                            <h3 style="color:#6366f1;margin-bottom:8px;">▶️ Memutar Episode ${epNum} (Server Streaming HD)</h3>
-                            <p style="font-size:12px;color:#9ca3af;">Streaming server terhubung langsung. Subtitle Indonesia Aktif (1080p).</p>
-                        </div>
-                    </body>
-                </html>
-            `;
+            const videoUrl = SAMPLE_VIDEOS[(epNum - 1) % SAMPLE_VIDEOS.length];
+            
+            sourceElem.src = videoUrl;
+            videoPlayer.load();
+            videoPlayer.play().catch(err => {
+                console.log('Autoplay deferred:', err);
+            });
+        }
+
+        function switchServer(serverVal) {
+            if (serverVal === 's2') {
+                const videoPlayer = document.getElementById('main-video-player');
+                const iframe = document.getElementById('modal-video-iframe');
+                videoPlayer.pause();
+                videoPlayer.classList.add('hidden');
+                iframe.classList.remove('hidden');
+                iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+            } else {
+                playEpisode(`ep-${selectedEpisodeNum}`, selectedEpisodeNum);
+            }
         }
 
         function startVideoPlayer() {
             playEpisode('ep-1', 1);
         }
 
+        function triggerDownload() {
+            const tempLink = document.createElement('a');
+            tempLink.href = SAMPLE_VIDEOS[(selectedEpisodeNum - 1) % SAMPLE_VIDEOS.length];
+            tempLink.download = `Episode_${selectedEpisodeNum}_Rayliziie.mp4`;
+            tempLink.target = '_blank';
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+        }
+
+        function handleSearchInput(e) {
+            const query = e.target.value.toLowerCase().trim();
+            if(!query) {
+                renderCards(currentItems);
+                return;
+            }
+            const filtered = currentItems.filter(item => {
+                const title = (item.title || item.name || '').toLowerCase();
+                return title.includes(query);
+            });
+            renderCards(filtered);
+        }
+
         function generateFallbackData(cat) {
             if (cat === 'donghua') {
                 return [
-                    { title: "Tales of Demon and God Season 10", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "EP 437", day: "Kamis", rating: "9.8", synopsis: "Nie Li kembali bertarung di Kota Glory." },
-                    { title: "Slay the Gods Season 2", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 8", day: "Kamis", rating: "9.7", synopsis: "Lin Qiye membantai makhluk dewa mistik." },
-                    { title: "A Will Eternal Final Season", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 4", day: "Kamis", rating: "9.6", synopsis: "Bai Xiaochun mencapai puncak keabadian." },
-                    { title: "Shrouding the Heavens (Zhe Tian)", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "EP 173", day: "Rabu", rating: "9.5", synopsis: "Petualangan semesta purba." },
-                    { title: "Swallowed Star (Tunshi Xingkong)", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "EP 234", day: "Selasa", rating: "9.9", synopsis: "Luo Feng mempertahankan bumi dari peradaban alien." },
-                    { title: "Renegade Immortal (Xian Ni)", cover_url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=400", episode: "EP 151", day: "Senin", rating: "9.8", synopsis: "Wang Lin melintasi penderitaan membalas dendam." }
+                    { title: "Battle Through The Heavens Season 5 (BTTH)", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "EP 112", day: "Minggu", rating: "9.9", synopsis: "Xiao Yan terus berjuang meningkatkan kekuatannya.", episode_count: 120 },
+                    { title: "Tales of Demon and God Season 10", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 437", day: "Kamis", rating: "9.8", synopsis: "Nie Li kembali bertarung di Kota Glory.", episode_count: 450 },
+                    { title: "Slay the Gods Season 2", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 8", day: "Kamis", rating: "9.7", synopsis: "Lin Qiye membantai makhluk dewa mistik.", episode_count: 24 },
+                    { title: "A Will Eternal Final Season", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "EP 4", day: "Rabu", rating: "9.6", synopsis: "Bai Xiaochun mencapai puncak keabadian.", episode_count: 52 },
+                    { title: "Shrouding the Heavens (Zhe Tian)", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "EP 173", day: "Rabu", rating: "9.5", synopsis: "Petualangan semesta purba.", episode_count: 200 },
+                    { title: "Swallowed Star (Tunshi Xingkong)", cover_url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=400", episode: "EP 234", day: "Selasa", rating: "9.9", synopsis: "Luo Feng mempertahankan bumi dari alien.", episode_count: 260 },
+                    { title: "Renegade Immortal (Xian Ni)", cover_url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400", episode: "EP 151", day: "Senin", rating: "9.8", synopsis: "Wang Lin melintasi penderitaan membalas dendam.", episode_count: 180 },
+                    { title: "Soul Land Season 2 (Douluo Dalu II)", cover_url: "https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=400", episode: "EP 65", day: "Sabtu", rating: "9.8", synopsis: "Huo Yuhao membangkitkan sekte Tang.", episode_count: 100 }
                 ];
             } else if (cat === 'films') {
                 return [
-                    { title: "Oppenheimer", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "Movie", rating: "9.1", synopsis: "Fisikawan J. Robert Oppenheimer mengembangkan bom atom." },
-                    { title: "Dune: Part Two", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "Movie", rating: "8.9", synopsis: "Paul Atreides bersatu dengan suku Fremen." }
+                    { title: "Oppenheimer", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "Movie", rating: "9.1", synopsis: "Fisikawan J. Robert Oppenheimer mengembangkan bom atom.", episode_count: 1 },
+                    { title: "Dune: Part Two", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "Movie", rating: "8.9", synopsis: "Paul Atreides bersatu dengan suku Fremen.", episode_count: 1 },
+                    { title: "Avatar: The Way of Water", cover_url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400", episode: "Movie", rating: "8.8", synopsis: "Jake Sully dan Neytiri melindungi keluarga mereka di Pandora.", episode_count: 1 },
+                    { title: "Interstellar", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "Movie", rating: "9.3", synopsis: "Petualangan melintasi lubang cacing di luar angkasa.", episode_count: 1 }
                 ];
             } else if (cat === 'drakor') {
                 return [
-                    { title: "Queen of Tears", cover_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400", episode: "EP 16", day: "Minggu", rating: "9.4", synopsis: "Kisah cinta krisis pernikahan pasangan kaya raya." },
-                    { title: "Lovely Runner", cover_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400", episode: "EP 16", day: "Selasa", rating: "9.7", synopsis: "Wanita yang kembali ke masa lalu menyelamatkan idola." }
+                    { title: "Queen of Tears", cover_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400", episode: "EP 16", day: "Minggu", rating: "9.4", synopsis: "Kisah cinta krisis pernikahan pasangan kaya raya.", episode_count: 16 },
+                    { title: "Lovely Runner", cover_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400", episode: "EP 16", day: "Selasa", rating: "9.7", synopsis: "Wanita yang kembali ke masa lalu menyelamatkan idola.", episode_count: 16 },
+                    { title: "Guardian: The Lonely and Great God (Goblin)", cover_url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=400", episode: "EP 16", day: "Completed", rating: "9.8", synopsis: "Kisah Goblin abadi yang mencari pengantin manusia.", episode_count: 16 },
+                    { title: "Crash Landing on You", cover_url: "https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=400", episode: "EP 16", day: "Completed", rating: "9.6", synopsis: "Pewaris kaya Korea Selatan mendarat darurat di Korea Utara.", episode_count: 16 }
                 ];
             } else {
                 return [
-                    { title: "Solo Leveling Season 2", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 6", day: "Kamis", rating: "9.8", synopsis: "Sung Jinwoo bertarung menaklukkan Gate." },
-                    { title: "Tomb Raider King", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 4", day: "Kamis", rating: "9.4", synopsis: "Pencuri peninggalan kuno kembali ke masa lalu." }
+                    { title: "Solo Leveling Season 2", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 6", day: "Kamis", rating: "9.8", synopsis: "Sung Jinwoo bertarung menaklukkan Gate.", episode_count: 12 },
+                    { title: "Tomb Raider King", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 4", day: "Kamis", rating: "9.4", synopsis: "Pencuri peninggalan kuno kembali ke masa lalu.", episode_count: 24 },
+                    { title: "Demon Slayer: Hashira Training Arc", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "EP 8", day: "Minggu", rating: "9.7", synopsis: "Tanjiro menjalani latihan keras bersama para Hashira.", episode_count: 8 },
+                    { title: "Jujutsu Kaisen Season 2", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "EP 23", day: "Kamis", rating: "9.8", synopsis: "Insiden Shibuya mengguncang dunia penyihir Jujutsu.", episode_count: 23 }
                 ];
             }
         }
