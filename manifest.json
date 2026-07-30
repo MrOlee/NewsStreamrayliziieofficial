@@ -1,7 +1,7 @@
 {
   "name": "Streaming Rayliziie Official",
   "short_name": "Rayliziie",
-  "description": "Streaming Anime, Drama, Film & Live TV",
+  "description": "Streaming Anime, Drama, Film & Live TV gratis",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0b0b12",
@@ -10,12 +10,14 @@
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
