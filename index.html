@@ -1,92 +1,112 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rayliziie | Official Streaming</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streaming Rayliziie Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: { extend: { colors: { brand: { 500: '#6366f1', 600: '#4f46e5' }, darkbg: '#0b0d14', darkcard: '#131722', darkborder: '#1f293d' } } }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0b0d14; color: #f3f4f6; -webkit-tap-highlight-color: transparent; }
-        .glass { background: rgba(19, 23, 34, 0.8); backdrop-filter: blur(12px); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: white; }
+        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); }
+        .thumbnail-card:hover .overlay { opacity: 1; }
+        .gradient-bg { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(10,10,10,1) 100%); }
     </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="overflow-x-hidden">
 
-    <header class="sticky top-0 z-50 glass border-b border-white/5 px-4 py-3 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <h1 class="text-xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">RAYLIZIIE</h1>
-        </div>
-        <div class="relative">
-            <input type="text" id="search-input" placeholder="Cari..." class="bg-white/5 border border-white/10 rounded-full py-1.5 pl-4 pr-10 text-xs w-40 focus:outline-none focus:border-indigo-500">
-        </div>
-    </header>
-
-    <main class="max-w-lg mx-auto p-4">
-        <div id="hero" class="relative w-full aspect-video rounded-2xl overflow-hidden mb-6 shadow-2xl">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-            <div class="absolute bottom-4 left-4">
-                <span class="text-[10px] font-bold bg-indigo-600 px-2 py-0.5 rounded text-white">LATEST</span>
-                <h2 class="text-lg font-bold text-white mt-1" id="hero-title">Loading...</h2>
+    <div id="app" class="flex min-h-screen">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="w-64 glass fixed h-full border-r border-gray-800 hidden md:flex flex-col p-6">
+            <div class="mb-10 text-center">
+                <!-- GANTI URL LOGO DI BAWAH INI -->
+                <img src="https://placehold.co/200x200/1e293b/white?text=LOGO" alt="Logo" class="w-32 mx-auto rounded-lg mb-4">
+                <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">RAYLIZIIE</h1>
             </div>
-        </div>
 
-        <section class="mb-6">
-            <div class="flex items-center justify-between mb-3">
-                <h3 class="font-bold text-sm">Terpopuler</h3>
+            <div class="space-y-6">
+                <div id="nav-categories" class="space-y-2">
+                    <button onclick="navigate('anime')" class="w-full text-left p-3 rounded-lg hover:bg-blue-600 transition flex items-center gap-3"><i class="ph ph-sword"></i> Anime</button>
+                    <button onclick="navigate('donghua')" class="w-full text-left p-3 rounded-lg hover:bg-blue-600 transition flex items-center gap-3"><i class="ph ph-yin-yang"></i> Donghua</button>
+                    <button onclick="navigate('films')" class="w-full text-left p-3 rounded-lg hover:bg-blue-600 transition flex items-center gap-3"><i class="ph ph-popcorn"></i> Films</button>
+                    <button onclick="navigate('drakor')" class="w-full text-left p-3 rounded-lg hover:bg-blue-600 transition flex items-center gap-3"><i class="ph ph-heart"></i> Drakor</button>
+                </div>
             </div>
-            <div id="content-grid" class="grid grid-cols-2 gap-4">
-                <!-- Data will load here -->
-            </div>
-        </section>
-    </main>
+        </nav>
 
-    <nav class="fixed bottom-0 left-0 w-full glass border-t border-white/5 p-3 flex justify-around z-50">
-        <button onclick="switchCategory('anime')" class="flex flex-col items-center gap-1"><i class="ph ph-sword text-lg"></i><span class="text-[9px]">Anime</span></button>
-        <button onclick="switchCategory('donghua')" class="flex flex-col items-center gap-1"><i class="ph ph-yin-yang text-lg"></i><span class="text-[9px]">Donghua</span></button>
-        <button onclick="switchCategory('films')" class="flex flex-col items-center gap-1"><i class="ph ph-film-strip text-lg"></i><span class="text-[9px]">Film</span></button>
-        <button onclick="switchCategory('drakor')" class="flex flex-col items-center gap-1"><i class="ph ph-heart text-lg"></i><span class="text-[9px]">Drakor</span></button>
-    </nav>
+        <!-- Main Content -->
+        <main class="flex-1 md:ml-64 p-4 md:p-8">
+            <header class="flex justify-between items-center mb-8">
+                <h2 id="page-title" class="text-3xl font-bold">Selamat Datang</h2>
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="Cari tontonan..." class="bg-gray-900 border border-gray-700 px-4 py-2 rounded-full focus:outline-none focus:border-blue-500 w-64">
+                </div>
+            </header>
+
+            <!-- Submenu (Dynamic) -->
+            <div id="submenu" class="flex gap-4 mb-8 overflow-x-auto pb-2">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- Content Grid -->
+            <div id="content-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                <p class="text-gray-400">Pilih kategori di menu untuk memulai...</p>
+            </div>
+        </main>
+    </div>
 
     <script>
-        const API = 'https://api-rayliziie.rayyankrens0304.workers.dev';
-        let items = [];
+        // --- KONFIGURASI ---
+        const WORKER_URL = 'https://api-rayliziie.rayyankrens0304.workers.dev';
+        let currentCategory = 'anime';
 
-        async function switchCategory(cat) {
-            const grid = document.getElementById('content-grid');
-            grid.innerHTML = '<div class="col-span-2 text-center text-xs py-10">Loading...</div>';
-            try {
-                const res = await fetch(`${API}/${cat}/home`);
-                const data = await res.json();
-                items = data.slice(0, 10);
-                render(items);
-            } catch(e) {
-                grid.innerHTML = '<div class="col-span-2 text-center text-xs py-10 text-red-400">Offline/Error</div>';
-            }
+        // --- NAVIGATION ---
+        function navigate(category) {
+            currentCategory = category;
+            document.getElementById('page-title').innerText = category.toUpperCase();
+            renderSubmenu(category);
+            fetchContent(`/${category}/home`);
         }
 
-        function render(data) {
-            const grid = document.getElementById('content-grid');
-            const heroTitle = document.getElementById('hero-title');
-            if(data[0]) heroTitle.innerText = data[0].title || 'Tontonan Pilihan';
-            
-            grid.innerHTML = data.map(i => `
-                <div class="bg-darkcard rounded-xl overflow-hidden">
-                    <div class="aspect-[2/3] bg-white/5 relative">
-                        <img src="${i.cover_url || i.poster}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x300/131722/6366f1?text=No+Img'">
-                    </div>
-                    <div class="p-2"><h4 class="text-[11px] font-bold line-clamp-1">${i.title || i.name}</h4></div>
-                </div>
+        function renderSubmenu(cat) {
+            const subs = ['Home', 'Genre', 'Schedule', 'Ongoing', 'List'];
+            const container = document.getElementById('submenu');
+            container.innerHTML = subs.map(item => `
+                <button onclick="fetchContent('/${cat}/${item.toLowerCase()}')" 
+                class="px-4 py-2 bg-gray-800 rounded-full hover:bg-blue-600 transition whitespace-nowrap">${item}</button>
             `).join('');
         }
 
-        switchCategory('anime');
+        // --- API HANDLER ---
+        async function fetchContent(path) {
+            const grid = document.getElementById('content-grid');
+            grid.innerHTML = '<p>Loading...</p>';
+            
+            try {
+                const response = await fetch(`${WORKER_URL}${path}`);
+                const data = await response.json();
+                renderCards(data);
+            } catch (err) {
+                grid.innerHTML = `<p class="text-red-500">Gagal memuat data: ${err.message}</p>`;
+            }
+        }
+
+        // --- RENDER UI ---
+        function renderCards(items) {
+            const grid = document.getElementById('content-grid');
+            if(!items || items.length === 0) { grid.innerHTML = '<p>Data kosong.</p>'; return; }
+            
+            grid.innerHTML = items.map(item => `
+                <div class="thumbnail-card relative overflow-hidden rounded-xl bg-gray-900 aspect-[2/3] group cursor-pointer">
+                    <img src="${item.poster || 'https://placehold.co/300x450/111/444?text=No+Image'}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black to-transparent w-full">
+                        <h3 class="font-bold truncate">${item.title || 'Unknown Title'}</h3>
+                    </div>
+                </div>
+            `).join('');
+        }
     </script>
 </body>
 </html>
