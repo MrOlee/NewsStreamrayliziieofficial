@@ -3,851 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streaming Rayliziie Official - Nonton Anime, Drakor, & Films</title>
+    <title>Streaming Rayliziie Official - Premium Theater</title>
     
-<!-- Google Fonts, FontAwesome, & HLS.js Player Engine -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-<style>
-    /* ====================================================================
-       🎨 RAYLIZIIE STREAMING - PREMIUM DARK THEME
-       ==================================================================== */
-    :root {
-        --bg-primary: #0a0c10;
-        --bg-secondary: #12161f;
-        --bg-card: #1a202c;
-        --accent-primary: #E50914; /* Netflix Red */
-        --accent-secondary: #FF6B00; /* Crunchyroll Orange */
-        --text-main: #ffffff;
-        --text-muted: #a0aec0;
-        --glass-bg: rgba(10, 12, 16, 0.9);
-        --border-color: rgba(255, 255, 255, 0.12);
-        --radius-sm: 8px;
-        --radius-md: 12px;
-        --radius-lg: 20px;
-        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-        background-color: var(--bg-primary);
-        color: var(--text-main);
-        overflow-x: hidden;
-        padding-bottom: 60px;
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-primary); }
-    ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
-
-    /* ====================================================================
-       WORKER API CONFIG BAR
-       ==================================================================== */
-    .config-bar {
-        background: #111827;
-        padding: 8px 4%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid var(--border-color);
-        font-size: 0.82rem;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1001;
-    }
-
-    .config-input-group {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-grow: 1;
-        max-width: 600px;
-    }
-
-    .config-input {
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid var(--border-color);
-        border-radius: 4px;
-        padding: 4px 10px;
-        color: #4ade80;
-        font-family: monospace;
-        font-size: 0.8rem;
-        width: 100%;
-    }
-
-    .status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 3px 10px;
-        border-radius: 12px;
-        font-weight: 700;
-        font-size: 0.75rem;
-        background: rgba(74, 222, 128, 0.15);
-        color: #4ade80;
-        border: 1px solid #4ade80;
-    }
-
-    /* ====================================================================
-       HEADER & NAVIGATION
-       ==================================================================== */
-    .navbar {
-        position: fixed;
-        top: 37px; /* Below config bar */
-        left: 0;
-        width: 100%;
-        height: 70px;
-        background: var(--glass-bg);
-        backdrop-filter: blur(12px);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 4%;
-        z-index: 1000;
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .logo-container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-    }
-
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        border-radius: var(--radius-sm);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        color: white;
-        box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
-    }
-
-    .logo-text {
-        font-family: 'Outfit', sans-serif;
-        font-size: 1.35rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        color: white;
-    }
-
-    .logo-text span {
-        background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 22px;
-        list-style: none;
-    }
-
-    .nav-link {
-        color: var(--text-muted);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: var(--transition);
-        cursor: pointer;
-    }
-
-    .nav-link:hover, .nav-link.active {
-        color: var(--text-main);
-        text-shadow: 0 0 10px rgba(255,255,255,0.3);
-    }
-
-    .search-box {
-        position: relative;
-        display: flex;
-        align-items: center;
-    }
-
-    .search-input {
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid var(--border-color);
-        padding: 8px 16px 8px 38px;
-        border-radius: 30px;
-        color: white;
-        font-size: 0.85rem;
-        width: 200px;
-        transition: var(--transition);
-    }
-
-    .search-input:focus {
-        outline: none;
-        width: 280px;
-        border-color: var(--accent-primary);
-        background: rgba(255, 255, 255, 0.12);
-    }
-
-    .search-icon {
-        position: absolute;
-        left: 14px;
-        color: var(--text-muted);
-        font-size: 0.85rem;
-    }
-
-    /* ====================================================================
-       HERO BANNER
-       ==================================================================== */
-    .hero {
-        position: relative;
-        width: 100%;
-        height: 65vh;
-        min-height: 480px;
-        margin-top: 107px;
-        display: flex;
-        align-items: flex-end;
-        padding: 0 4% 50px;
-        background: linear-gradient(to top, var(--bg-primary) 10%, transparent 60%),
-                    linear-gradient(to right, rgba(10, 12, 16, 0.95) 30%, transparent 80%),
-                    url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920') center/cover no-repeat;
-    }
-
-    .hero-content { max-width: 650px; z-index: 2; }
-
-    .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 5px 12px;
-        background: rgba(229, 9, 20, 0.2);
-        border: 1px solid var(--accent-primary);
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: var(--accent-primary);
-        margin-bottom: 14px;
-        text-transform: uppercase;
-    }
-
-    .hero-title {
-        font-family: 'Outfit', sans-serif;
-        font-size: 2.8rem;
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 12px;
-    }
-
-    .hero-desc {
-        color: #cbd5e0;
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin-bottom: 20px;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .btn {
-        padding: 10px 24px;
-        border-radius: var(--radius-sm);
-        font-weight: 700;
-        font-size: 0.9rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-        border: none;
-        transition: var(--transition);
-        text-decoration: none;
-    }
-
-    .btn-primary {
-        background: var(--accent-primary);
-        color: white;
-        box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
-    }
-
-    .btn-primary:hover {
-        background: #f40612;
-        transform: translateY(-2px);
-    }
-
-    /* ====================================================================
-       MEDIA GRID & CARDS
-       ==================================================================== */
-    .content-section {
-        padding: 20px 4%;
-        margin-bottom: 20px;
-    }
-
-    .section-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 16px;
-    }
-
-    .section-title {
-        font-family: 'Outfit', sans-serif;
-        font-size: 1.4rem;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .section-title i { color: var(--accent-secondary); }
-
-    .media-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 18px;
-    }
-
-    .media-card {
-        position: relative;
-        background: var(--bg-card);
-        border-radius: var(--radius-md);
-        overflow: hidden;
-        cursor: pointer;
-        transition: var(--transition);
-        border: 1px solid var(--border-color);
-    }
-
-    .media-card:hover {
-        transform: translateY(-6px);
-        border-color: rgba(255, 255, 255, 0.3);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-    }
-
-    .poster-wrapper {
-        position: relative;
-        width: 100%;
-        padding-top: 145%;
-        overflow: hidden;
-        background: #1e293b;
-    }
-
-    .poster-img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: var(--transition);
-    }
-
-    .media-card:hover .poster-img { transform: scale(1.06); }
-
-    .card-badge {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(4px);
-        padding: 3px 6px;
-        border-radius: 4px;
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #FFD700;
-    }
-
-    .sub-badge {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        background: var(--accent-secondary);
-        padding: 3px 6px;
-        border-radius: 4px;
-        font-size: 0.65rem;
-        font-weight: 800;
-        color: white;
-        text-transform: uppercase;
-    }
-
-    .card-info { padding: 10px; }
-
-    .card-title {
-        font-size: 0.88rem;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-bottom: 4px;
-    }
-
-    .card-sub {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        display: flex;
-        justify-content: space-between;
-    }
-
-    /* Loading Skeleton */
-    .skeleton {
-        animation: skeleton-loading 1s linear infinite alternate;
-        border-radius: var(--radius-md);
-        height: 240px;
-    }
-    @keyframes skeleton-loading {
-        0% { background-color: #1e293b; }
-        100% { background-color: #334155; }
-    }
-
-    /* ====================================================================
-       MODAL STREAM PLAYER
-       ==================================================================== */
-    .modal {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.92);
-        backdrop-filter: blur(15px);
-        z-index: 2000;
-        display: none;
-        overflow-y: auto;
-    }
-
-    .modal.active { display: block; }
-
-    .modal-container {
-        max-width: 1000px;
-        margin: 30px auto;
-        background: var(--bg-secondary);
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-        border: 1px solid var(--border-color);
-        position: relative;
-    }
-
-    .modal-close {
-        position: absolute;
-        top: 15px; right: 15px;
-        width: 36px; height: 36px;
-        background: rgba(0,0,0,0.7);
-        border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        color: white; cursor: pointer; z-index: 10;
-        border: 1px solid var(--border-color);
-    }
-
-    .modal-close:hover { background: var(--accent-primary); }
-
-    .player-wrapper {
-        position: relative;
-        width: 100%;
-        padding-top: 56.25%;
-        background: black;
-    }
-
-    .player-wrapper iframe, .player-wrapper video {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        border: none;
-    }
-
-    .modal-body { padding: 24px; }
-    .modal-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 12px; }
-
-    .modal-tabs {
-        display: flex; gap: 20px; margin-bottom: 16px;
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .modal-tab {
-        padding: 8px 0; font-weight: 700; color: var(--text-muted);
-        cursor: pointer; position: relative;
-    }
-
-    .modal-tab.active { color: white; }
-    .modal-tab.active::after {
-        content: ''; position: absolute; bottom: -1px; left: 0;
-        width: 100%; height: 3px; background: var(--accent-primary);
-    }
-
-    .episodes-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 10px; max-height: 250px; overflow-y: auto;
-    }
-
-    .episode-card {
-        background: rgba(255,255,255,0.05);
-        padding: 10px; border-radius: var(--radius-sm);
-        text-align: center; cursor: pointer;
-        border: 1px solid var(--border-color);
-    }
-
-    .episode-card:hover, .episode-card.active {
-        background: var(--accent-primary);
-        border-color: var(--accent-primary);
-    }
-
-    .episode-card .ep-num { font-weight: 700; font-size: 0.88rem; display: block; }
-    .episode-card .ep-title { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
-
-    .download-list { display: flex; flex-direction: column; gap: 10px; }
-    .download-item {
-        display: flex; align-items: center; justify-content: space-between;
-        background: rgba(255,255,255,0.05); padding: 12px 16px;
-        border-radius: var(--radius-sm); border: 1px solid var(--border-color);
-    }
-</style>
-
-
-<!-- ====================================================================
-     WORKER GATEWAY LIVE CONNECTOR CONFIG
-     ==================================================================== -->
-<div class="config-bar">
-    <div class="config-input-group">
-        <i class="fa-solid fa-link" style="color: #4ade80;"></i>
-        <span style="color: var(--text-muted);">Worker Gateway:</span>
-        <input type="text" id="gatewayUrlInput" class="config-input" value="https://indocast-proxy.yourdomain.workers.dev" placeholder="Masukkan URL Worker Kamu">
-        <button onclick="saveGatewayUrl()" class="btn btn-primary" style="padding: 2px 10px; font-size: 0.75rem;">Simpan & Refresh</button>
-    </div>
-    <div class="status-pill" id="connectionStatus"><i class="fa-solid fa-circle-check"></i> Terhubung Live API</div>
-</div>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-    <a href="#" class="logo-container">
-        <div class="logo-icon"><i class="fa-solid fa-play"></i></div>
-        <div class="logo-text">RAYLIZIIE <span>STREAM</span></div>
-    </a>
-
-    <ul class="nav-links">
-        <li><a class="nav-link active" onclick="loadContent('all')">Beranda</a></li>
-        <li><a class="nav-link" onclick="loadCategoryRoute('anime')">Anime</a></li>
-        <li><a class="nav-link" onclick="loadCategoryRoute('drakor')">Drakor</a></li>
-        <li><a class="nav-link" onclick="loadCategoryRoute('films')">Films</a></li>
-        <li><a class="nav-link" onclick="loadCategoryRoute('donghua')">Donghua</a></li>
-        <li><a class="nav-link" onclick="loadCategoryRoute('live')">Live TV</a></li>
-    </ul>
-
-    <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input type="text" id="searchInput" class="search-input" placeholder="Cari anime, drakor, film..." onkeyup="handleSearch(event)">
-    </div>
-</nav>
-
-<!-- HERO BANNER -->
-<section class="hero" id="heroBanner">
-    <div class="hero-content">
-        <div class="hero-badge"><i class="fa-solid fa-fire"></i> Official Streaming Platform</div>
-        <h1 class="hero-title" id="heroTitle">Selamat Datang di Rayliziie Stream</h1>
-        <p class="hero-desc" id="heroDesc">
-            Portal nonton anime, drama korea, donghua, dan film bioskop gratis tanpa iklan mengganggu, terhubung langsung melalui Indocast Proxy Gateway.
-        </p>
-        <div>
-            <button class="btn btn-primary" onclick="loadContent('all')">
-                <i class="fa-solid fa-arrows-rotate"></i> Muat Ulang Konten
-            </button>
-        </div>
-    </div>
-</section>
-
-<!-- MAIN MEDIA SECTIONS -->
-<main>
-    <section class="content-section">
-        <div class="section-header">
-            <h2 class="section-title"><i class="fa-solid fa-bolt"></i> Anime & Donghua Terbaru</h2>
-        </div>
-        <div class="media-grid" id="animeGrid"></div>
-    </section>
-
-    <section class="content-section">
-        <div class="section-header">
-            <h2 class="section-title"><i class="fa-solid fa-heart"></i> Drama Korea & Asia</h2>
-        </div>
-        <div class="media-grid" id="drakorGrid"></div>
-    </section>
-
-    <section class="content-section">
-        <div class="section-header">
-            <h2 class="section-title"><i class="fa-solid fa-film"></i> Film Bioskop & Trending</h2>
-        </div>
-        <div class="media-grid" id="filmsGrid"></div>
-    </section>
-</main>
-
-<!-- STREAMING PLAYER & DETAIL MODAL -->
-<div class="modal" id="playerModal">
-    <div class="modal-container">
-        <div class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></div>
+    <!-- External Dependencies -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <style>
+        :root {
+            --bg-primary: #0a0c10;
+            --bg-secondary: #12161f;
+            --bg-card: #1a202c;
+            --accent-primary: #E50914; 
+            --accent-secondary: #FF6B00; 
+            --text-main: #ffffff;
+            --text-muted: #a0aec0;
+            --border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-primary); color: var(--text-main); padding-top: 100px; }
+
+        /* Status & Config */
+        .config-bar { position: fixed; top: 0; width: 100%; background: #111827; padding: 8px 4%; display: flex; align-items: center; justify-content: space-between; z-index: 1002; border-bottom: 1px solid var(--border-color); }
+        .config-input { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); padding: 4px 10px; color: #4ade80; border-radius: 4px; width: 300px; font-family: monospace; font-size: 0.8rem; }
+        .status-pill { padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid #4ade80; }
+        .status-pill.error { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: #ef4444; }
+
+        /* Navbar */
+        .navbar { position: fixed; top: 40px; width: 100%; height: 60px; background: rgba(10, 12, 16, 0.95); backdrop-filter: blur(12px); display: flex; align-items: center; padding: 0 4%; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        .logo-text { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.2rem; }
+        .logo-text span { background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        <div class="player-wrapper" id="playerWrapper">
-            <!-- Dynamic Native Video Player or Iframe Embed -->
-            <video id="hlsVideoPlayer" controls autoplay style="display:none; width:100%; height:100%;"></video>
-            <iframe id="embedIframe" src="" allowfullscreen style="display:none;"></iframe>
+        /* Grid */
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; padding: 20px 4%; }
+        .media-card { background: var(--bg-card); border-radius: 8px; overflow: hidden; cursor: pointer; border: 1px solid var(--border-color); transition: all 0.2s; }
+        .media-card:hover { transform: translateY(-5px); border-color: var(--accent-primary); }
+        .poster-wrapper { position: relative; padding-top: 140%; background: #2d3748; }
+        .poster-img { position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover; }
+        .card-info { padding: 12px; }
+
+        /* Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; overflow-y: auto; }
+        .modal-container { max-width: 800px; margin: 50px auto; background: var(--bg-secondary); border-radius: 12px; overflow: hidden; }
+        .player-wrapper { width: 100%; padding-top: 56.25%; background: black; position: relative; }
+        .player-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+
+    <div class="config-bar">
+        <input type="text" id="apiWorkerUrl" class="config-input" placeholder="Masukkan Worker URL..." onchange="updateWorkerUrl()">
+        <div id="statusPill" class="status-pill">CHECKING</div>
+    </div>
+
+    <nav class="navbar">
+        <span class="logo-text">Rayliziie<span>Official</span></span>
+    </nav>
+
+    <main id="app-root">
+        <div style="padding: 100px 4% 20px;">
+            <h2><i class="fa-solid fa-fire" style="color:var(--accent-secondary);"></i> Rekomendasi Hari Ini</h2>
+            <div class="media-grid" id="mainGrid"></div>
         </div>
+    </main>
 
-        <div class="modal-body">
-            <h2 class="modal-title" id="modalTitle">Loading Content Title...</h2>
-
-            <div class="modal-tabs">
-                <div class="modal-tab active" id="tabEpBtn" onclick="switchModalTab('episodes')"><i class="fa-solid fa-list-ol"></i> Daftar Episode</div>
-                <div class="modal-tab" id="tabDlBtn" onclick="switchModalTab('downloads')"><i class="fa-solid fa-download"></i> Link Download</div>
-            </div>
-
-            <div id="episodesView">
-                <div class="episodes-grid" id="episodesGrid"></div>
-            </div>
-
-            <div id="downloadsView" style="display: none;">
-                <div class="download-list" id="downloadList"></div>
-            </div>
+    <div id="playerModal" class="modal">
+        <div class="modal-container">
+            <div class="player-wrapper"><video id="hlsPlayer" controls></video></div>
+            <div style="padding: 20px;"><h2 id="modalTitle">Loading...</h2></div>
+            <button onclick="closePlayer()" style="position:absolute; top:20px; right:20px; background:rgba(0,0,0,0.5); border:none; color:white; padding:10px 15px; border-radius:50%; cursor:pointer;">&times;</button>
         </div>
     </div>
-</div>
 
-<!-- ====================================================================
-     LIVE DYNAMIC API INTEGRATION LOGIC
-     ==================================================================== -->
-<script>
-    // Default Gateway URL Storage
-    let GATEWAY_URL = localStorage.getItem('RAYLIZIIE_GATEWAY_URL') || 'https://indocast-proxy.yourdomain.workers.dev';
-    document.getElementById('gatewayUrlInput').value = GATEWAY_URL;
+    <script>
+        const state = { hls: null };
 
-    let hlsPlayer = null;
-
-    function saveGatewayUrl() {
-        const inputVal = document.getElementById('gatewayUrlInput').value.trim().replace(/\/$/, "");
-        if (inputVal) {
-            GATEWAY_URL = inputVal;
-            localStorage.setItem('RAYLIZIIE_GATEWAY_URL', GATEWAY_URL);
-            alert("URL Gateway berhasil diperbarui!");
-            loadContent('all');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        loadContent('all');
-    });
-
-    // 1. Fetch Real Data from Worker Proxy
-    async function loadContent(type) {
-        showSkeletons();
-
-        try {
-            // Parallel Requests to Proxy Categories
-            const [animeRes, drakorRes, filmsRes] = await Promise.allSettled([
-                fetch(`${GATEWAY_URL}/anime/home`),
-                fetch(`${GATEWAY_URL}/drakor/tab`),
-                fetch(`${GATEWAY_URL}/films/home`)
-            ]);
-
-            if (animeRes.status === 'fulfilled' && animeRes.value.ok) {
-                const data = await animeRes.value.json();
-                renderGrid('animeGrid', parseApiResponse(data, 'animekompi'), 'animekompi');
-            } else {
-                renderFallbackGrid('animeGrid', 'anime');
-            }
-
-            if (drakorRes.status === 'fulfilled' && drakorRes.value.ok) {
-                const data = await drakorRes.value.json();
-                renderGrid('drakorGrid', parseApiResponse(data, 'dramovnime'), 'dramovnime');
-            } else {
-                renderFallbackGrid('drakorGrid', 'drakor');
-            }
-
-            if (filmsRes.status === 'fulfilled' && filmsRes.value.ok) {
-                const data = await filmsRes.value.json();
-                renderGrid('filmsGrid', parseApiResponse(data, 'filmbox'), 'filmbox');
-            } else {
-                renderFallbackGrid('filmsGrid', 'films');
-            }
-
-        } catch (err) {
-            console.error("Failed fetching live API:", err);
-            document.getElementById('connectionStatus').innerHTML = '<i class="fa-solid fa-circle-exclamation" style="color:#ef4444"></i> Reconnecting / Fallback';
-        }
-    }
-
-    // Show Skeleton Loading Cards
-    function showSkeletons() {
-        const skeletonHTML = Array(6).fill('<div class="skeleton"></div>').join('');
-        document.getElementById('animeGrid').innerHTML = skeletonHTML;
-        document.getElementById('drakorGrid').innerHTML = skeletonHTML;
-        document.getElementById('filmsGrid').innerHTML = skeletonHTML;
-    }
-
-    // Standardize API Array Responses
-    function parseApiResponse(json, provider) {
-        let list = [];
-        if (Array.isArray(json)) list = json;
-        else if (json.data && Array.isArray(json.data)) list = json.data;
-        else if (json.results && Array.isArray(json.results)) list = json.results;
-        else if (json.anime && Array.isArray(json.anime)) list = json.anime;
-
-        return list.map(item => ({
-            id: item.id || item.slug || item.url || item.title,
-            title: item.title || item.name || item.subject || 'Untitled',
-            img: item.poster || item.cover || item.image || item.thumbnail || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400',
-            rating: item.rating || item.score || '8.5',
-            ep: item.episode || item.episodes || item.type || 'HD'
-        }));
-    }
-
-    // Render Media Grid Cards
-    function renderGrid(containerId, items, provider) {
-        const container = document.getElementById(containerId);
-        if (!items || items.length === 0) {
-            container.innerHTML = '<p style="color:var(--text-muted)">Tidak ada konten ditemukan.</p>';
-            return;
+        function updateWorkerUrl() {
+            const url = document.getElementById('apiWorkerUrl').value;
+            localStorage.setItem('rayliziie_worker', url);
+            initApp();
         }
 
-        container.innerHTML = items.map(item => `
-            <div class="media-card" onclick="openMediaDetail('${provider}', '${encodeURIComponent(item.id)}')">
-                <div class="poster-wrapper">
-                    <img src="${item.img}" class="poster-img" alt="${item.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400'">
-                    <div class="card-badge"><i class="fa-solid fa-star"></i> ${item.rating}</div>
-                    <div class="sub-badge">Sub Indo</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-title">${item.title}</div>
-                    <div class="card-sub">
-                        <span>${item.ep}</span>
-                        <span>1080p</span>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-    }
+        function getApiUrl() {
+            return localStorage.getItem('rayliziie_worker') || 'https://your-worker-url.workers.dev';
+        }
 
-    // 2. Open Media Detail & Fetch Episodes Dynamic
-    async function openMediaDetail(provider, contentId) {
-        const modal = document.getElementById('playerModal');
-        document.getElementById('modalTitle').innerText = 'Memuat Informasi Content...';
-        document.getElementById('episodesGrid').innerHTML = '<p>Sedang mengambil daftar episode dari server...</p>';
-        modal.classList.add('active');
-
-        try {
-            const subpath = provider === 'dramovnime' ? `/detaildata?id=${contentId}` : `/detail?id=${contentId}`;
-            const res = await fetch(`${GATEWAY_URL}/${provider}${subpath}`);
+        async function fetchApi(endpoint) {
+            const pill = document.getElementById('statusPill');
+            const url = getApiUrl() + endpoint;
             
-            if (res.ok) {
-                const detail = await res.json();
-                document.getElementById('modalTitle').innerText = detail.title || detail.name || decodeURIComponent(contentId);
+            // Validation
+            if (getApiUrl().includes('your-worker-url')) {
+                pill.className = 'status-pill error';
+                pill.innerText = 'URL NOT CONFIGURED';
+                return null;
+            }
+
+            try {
+                pill.innerText = 'LOADING...';
+                pill.className = 'status-pill';
                 
-                // Populate Episodes
-                let epList = detail.episodes || detail.episode_list || [];
-                if (epList.length === 0) {
-                    epList = [{ id: contentId, episode: '1', title: 'Full Movie / Stream' }];
-                }
-
-                document.getElementById('episodesGrid').innerHTML = epList.map((ep, idx) => `
-                    <div class="episode-card ${idx === 0 ? 'active' : ''}" onclick="playStream('${provider}', '${encodeURIComponent(ep.id || contentId)}')">
-                        <span class="ep-num">Episode ${ep.episode || ep.num || (idx + 1)}</span>
-                        <span class="ep-title">Sub Indo</span>
-                    </div>
-                `).join('');
-
-                // Play Episode 1 Auto
-                if (epList[0]) playStream(provider, encodeURIComponent(epList[0].id || contentId));
-            } else {
-                playStream(provider, contentId);
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                
+                const data = await res.json();
+                pill.innerText = 'ONLINE';
+                return data;
+            } catch (e) {
+                console.error("Fetch Error:", e);
+                pill.innerText = 'ERROR';
+                pill.className = 'status-pill error';
+                return null;
             }
-        } catch (e) {
-            playStream(provider, contentId);
         }
-    }
 
-    // 3. Play Video Stream (HLS.js / Embed Pass-Through)
-    async function playStream(provider, episodeId) {
-        const videoEl = document.getElementById('hlsVideoPlayer');
-        const iframeEl = document.getElementById('embedIframe');
+        async function initApp() {
+            const data = await fetchApi('/anime/home');
+            if(data && data.results) renderGrid(data.results);
+            else {
+                document.getElementById('mainGrid').innerHTML = '<p style="padding:20px; color:var(--text-muted);">Gagal memuat data. Periksa Worker URL Anda di atas.</p>';
+            }
+        }
 
-        try {
-            const playEndpoint = provider === 'dramovnime' || provider === 'filmbox' ? `/getplay?id=${episodeId}` : `/play?id=${episodeId}`;
-            const res = await fetch(`${GATEWAY_URL}/${provider}${playEndpoint}`);
+        function renderGrid(items) {
+            const grid = document.getElementById('mainGrid');
+            grid.innerHTML = items.map(item => `
+                <div class="media-card" onclick="playMedia('${item.id}', '${item.title}')">
+                    <div class="poster-wrapper"><img src="${item.thumb || 'https://placehold.co/300x450'}" class="poster-img"></div>
+                    <div class="card-info"><h4 class="card-title">${item.title}</h4></div>
+                </div>
+            `).join('');
+        }
+
+        function playMedia(id, title) {
+            const modal = document.getElementById('playerModal');
+            document.getElementById('modalTitle').innerText = title;
+            modal.style.display = 'block';
             
-            if (res.ok) {
-                const streamData = await res.json();
-                const streamUrl = streamData.url || streamData.stream || streamData.file || streamData.m3u8;
-
-                if (streamUrl && streamUrl.includes('.m3u8')) {
-                    iframeEl.style.display = 'none';
-                    videoEl.style.display = 'block';
-
-                    if (Hls.isSupported()) {
-                        if (hlsPlayer) hlsPlayer.destroy();
-                        hlsPlayer = new Hls();
-                        hlsPlayer.loadSource(streamUrl);
-                        hlsPlayer.attachMedia(videoEl);
-                    } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
-                        videoEl.src = streamUrl;
-                    }
-                } else {
-                    // Fallback Iframe Embed
-                    videoEl.style.display = 'none';
-                    iframeEl.style.display = 'block';
-                    iframeEl.src = streamUrl || `https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1`;
-                }
-
-                // Populate Downloads
-                const downloads = streamData.downloads || streamData.download_links || [
-                    { quality: '1080p Full HD', url: streamUrl || '#' },
-                    { quality: '720p HD Standard', url: streamUrl || '#' }
-                ];
-
-                document.getElementById('downloadList').innerHTML = downloads.map(dl => `
-                    <div class="download-item">
-                        <div><strong>${dl.quality || 'HD MP4'}</strong> - Stream Server</div>
-                        <a href="${dl.url}" target="_blank" class="btn btn-primary" style="padding:4px 12px; font-size:0.8rem;"><i class="fa-solid fa-download"></i> Download</a>
-                    </div>
-                `).join('');
+            const video = document.getElementById('hlsPlayer');
+            const streamUrl = getApiUrl() + `/play?id=${id}`; 
+            
+            if (Hls.isSupported()) {
+                if (state.hls) state.hls.destroy();
+                state.hls = new Hls();
+                state.hls.loadSource(streamUrl);
+                state.hls.attachMedia(video);
             }
-        } catch (err) {
-            console.error("Playback fetch error:", err);
+            video.play();
         }
-    }
 
-    function closeModal() {
-        document.getElementById('playerModal').classList.remove('active');
-        const videoEl = document.getElementById('hlsVideoPlayer');
-        videoEl.pause();
-        if (hlsPlayer) hlsPlayer.destroy();
-        document.getElementById('embedIframe').src = '';
-    }
-
-    function switchModalTab(tab) {
-        document.getElementById('tabEpBtn').classList.toggle('active', tab === 'episodes');
-        document.getElementById('tabDlBtn').classList.toggle('active', tab === 'downloads');
-        document.getElementById('episodesView').style.display = tab === 'episodes' ? 'block' : 'none';
-        document.getElementById('downloadsView').style.display = tab === 'downloads' ? 'block' : 'none';
-    }
-
-    function handleSearch(event) {
-        if (event.key === 'Enter') {
-            const query = event.target.value.trim();
-            if (query.length > 2) {
-                alert(`Mencari "${query}" langsung ke Proxy API Worker...`);
-            }
+        function closePlayer() {
+            document.getElementById('playerModal').style.display = 'none';
+            document.getElementById('hlsPlayer').pause();
         }
-    }
 
-    // Mock Fallback Generator if Local Test Without Backend Worker
-    function renderFallbackGrid(containerId, cat) {
-        const samples = [
-            { id: '1', title: `Sample ${cat} 1`, img: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400', rating: '9.5', ep: 'Ep 12' },
-            { id: '2', title: `Sample ${cat} 2`, img: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400', rating: '9.0', ep: 'Ep 8' }
-        ];
-        renderGrid(containerId, samples, cat);
-    }
-</script>
-
+        // Initialize on load
+        window.onload = () => {
+            const savedUrl = localStorage.getItem('rayliziie_worker');
+            if (savedUrl) document.getElementById('apiWorkerUrl').value = savedUrl;
+            initApp();
+        };
+    </script>
 </body>
 </html>
