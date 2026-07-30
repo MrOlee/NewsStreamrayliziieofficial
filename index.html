@@ -3,271 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raylizii - Streaming Tanpa Batas</title>
-    
-    <!-- Google Fonts untuk tampilan modern -->
+    <title>Raylizii - Streaming</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
     <style>
-        /* ================================================================
-               RESET & BASIC STYLES
-            ================================================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* --- GLOBAL STYLING --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-color: #0f0f11;
             color: #ffffff;
             font-family: 'Inter', sans-serif;
-            padding-bottom: 80px; /* Space untuk bottom nav */
+            padding-bottom: 80px;
         }
+        a { text-decoration: none; color: inherit; }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* ================================================================
-               HEADER / NAVBAR
-            ================================================================ */
+        /* --- HEADER --- */
         .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: #1a1a1d;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; background-color: #1a1a1d;
+            position: sticky; top: 0; z-index: 100;
             border-bottom: 1px solid #2a2a2e;
         }
+        .brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
+        .brand-icon { color: #ff3b3b; }
+        .brand-badge { background: #ff3b3b; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+        .search-btn { background: #2a2a2e; border: none; color: #aaa; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .brand-icon {
-            color: #ff3b3b;
-        }
-
-        .brand-badge {
-            background: #ff3b3b;
-            color: white;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .search-btn {
-            background: #2a2a2e;
-            border: none;
-            color: #aaa;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        /* ================================================================
-               HERO SECTION
-            ================================================================ */
+        /* --- HERO BANNER --- */
         .hero-banner {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            margin: 15px;
-            padding: 25px;
-            border-radius: 16px;
-            position: relative;
-            overflow: hidden;
+            margin: 15px; padding: 25px; border-radius: 16px;
+            position: relative; overflow: hidden;
         }
+        .hero-badge { display: inline-block; background: #ff3b3b; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 12px; }
+        .hero-title { font-size: 28px; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
+        .hero-subtitle { color: #b0b0b0; font-size: 14px; margin-bottom: 20px; }
+        .hero-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 20px; font-size: 12px; color: #ccc; border: 1px solid rgba(255, 255, 255, 0.05); }
 
-        .hero-badge {
-            display: inline-block;
-            background: #ff3b3b;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
+        /* --- SECTION HEADER --- */
+        .section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; margin-top: 25px; margin-bottom: 15px; }
+        .section-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .section-link { font-size: 14px; color: #888; cursor: pointer; }
+        .section-link:hover { color: #fff; }
 
-        .hero-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            color: #b0b0b0;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .hero-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .hero-tag {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: #ccc;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* ================================================================
-               SECTION HEADER
-            ================================================================ */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-link {
-            font-size: 14px;
-            color: #888;
-            cursor: pointer;
-        }
-        
-        .section-link:hover {
-            color: #fff;
-        }
-
-        /* ================================================================
-               CARD GRID / CONTAINER (Tempat Error Dulu)
-            ================================================================ */
+        /* --- CARD CONTAINER & CARD STYLES --- */
         .card-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 15px;
             padding: 0 20px;
         }
-
-        /* ================================================================
-               INDIVIDUAL CARD STYLES
-            ================================================================ */
         .movie-card {
-            background-color: #1a1a1d;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.2s;
-            cursor: pointer;
-            border: 1px solid #252529;
+            background-color: #1a1a1d; border-radius: 12px; overflow: hidden;
+            transition: transform 0.2s; cursor: pointer; border: 1px solid #252529;
         }
+        .movie-card:hover { transform: translateY(-5px); border-color: #ff3b3b; }
+        .card-image-container { width: 100%; aspect-ratio: 2/3; overflow: hidden; background: #2a2a2e; position: relative; }
+        .card-image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .card-info { padding: 10px; }
+        .card-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+        .card-subtitle { font-size: 12px; color: #777; }
 
-        .movie-card:hover {
-            transform: translateY(-5px);
-            border-color: #ff3b3b;
-        }
-
-        .card-image-container {
-            width: 100%;
-            aspect-ratio: 2/3;
-            overflow: hidden;
-            background: #2a2a2e;
-            position: relative;
-        }
-
-        .card-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .card-info {
-            padding: 10px;
-        }
-
-        .card-title {
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 4px;
-        }
-
-        .card-subtitle {
-            font-size: 12px;
-            color: #777;
-        }
-
-        /* ================================================================
-               FOOTER / BOTTOM NAV
-            ================================================================ */
+        /* --- FOOTER --- */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #1a1a1d;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            border-top: 1px solid #2a2a2e;
-            z-index: 100;
+            position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1a1a1d;
+            display: flex; justify-content: space-around; padding: 10px 0;
+            border-top: 1px solid #2a2a2e; z-index: 100;
         }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #777; cursor: pointer; }
+        .nav-item.active { color: #ff3b3b; }
+        .nav-icon { font-size: 20px; margin-bottom: 4px; }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 10px;
-            color: #777;
-            cursor: pointer;
+        /* --- RESPONSIVE --- */
+        @media (min-width: 600px) { .card-container { grid-template-columns: repeat(4, 1fr); } }
+        @media (min-width: 1024px) { .card-container { grid-template-columns: repeat(6, 1fr); } }
+        
+        /* --- CSS FOR FALLBACK IMAGE (Mengganti via.placeholder.com yang Error 503) --- */
+        .fallback-image-box {
+            width: 100%; height: 100%; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; background: #2a2a2e;
+            color: #888; font-size: 14px; font-weight: bold; text-align: center; padding: 10px;
         }
-
-        .nav-item.active {
-            color: #ff3b3b;
-        }
-
-        .nav-icon {
-            font-size: 20px;
-            margin-bottom: 4px;
-        }
-
-        /* ================================================================
-               RESPONSIVE ADJUSTMENTS
-            ================================================================ */
-        @media (min-width: 600px) {
-            .card-container {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .card-container {
-                grid-template-columns: repeat(6, 1fr);
-            }
-        }
+        .fallback-image-box span { font-size: 12px; font-weight: normal; color: #555; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <!-- 1. HEADER -->
+    <!-- HEADER -->
     <header class="app-header">
         <div class="brand">
             <span class="brand-icon">▶</span> Raylizii <span class="brand-badge">PRO</span>
@@ -275,7 +97,7 @@
         <button class="search-btn">🔍</button>
     </header>
 
-    <!-- 2. HERO BANNER -->
+    <!-- HERO BANNER -->
     <section class="hero-banner">
         <div class="hero-badge">🔥 TRENDING</div>
         <h1 class="hero-title">Streaming Tanpa Batas</h1>
@@ -287,112 +109,79 @@
         </div>
     </section>
 
-    <!-- 3. SECTION TRENDING -->
+    <!-- SECTION 1: TRENDING -->
     <section>
         <div class="section-header">
             <h2 class="section-title">🔥 Trending</h2>
             <span class="section-link">Lihat semua</span>
         </div>
-        <!-- TEMPAT KARTU AKAN DIMASUKKAN OLEH JAVASCRIPT -->
         <div id="trending-container" class="card-container">
-            <!-- Loading indicator sementara -->
-            <div style="grid-column: 1/-1; text-align: center; color: #888; padding: 20px;">
-                Memuat data trending...
-            </div>
+            <!-- Loading Indicator -->
+            <div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div>
         </div>
     </section>
 
-    <!-- 4. SECTION ANIME -->
+    <!-- SECTION 2: ANIME -->
     <section>
         <div class="section-header">
             <h2 class="section-title">📺 Anime</h2>
             <span class="section-link">Lihat semua</span>
         </div>
         <div id="anime-container" class="card-container">
-            <div style="grid-column: 1/-1; text-align: center; color: #888; padding: 20px;">
-                Memuat data anime...
-            </div>
+            <div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div>
         </div>
     </section>
 
-    <!-- 5. SECTION DRAMA KOREA -->
+    <!-- SECTION 3: DRAMA KOREA -->
     <section>
         <div class="section-header">
             <h2 class="section-title">🇰🇷 Drama Korea</h2>
             <span class="section-link">Lihat semua</span>
         </div>
         <div id="drama-container" class="card-container">
-            <div style="grid-column: 1/-1; text-align: center; color: #888; padding: 20px;">
-                Memuat data drama...
-            </div>
+            <div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div>
         </div>
     </section>
 
-    <!-- 6. BOTTOM NAVIGATION -->
+    <!-- FOOTER -->
     <nav class="bottom-nav">
-        <div class="nav-item active">
-            <span class="nav-icon">🏠</span>
-            Beranda
-        </div>
-        <div class="nav-item">
-            <span class="nav-icon">📺</span>
-            Anime
-        </div>
-        <div class="nav-item">
-            <span class="nav-icon">🎬</span>
-            Drama
-        </div>
-        <div class="nav-item">
-            <span class="nav-icon">🎥</span>
-            Film
-        </div>
-        <div class="nav-item">
-            <span class="nav-icon">📡</span>
-            TV Live
-        </div>
+        <div class="nav-item active"><span class="nav-icon">🏠</span>Beranda</div>
+        <div class="nav-item"><span class="nav-icon">📺</span>Anime</div>
+        <div class="nav-item"><span class="nav-icon">🎬</span>Drama</div>
+        <div class="nav-item"><span class="nav-icon">🎥</span>Film</div>
+        <div class="nav-item"><span class="nav-icon">📡</span>TV Live</div>
     </nav>
 
 
-    <!-- ================================================================
-    JAVASCRIPT (LOGIKA DIPERBAIKI)
-    ================================================================ -->
+    <!-- ============================================================== -->
+    <!-- JAVASCRIPT - LOGIKA PENANGANAN ERROR 100% DIPERBAIKI           -->
+    <!-- ============================================================== -->
     <script>
-        // ============================================================
-        // 1. KONFIGURASI MOCK API (Ganti dengan URL API Asli Anda)
-        // ============================================================
-        // Karena saya tidak punya akses API asli Anda, saya buat data dummy
-        // agar halaman ini bisa langsung muncul tanpa error saat Anda tes.
-        // GANTI 'API_URL' dengan endpoint Anda yang sebenarnya.
-        const API_URL = 'https://api.example.com/data'; 
-
-        // Data Dummy (Jika API gagal, ini akan dipakai)
-        const MOCK_DATA = {
+        // --- KONFIGURASI ---
+        // GANTI URL INI DENGAN API ASLI ANDA
+        const YOUR_API_URL = 'https://api-rayliziie.rayyankrens0304.workers.dev/'; 
+        
+        // --- DATA DUMMY (Cadangan jika API Anda error atau kosong) ---
+        const FALLBACK_DATA = {
             trending: [
-                { id: 1, title: "Demon Slayer", image: "https://placehold.co/300x450/2d2d2d/ff3b3b?text=DS", type: "Anime" },
-                { id: 2, title: "Stranger Things", image: "https://placehold.co/300x450/2d2d2d/ff3b3b?text=ST", type: "Series" },
-                { id: 3, title: "The Glory", image: "https://placehold.co/300x450/2d2d2d/ff3b3b?text=Glory", type: "Drama" },
-                { id: 4, title: "Avatar 2", image: "https://placehold.co/300x450/2d2d2d/ff3b3b?text=Avatar", type: "Movie" },
+                { id: 1, title: "Judul Trending 1", image: null, type: "Movie" }, // null sengaja dibuat untuk tes error handler
+                { id: 2, title: "Judul Trending 2", image: "/path/to/img.jpg", type: "Series" },
             ],
-            anime: [
-                { id: 5, title: "Jujutsu Kaisen", image: "https://placehold.co/300x450/1a1a2e/00d2ff?text=JJK", type: "Anime" },
-                { id: 6, title: "One Piece", image: "https://placehold.co/300x450/1a1a2e/00d2ff?text=OP", type: "Anime" },
-            ],
-            drama: [
-                { id: 7, title: "Queen of Tears", image: "https://placehold.co/300x450/1a1a2e/ffd700?text=QOT", type: "K-Drama" },
-                { id: 8, title: "Vincenzo", image: "https://placehold.co/300x450/1a1a2e/ffd700?text=Vincenzo", type: "K-Drama" },
-            ]
+            anime: [{ id: 3, title: "Anime Populer", image: null, type: "Anime" }],
+            drama: [{ id: 4, title: "Drama Korea Baru", image: null, type: "K-Drama" }]
         };
 
-        // ============================================================
-        // 2. FUNGSI UTAMA: getImage (Memperbaiki Error)
-        // ============================================================
+        // ===============================================================
+        // 1. getImage (FIX UTAMA: MEMPERBAIKI ERROR url.startsWith)
+        // ===============================================================
         function getImage(url) {
-            // CEK KEAMANAN: Jika url null/undefined/bukan string, pakai default
+            // LAPIS PERTAHANAN PERTAMA:
+            // Jika URL kosong/null/undefined, atau BUKAN string -> JANGAN panggil .startsWith()
             if (!url || typeof url !== 'string') {
-                return 'https://placehold.co/300x450/1a1a1a/FFFFFF?text=No+Image';
+                return null; // Kembalikan null agar fallback gambar dipicu
             }
 
-            // Logika asli Anda (misal menangani relative path)
+            // Logika asli Anda hanya akan berjalan jika url BENAR-BENAR string
             if (url.startsWith('/')) {
                 return window.location.origin + url;
             }
@@ -400,26 +189,37 @@
             return url;
         }
 
-        // ============================================================
-        // 3. FUNGSI PEMBUAT KARTU (createCard)
-        // ============================================================
+        // ===============================================================
+        // 2. createCard (Menggunakan DOM element agar aman)
+        // ===============================================================
         function createCard(item) {
-            const title = item.title || item.name || 'Judul Tidak Diketahui';
-            const imageUrl = item.image || item.poster || item.poster_path || '';
+            if (!item) return document.createElement('div'); // Kembalikan kosong jika data null
+
+            const title = item.title || item.name || 'Tanpa Judul';
+            const rawImage = item.image || item.poster || item.poster_path || null;
             
+            // Dapatkan URL gambar yang sudah di-filter
+            const safeImageUrl = getImage(rawImage);
+
             const card = document.createElement('div');
             card.className = 'movie-card';
 
-            // Masukkan gambar menggunakan getImage() yang sudah aman
-            // Tambahkan onerror untuk menangani gambar rusak
+            // --- LOGIKA GAMBAR ---
+            let imageHtml = '';
+            
+            // Jika URL gambar valid
+            if (safeImageUrl) {
+                // Perhatikan onerror: Jika gambar dari API mati (seperti 503), ini akan memicu fallback
+                imageHtml = `<img src="${safeImageUrl}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML=\`<div class='fallback-image-box'>🖼️<br>Gambar Error<span>Fallback Lokal</span></div>\`;">`;
+            } 
+            // Jika URL gambar null atau rusak sejak awal
+            else {
+                imageHtml = `<div class="fallback-image-box">🖼️<br>Tidak Ada Gambar<span>Fallback Lokal</span></div>`;
+            }
+
             card.innerHTML = `
                 <div class="card-image-container">
-                    <img 
-                        src="${getImage(imageUrl)}" 
-                        alt="${title}" 
-                        loading="lazy"
-                        onerror="this.onerror=null; this.src='https://placehold.co/300x450/1a1a1a/FFFFFF?text=Error';"
-                    >
+                    ${imageHtml}
                 </div>
                 <div class="card-info">
                     <h3 class="card-title">${title}</h3>
@@ -430,77 +230,75 @@
             return card;
         }
 
-        // ============================================================
-        // 4. FUNGSI RENDER (renderRow)
-        // ============================================================
+        // ===============================================================
+        // 3. renderRow (Membuat kartu di dalam HTML)
+        // ===============================================================
         function renderRow(containerId, items) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            
-            // Jika data kosong, tampilkan pesan
-            if (!items || items.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">Tidak ada data.</div>`;
-                return;
-            }
 
             // Kosongkan container
             container.innerHTML = '';
 
-            // Loop dan buat kartu
+            // Validasi Data: Jika items bukan array, atau kosong
+            if (!items || !Array.isArray(items) || items.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">📭 Tidak ada data untuk ditampilkan.</div>`;
+                return;
+            }
+
+            // Loop data dan masukkan ke DOM
             items.forEach(item => {
                 if (item) {
-                    container.appendChild(createCard(item));
+                    const card = createCard(item);
+                    container.appendChild(card);
                 }
             });
         }
 
-        // ============================================================
-        // 5. FUNGSI LOAD DATA (loadSection)
-        // ============================================================
-        async function loadSection(sectionId, mockKey) {
+        // ===============================================================
+        // 4. loadData (Mengambil data dari API)
+        // ===============================================================
+        async function loadData(sectionId, fallbackKey) {
             const container = document.getElementById(sectionId);
             
             try {
-                // Coba fetch API asli
-                const response = await fetch(API_URL);
+                // Coba fetch API
+                const response = await fetch(YOUR_API_URL);
                 
-                if (!response.ok) throw new Error("Gagal fetch API");
-
+                if (!response.ok) throw new Error(`HTTP Status: ${response.status}`);
+                
                 const result = await response.json();
                 
-                // Logika ambil data (sesuaikan dengan struktur JSON API Anda)
-                // Asumsi data ada di result.data
-                let data = result.data || result.results || result;
+                // SESUAIKAN BAGIAN INI DENGAN STRUKTUR JSON API ANDA
+                // Misal: let items = result.data; atau let items = result.results;
+                let items = result.data || result.results || result; 
 
-                // Jika data bukan array, ubah ke array
-                if (!Array.isArray(data)) data = [data];
+                // Jika items bukan array, ubah menjadi array
+                if (!Array.isArray(items)) items = [items];
 
-                // Filter data khusus untuk section ini (Opsional, tergantung API)
-                // Di sini saya langsung render semua data yang didapat
-                renderRow(sectionId, data);
+                renderRow(sectionId, items);
 
             } catch (error) {
-                console.warn(`API gagal untuk ${sectionId}, memakai data dummy.`, error);
+                console.warn(`Gagal fetch API untuk ${sectionId}:`, error.message);
                 
-                // FALLBACK: Jika API gagal, pakai data dummy agar tidak kosong
-                if (MOCK_DATA[mockKey]) {
-                    renderRow(sectionId, MOCK_DATA[mockKey]);
+                // JIKA API GAGAL -> PAKAI DATA FALLBACK (Dummy) AGAR SITUS TIDAK KOSONG
+                if (FALLBACK_DATA[fallbackKey]) {
+                    renderRow(sectionId, FALLBACK_DATA[fallbackKey]);
                 } else {
-                    container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ff6b6b; padding: 20px;">Error: ${error.message}</div>`;
+                    container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ff6b6b; padding: 20px;">⚠️ Gagal memuat data: ${error.message}</div>`;
                 }
             }
         }
 
-        // ============================================================
-        // 6. JALANKAN SAAT HALAMAN DIMUAT
-        // ============================================================
+        // ===============================================================
+        // 5. EKSEKUSI SAAT HALAMAN SIAP
+        // ===============================================================
         document.addEventListener('DOMContentLoaded', () => {
-            // Load setiap section
-            loadSection('trending-container', 'trending');
-            loadSection('anime-container', 'anime');
-            loadSection('drama-container', 'drama');
+            // Panggil fungsi load untuk setiap section
+            loadData('trending-container', 'trending');
+            loadData('anime-container', 'anime');
+            loadData('drama-container', 'drama');
         });
     </script>
-
 </body>
 </html>
