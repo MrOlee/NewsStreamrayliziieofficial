@@ -3,35 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raylizii - Streaming Tanpa Batas</title>
+    <title>Raylizii - Streaming</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- GLOBAL STYLING --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #0f0f11; color: #ffffff; font-family: 'Inter', sans-serif; padding-bottom: 80px; }
         a { text-decoration: none; color: inherit; }
-
-        /* --- HEADER --- */
         .app-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background-color: #1a1a1d; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #2a2a2e; }
         .brand { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
         .brand-icon { color: #ff3b3b; }
         .brand-badge { background: #ff3b3b; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; }
         .search-btn { background: #2a2a2e; border: none; color: #aaa; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
-
-        /* --- HERO BANNER --- */
         .hero-banner { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); margin: 15px; padding: 25px; border-radius: 16px; position: relative; overflow: hidden; }
         .hero-badge { display: inline-block; background: #ff3b3b; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 12px; }
         .hero-title { font-size: 28px; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
         .hero-subtitle { color: #b0b0b0; font-size: 14px; margin-bottom: 20px; }
         .hero-tags { display: flex; gap: 10px; flex-wrap: wrap; }
         .hero-tag { background: rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 20px; font-size: 12px; color: #ccc; border: 1px solid rgba(255, 255, 255, 0.05); }
-
-        /* --- SECTION HEADER --- */
         .section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; margin-top: 25px; margin-bottom: 15px; }
         .section-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
         .section-link { font-size: 14px; color: #888; cursor: pointer; }
-
-        /* --- CARD CONTAINER & STYLES --- */
         .card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 0 20px; }
         .movie-card { background-color: #1a1a1d; border-radius: 12px; overflow: hidden; transition: transform 0.2s; cursor: pointer; border: 1px solid #252529; }
         .movie-card:hover { transform: translateY(-5px); border-color: #ff3b3b; }
@@ -40,32 +31,21 @@
         .card-info { padding: 10px; }
         .card-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
         .card-subtitle { font-size: 12px; color: #777; }
-
-        /* --- FALLBACK IMAGE LOKAL (Menggantikan via.placeholder.com) --- */
         .fallback-box { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #252529; color: #888; font-size: 14px; font-weight: bold; text-align: center; padding: 20px; }
         .fallback-box span { font-size: 12px; font-weight: normal; color: #555; margin-top: 5px; }
-
-        /* --- FOOTER --- */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1a1a1d; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #2a2a2e; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #777; cursor: pointer; }
         .nav-item.active { color: #ff3b3b; }
         .nav-icon { font-size: 20px; margin-bottom: 4px; }
-
         @media (min-width: 600px) { .card-container { grid-template-columns: repeat(4, 1fr); } }
         @media (min-width: 1024px) { .card-container { grid-template-columns: repeat(6, 1fr); } }
     </style>
 </head>
 <body>
-
-    <!-- HEADER -->
     <header class="app-header">
-        <div class="brand">
-            <span class="brand-icon">▶</span> Raylizii <span class="brand-badge">PRO</span>
-        </div>
+        <div class="brand"><span class="brand-icon">▶</span> Raylizii <span class="brand-badge">PRO</span></div>
         <button class="search-btn">🔍</button>
     </header>
-
-    <!-- HERO -->
     <section class="hero-banner">
         <div class="hero-badge">🔥 TRENDING</div>
         <h1 class="hero-title">Streaming Tanpa Batas</h1>
@@ -76,41 +56,18 @@
             <span class="hero-tag">4K UHD</span>
         </div>
     </section>
-
-    <!-- SECTION TRENDING -->
     <section>
-        <div class="section-header">
-            <h2 class="section-title">🔥 Trending</h2>
-            <span class="section-link">Lihat semua</span>
-        </div>
-        <div id="trending-container" class="card-container">
-            <div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div>
-        </div>
+        <div class="section-header"><h2 class="section-title">🔥 Trending</h2><span class="section-link">Lihat semua</span></div>
+        <div id="trending-container" class="card-container"><div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div></div>
     </section>
-
-    <!-- SECTION ANIME -->
     <section>
-        <div class="section-header">
-            <h2 class="section-title">📺 Anime</h2>
-            <span class="section-link">Lihat semua</span>
-        </div>
-        <div id="anime-container" class="card-container">
-            <div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div>
-        </div>
+        <div class="section-header"><h2 class="section-title">📺 Anime</h2><span class="section-link">Lihat semua</span></div>
+        <div id="anime-container" class="card-container"><div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div></div>
     </section>
-
-    <!-- SECTION DRAMA -->
     <section>
-        <div class="section-header">
-            <h2 class="section-title">🇰🇷 Drama Korea</h2>
-            <span class="section-link">Lihat semua</span>
-        </div>
-        <div id="drama-container" class="card-container">
-            <div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div>
-        </div>
+        <div class="section-header"><h2 class="section-title">🇰🇷 Drama Korea</h2><span class="section-link">Lihat semua</span></div>
+        <div id="drama-container" class="card-container"><div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div></div>
     </section>
-
-    <!-- FOOTER -->
     <nav class="bottom-nav">
         <div class="nav-item active"><span class="nav-icon">🏠</span>Beranda</div>
         <div class="nav-item"><span class="nav-icon">📺</span>Anime</div>
@@ -119,50 +76,17 @@
         <div class="nav-item"><span class="nav-icon">📡</span>TV Live</div>
     </nav>
 
-
-    <!-- ============================================================== -->
-    <!-- JAVASCRIPT UTAMA (HARUS ADA DI SINI, BUKAN DI sw.js)            -->
-    <!-- ============================================================== -->
     <script>
-        // --- KONFIGURASI API ---
-        // GANTI URL INI DENGAN API ASLI ANDA
-        const API_URL = 'https://api-rayliziie.rayyankrens0304.workers.dev/'; 
+        // GANTI URL INI
+        const API_URL = 'https://api-rayliziie.rayyankrens0304.workers.dev'; 
 
-        // --- DATA CADANGAN (Jika API Gagal, ini akan muncul agar tidak kosong) ---
-        const FALLBACK_DATA = {
-            trending: [
-                { id: 1, title: "Demon Slayer", image: null, type: "Anime" },
-                { id: 2, title: "Stranger Things", image: null, type: "Series" },
-                { id: 3, title: "The Glory", image: null, type: "K-Drama" },
-            ],
-            anime: [
-                { id: 4, title: "Jujutsu Kaisen", image: null, type: "Anime" },
-                { id: 5, title: "One Piece", image: null, type: "Anime" },
-            ],
-            drama: [
-                { id: 6, title: "Queen of Tears", image: null, type: "K-Drama" },
-            ]
-        };
-
-        // ===============================================================
-        // 1. getImage (MEMPERBAIKI ERROR url.startsWith)
-        // ===============================================================
         function getImage(url) {
-            // PENTING: Jika URL null, undefined, atau BUKAN string -> JANGAN panggil .startsWith()
-            if (!url || typeof url !== 'string') {
-                return null; 
-            }
-
-            // Logika asli (hanya berjalan jika url BENAR-BENAR string)
-            if (url.startsWith('/')) {
-                return window.location.origin + url;
-            }
+            // CEGAH ERROR url.startsWith
+            if (!url || typeof url !== 'string') return null; 
+            if (url.startsWith('/')) return window.location.origin + url;
             return url;
         }
 
-        // ===============================================================
-        // 2. createCard (MEMBUAT KARTU HTML)
-        // ===============================================================
         function createCard(item) {
             if (!item) return document.createElement('div');
             const title = item.title || item.name || 'Tanpa Judul';
@@ -172,19 +96,15 @@
             const card = document.createElement('div');
             card.className = 'movie-card';
 
-            // Tentukan HTML Gambar
             let imageHtml = '';
             if (safeImageUrl) {
-                // Jika gambar gagal dimuat (503), JavaScript di onerror akan membuat fallback lokal
                 imageHtml = `<img src="${safeImageUrl}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML=\`<div class='fallback-box'>🖼️<br>Gambar Error<span>Fallback Lokal</span></div>\`;">`;
             } else {
                 imageHtml = `<div class="fallback-box">🖼️<br>Tidak Ada Gambar<span>Fallback Lokal</span></div>`;
             }
 
             card.innerHTML = `
-                <div class="card-image-container">
-                    ${imageHtml}
-                </div>
+                <div class="card-image-container">${imageHtml}</div>
                 <div class="card-info">
                     <h3 class="card-title">${title}</h3>
                     <p class="card-subtitle">${item.type || item.media_type || 'Unknown'}</p>
@@ -193,52 +113,35 @@
             return card;
         }
 
-        // ===============================================================
-        // 3. renderRow (MENEMPELKAN KE HTML)
-        // ===============================================================
         function renderRow(containerId, items) {
             const container = document.getElementById(containerId);
             if (!container) return;
-
             container.innerHTML = '';
             if (!items || !Array.isArray(items) || items.length === 0) {
                 container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">📭 Tidak ada data.</div>`;
                 return;
             }
-            items.forEach(item => {
-                if (item) container.appendChild(createCard(item));
-            });
+            items.forEach(item => { if (item) container.appendChild(createCard(item)); });
         }
 
-        // ===============================================================
-        // 4. loadData (MENGAMBIL DARI API)
-        // ===============================================================
-        async function loadData(sectionId, fallbackKey) {
+        async function loadData(sectionId) {
             try {
                 const response = await fetch(API_URL);
                 if (!response.ok) throw new Error(`HTTP Status: ${response.status}`);
                 const result = await response.json();
-                
                 let items = result.data || result.results || result; 
                 if (!Array.isArray(items)) items = [items];
-                
                 renderRow(sectionId, items);
             } catch (error) {
-                console.warn(`API gagal untuk ${sectionId}:`, error.message);
-                // Jika API gagal, Pakai Data Cadangan (Agar Halaman Tidak Kosong)
-                if (FALLBACK_DATA[fallbackKey]) {
-                    renderRow(sectionId, FALLBACK_DATA[fallbackKey]);
-                }
+                console.warn(`Gagal fetch:`, error.message);
+                document.getElementById(sectionId).innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ff6b6b; padding: 20px;">⚠️ Gagal memuat data.</div>`;
             }
         }
 
-        // ===============================================================
-        // 5. JALANKAN SAAT HALAMAN DIMUAT
-        // ===============================================================
         document.addEventListener('DOMContentLoaded', () => {
-            loadData('trending-container', 'trending');
-            loadData('anime-container', 'anime');
-            loadData('drama-container', 'drama');
+            loadData('trending-container');
+            loadData('anime-container');
+            loadData('drama-container');
         });
     </script>
 </body>
