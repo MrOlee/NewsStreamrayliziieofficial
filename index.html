@@ -141,13 +141,17 @@
                 const response = await fetch(`${WORKER_URL}${path}`);
                 const result = await response.json();
                 
+                // --- DEBUGGING ---
+                console.log("API Response:", result);
+                
                 // --- ROBUST DATA HANDLING ---
-                // Force convert whatever result is into an array
+                // If it's already an array, use it. 
+                // Otherwise, look for an array inside common result keys
                 let items = [];
                 if (Array.isArray(result)) {
                     items = result;
                 } else if (result && typeof result === 'object') {
-                    // Look for array in potential keys
+                    // Try to find the first property that is an array
                     const foundKey = Object.keys(result).find(k => Array.isArray(result[k]));
                     items = foundKey ? result[foundKey] : [];
                 }
@@ -165,15 +169,16 @@
             // --- FINAL GUARD ---
             if(!Array.isArray(items)) {
                 console.error("renderCards received non-array:", items);
-                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Format data tidak valid.</div>';
+                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Data tidak ditemukan atau format salah. Cek Console (F12).</div>';
                 return;
             }
 
             if(items.length === 0) { 
-                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Tidak ada data.</div>'; 
+                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Tidak ada data untuk ditampilkan.</div>'; 
                 return; 
             }
             
+            // Set Hero
             const hero = items[0];
             if(hero) {
                 document.getElementById('hero-img').src = hero.poster || 'https://placehold.co/600x400/121216/333?text=RAYLIZIIE';
@@ -195,7 +200,7 @@
         }
 
         function toggleSearch() {
-            // Placeholder logic
+            // Future feature
         }
     </script>
 </body>
