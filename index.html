@@ -27,8 +27,7 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #09090b; color: #f4f4f5; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .glass-nav { background: rgba(9, 9, 11, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        .glass-nav { background: rgba(9, 9, 11, 0.85); backdrop-filter: blur(16px); }
         .hero-gradient { background: linear-gradient(0deg, #09090b 0%, rgba(9,9,11,0.6) 50%, rgba(9,9,11,0) 100%); }
     </style>
 </head>
@@ -39,78 +38,51 @@
             <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-primary to-amber-500 flex items-center justify-center font-extrabold text-white text-sm shadow-lg shadow-primary/30">R</div>
             <h1 class="font-extrabold tracking-wider text-lg bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">RAYLIZIIE</h1>
         </div>
-        <div class="flex items-center gap-3">
-            <button onclick="toggleSearch()" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition">
-                <i class="ph ph-magnifying-glass text-lg"></i>
-            </button>
-        </div>
     </header>
 
     <main class="px-4 pt-4">
-        
+        <!-- Hero Spotlight -->
         <div id="hero-spotlight" class="relative w-full h-72 rounded-2xl overflow-hidden mb-6 shadow-2xl bg-cardbg border border-white/5 flex items-end">
             <div class="absolute inset-0">
                 <img id="hero-img" src="https://placehold.co/600x400/121216/333?text=RAYLIZIIE" class="w-full h-full object-cover opacity-60">
                 <div class="absolute inset-0 hero-gradient"></div>
             </div>
             <div class="relative p-5 w-full">
-                <span id="hero-badge" class="px-2.5 py-1 rounded-md bg-primary text-white text-xs font-bold uppercase tracking-wider mb-2 inline-block">Loading...</span>
-                <h2 id="hero-title" class="text-xl font-bold text-white mb-1 line-clamp-1">Selamat Datang</h2>
-                <button class="bg-white text-darkbase px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-gray-200 transition shadow-lg">
-                    <i class="ph ph-play-fill text-sm text-primary"></i> Tonton
-                </button>
+                <span id="hero-badge" class="px-2.5 py-1 rounded-md bg-primary text-white text-xs font-bold uppercase tracking-wider mb-2 inline-block">Featured</span>
+                <h2 id="hero-title" class="text-xl font-bold text-white mb-1 line-clamp-1">Memuat...</h2>
             </div>
         </div>
 
         <div id="submenu" class="flex gap-2 mb-6 overflow-x-auto no-scrollbar pb-1"></div>
 
-        <div class="flex items-center justify-between mb-4">
-            <h3 id="section-title" class="font-bold text-base text-white flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-primary"></span> Konten
-            </h3>
-        </div>
+        <h3 id="section-title" class="font-bold text-base text-white mb-4 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary"></span> Konten
+        </h3>
 
+        <!-- Content Grid with Error Handling -->
         <div id="content-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
-            <div class="col-span-full py-16 text-center text-gray-500 text-sm">Memuat...</div>
+            <div class="col-span-full py-16 text-center text-gray-500">Memuat data...</div>
         </div>
     </main>
 
+    <!-- Bottom Nav -->
     <nav class="fixed bottom-0 inset-x-0 glass-nav border-t border-white/10 z-50 px-6 py-2 flex justify-between items-center max-w-lg mx-auto">
-        <button onclick="navigate('anime')" id="nav-btn-anime" class="nav-btn flex flex-col items-center gap-1 text-primary transition">
-            <i class="ph ph-sword text-2xl"></i>
-            <span class="text-[10px] font-semibold">Anime</span>
-        </button>
-        <button onclick="navigate('donghua')" id="nav-btn-donghua" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-white transition">
-            <i class="ph ph-yin-yang text-2xl"></i>
-            <span class="text-[10px] font-semibold">Donghua</span>
-        </button>
-        <button onclick="navigate('films')" id="nav-btn-films" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-white transition">
-            <i class="ph ph-popcorn text-2xl"></i>
-            <span class="text-[10px] font-semibold">Films</span>
-        </button>
-        <button onclick="navigate('drakor')" id="nav-btn-drakor" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-white transition">
-            <i class="ph ph-heart text-2xl"></i>
-            <span class="text-[10px] font-semibold">Drakor</span>
-        </button>
+        <button onclick="navigate('anime')" id="nav-btn-anime" class="nav-btn flex flex-col items-center gap-1 text-primary transition"><i class="ph ph-sword text-2xl"></i><span class="text-[10px] font-semibold">Anime</span></button>
+        <button onclick="navigate('donghua')" id="nav-btn-donghua" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-white transition"><i class="ph ph-yin-yang text-2xl"></i><span class="text-[10px] font-semibold">Donghua</span></button>
+        <button onclick="navigate('films')" id="nav-btn-films" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-white transition"><i class="ph ph-popcorn text-2xl"></i><span class="text-[10px] font-semibold">Films</span></button>
+        <button onclick="navigate('drakor')" id="nav-btn-drakor" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-white transition"><i class="ph ph-heart text-2xl"></i><span class="text-[10px] font-semibold">Drakor</span></button>
     </nav>
 
     <script>
         const WORKER_URL = 'https://api-rayliziie.rayyankrens0304.workers.dev';
         let currentCategory = 'anime';
-
-        window.addEventListener('DOMContentLoaded', () => navigate('anime'));
+        let currentPath = '/anime/home'; // Save last path for retry
 
         function navigate(category) {
             currentCategory = category;
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-primary');
-                btn.classList.add('text-gray-400');
-            });
+            document.querySelectorAll('.nav-btn').forEach(btn => { btn.classList.remove('text-primary'); btn.classList.add('text-gray-400'); });
             const activeBtn = document.getElementById(`nav-btn-${category}`);
-            if(activeBtn) {
-                activeBtn.classList.remove('text-gray-400');
-                activeBtn.classList.add('text-primary');
-            }
+            if(activeBtn) { activeBtn.classList.remove('text-gray-400'); activeBtn.classList.add('text-primary'); }
             renderSubmenu(category);
             fetchContent(`/${category}/home`);
         }
@@ -120,83 +92,61 @@
             const container = document.getElementById('submenu');
             container.innerHTML = subs.map((item, idx) => `
                 <button onclick="setActiveSub(this); fetchContent('/${cat}/${item.toLowerCase()}')" 
-                class="sub-pill px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition border ${idx === 0 ? 'bg-primary border-primary text-white shadow-md shadow-primary/20' : 'bg-cardbg border-white/5 text-gray-400 hover:bg-white/5'}">${item}</button>
+                class="sub-pill px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition border ${idx === 0 ? 'bg-primary border-primary text-white' : 'bg-cardbg border-white/5 text-gray-400'}">${item}</button>
             `).join('');
         }
 
         function setActiveSub(el) {
             document.querySelectorAll('.sub-pill').forEach(btn => {
-                btn.classList.remove('bg-primary', 'border-primary', 'text-white', 'shadow-md', 'shadow-primary/20');
-                btn.classList.add('bg-cardbg', 'border-white/5', 'text-gray-400');
+                btn.classList.replace('bg-primary', 'bg-cardbg'); btn.classList.replace('border-primary', 'border-white/5'); btn.classList.replace('text-white', 'text-gray-400');
             });
-            el.classList.remove('bg-cardbg', 'border-white/5', 'text-gray-400');
-            el.classList.add('bg-primary', 'border-primary', 'text-white', 'shadow-md', 'shadow-primary/20');
+            el.classList.replace('bg-cardbg', 'bg-primary'); el.classList.replace('border-white/5', 'border-primary'); el.classList.replace('text-gray-400', 'text-white');
         }
 
         async function fetchContent(path) {
+            currentPath = path;
             const grid = document.getElementById('content-grid');
-            grid.innerHTML = '<div class="col-span-full py-16 text-center text-xs text-gray-500">Memuat data...</div>';
+            grid.innerHTML = '<div class="col-span-full py-16 text-center text-gray-500">Memuat...</div>';
             
             try {
                 const response = await fetch(`${WORKER_URL}${path}`);
+                if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+
                 const result = await response.json();
+                const items = Array.isArray(result) ? result : (result.data || result.result || []);
                 
-                // --- ROBUST DATA HANDLING ---
-                // API structure is { code, message, data: { ... } }
-                let items = [];
-                if (result && result.data) {
-                    // If result.data is already an array, use it
-                    if (Array.isArray(result.data)) {
-                        items = result.data;
-                    } 
-                    // If result.data is an object, look for an array property inside it
-                    else if (typeof result.data === 'object') {
-                        const foundKey = Object.keys(result.data).find(k => Array.isArray(result.data[k]));
-                        items = foundKey ? result.data[foundKey] : [];
-                    }
+                if(items.length === 0) {
+                    grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500">Data kosong.</div>';
+                } else {
+                    renderCards(items);
                 }
-                
-                renderCards(items);
             } catch (err) {
-                console.error("Fetch error:", err);
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-red-400 text-xs">Error: ${err.message}</div>`;
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-red-500 text-sm">
+                        <p class="mb-4">Koneksi ke server gagal (502).</p>
+                        <button onclick="fetchContent(currentPath)" class="bg-primary text-white px-6 py-2 rounded-lg font-bold">Coba Lagi</button>
+                    </div>`;
             }
         }
 
         function renderCards(items) {
             const grid = document.getElementById('content-grid');
+            const hero = items[0] || {};
             
-            if(!Array.isArray(items)) {
-                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Data tidak ditemukan.</div>';
-                return;
-            }
-
-            if(items.length === 0) { 
-                grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-500 text-xs">Tidak ada data.</div>'; 
-                return; 
-            }
-            
-            const hero = items[0];
-            if(hero) {
-                document.getElementById('hero-img').src = hero.poster || 'https://placehold.co/600x400/121216/333?text=RAYLIZIIE';
-                document.getElementById('hero-title').innerText = hero.title || 'Judul';
-                document.getElementById('hero-badge').innerText = currentCategory.toUpperCase();
-            }
+            document.getElementById('hero-img').src = hero.poster || 'https://placehold.co/600x400/121216/333?text=RAYLIZIIE';
+            document.getElementById('hero-title').innerText = hero.title || 'Judul Tidak Tersedia';
 
             grid.innerHTML = items.map(item => `
-                <div class="group relative bg-cardbg rounded-xl overflow-hidden border border-white/5 shadow-md flex flex-col active:scale-95 transition duration-200">
-                    <div class="relative aspect-[3/4] w-full overflow-hidden bg-gray-900">
-                        <img src="${item.poster || 'https://placehold.co/300x450/111/444?text=No+Image'}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-darkbase via-transparent opacity-80"></div>
+                <div class="group bg-cardbg rounded-xl overflow-hidden border border-white/5 shadow-md flex flex-col active:scale-95 transition">
+                    <div class="aspect-[3/4] w-full overflow-hidden bg-gray-900">
+                        <img src="${item.poster || 'https://placehold.co/300x450/111/444?text=No+Image'}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition">
                     </div>
-                    <div class="p-3">
-                        <h3 class="font-bold text-xs text-white line-clamp-2 leading-snug">${item.title || 'Unknown'}</h3>
-                    </div>
+                    <div class="p-3"><h3 class="font-bold text-xs text-white line-clamp-2">${item.title || 'Unknown'}</h3></div>
                 </div>
             `).join('');
         }
 
-        function toggleSearch() {}
+        navigate('anime');
     </script>
 </body>
 </html>
