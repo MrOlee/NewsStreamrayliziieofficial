@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raylizii - Streaming</title>
+    <title>Raylizii - Streaming Tanpa Batas</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* --- GLOBAL STYLING --- */
@@ -58,11 +58,19 @@
             transition: transform 0.2s; cursor: pointer; border: 1px solid #252529;
         }
         .movie-card:hover { transform: translateY(-5px); border-color: #ff3b3b; }
-        .card-image-container { width: 100%; aspect-ratio: 2/3; overflow: hidden; background: #2a2a2e; position: relative; }
+        .card-image-container { width: 100%; aspect-ratio: 2/3; overflow: hidden; background: #2a2a2e; position: relative; display: flex; justify-content: center; align-items: center; }
         .card-image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .card-info { padding: 10px; }
         .card-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
         .card-subtitle { font-size: 12px; color: #777; }
+
+        /* --- FALLBACK IMAGE BOX (Mengganti via.placeholder.com yang Error 503) --- */
+        .fallback-box {
+            width: 100%; height: 100%; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; background: #2a2a2e;
+            color: #888; font-size: 14px; font-weight: bold; text-align: center; padding: 20px;
+        }
+        .fallback-box span { font-size: 12px; font-weight: normal; color: #555; margin-top: 5px; }
 
         /* --- FOOTER --- */
         .bottom-nav {
@@ -77,14 +85,6 @@
         /* --- RESPONSIVE --- */
         @media (min-width: 600px) { .card-container { grid-template-columns: repeat(4, 1fr); } }
         @media (min-width: 1024px) { .card-container { grid-template-columns: repeat(6, 1fr); } }
-        
-        /* --- CSS FOR FALLBACK IMAGE (Mengganti via.placeholder.com yang Error 503) --- */
-        .fallback-image-box {
-            width: 100%; height: 100%; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; background: #2a2a2e;
-            color: #888; font-size: 14px; font-weight: bold; text-align: center; padding: 10px;
-        }
-        .fallback-image-box span { font-size: 12px; font-weight: normal; color: #555; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -115,8 +115,8 @@
             <h2 class="section-title">🔥 Trending</h2>
             <span class="section-link">Lihat semua</span>
         </div>
+        <!-- Tempat Kartu -->
         <div id="trending-container" class="card-container">
-            <!-- Loading Indicator -->
             <div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">⏳ Memuat data...</div>
         </div>
     </section>
@@ -154,34 +154,42 @@
 
 
     <!-- ============================================================== -->
-    <!-- JAVASCRIPT - LOGIKA PENANGANAN ERROR 100% DIPERBAIKI           -->
+    <!-- JAVASCRIPT - LOGIKA 100% ANTI ERROR                             -->
     <!-- ============================================================== -->
     <script>
-        // --- KONFIGURASI ---
+        // --- KONFIGURASI API ---
         // GANTI URL INI DENGAN API ASLI ANDA
-        const YOUR_API_URL = 'https://api-rayliziie.rayyankrens0304.workers.dev/'; 
-        
-        // --- DATA DUMMY (Cadangan jika API Anda error atau kosong) ---
-        const FALLBACK_DATA = {
+        const API_URL = 'https://api.example.com/get-content'; 
+
+        // --- DATA FALLBACK (Jika API error, ini akan muncul agar tidak kosong) ---
+        const DUMMY_DATA = {
             trending: [
-                { id: 1, title: "Judul Trending 1", image: null, type: "Movie" }, // null sengaja dibuat untuk tes error handler
-                { id: 2, title: "Judul Trending 2", image: "/path/to/img.jpg", type: "Series" },
+                { id: 1, title: "Demon Slayer", image: null, type: "Anime" },
+                { id: 2, title: "Stranger Things", image: null, type: "Series" },
+                { id: 3, title: "The Glory", image: null, type: "K-Drama" },
+                { id: 4, title: "Avatar 2", image: null, type: "Movie" },
             ],
-            anime: [{ id: 3, title: "Anime Populer", image: null, type: "Anime" }],
-            drama: [{ id: 4, title: "Drama Korea Baru", image: null, type: "K-Drama" }]
+            anime: [
+                { id: 5, title: "Jujutsu Kaisen", image: null, type: "Anime" },
+                { id: 6, title: "One Piece", image: null, type: "Anime" },
+            ],
+            drama: [
+                { id: 7, title: "Queen of Tears", image: null, type: "K-Drama" },
+                { id: 8, title: "Vincenzo", image: null, type: "K-Drama" },
+            ]
         };
 
         // ===============================================================
         // 1. getImage (FIX UTAMA: MEMPERBAIKI ERROR url.startsWith)
         // ===============================================================
         function getImage(url) {
-            // LAPIS PERTAHANAN PERTAMA:
-            // Jika URL kosong/null/undefined, atau BUKAN string -> JANGAN panggil .startsWith()
+            // LAPIS PERTAHANAN PALING PENTING:
+            // Jika url null, undefined, atau BUKAN string -> Langsung return null (tanpa error)
             if (!url || typeof url !== 'string') {
-                return null; // Kembalikan null agar fallback gambar dipicu
+                return null; 
             }
 
-            // Logika asli Anda hanya akan berjalan jika url BENAR-BENAR string
+            // Logika asli Anda (hanya berjalan jika url BENAR-BENAR string)
             if (url.startsWith('/')) {
                 return window.location.origin + url;
             }
@@ -190,10 +198,10 @@
         }
 
         // ===============================================================
-        // 2. createCard (Menggunakan DOM element agar aman)
+        // 2. createCard (Membuat Kartu HTML dengan Aman)
         // ===============================================================
         function createCard(item) {
-            if (!item) return document.createElement('div'); // Kembalikan kosong jika data null
+            if (!item) return document.createElement('div');
 
             const title = item.title || item.name || 'Tanpa Judul';
             const rawImage = item.image || item.poster || item.poster_path || null;
@@ -207,16 +215,18 @@
             // --- LOGIKA GAMBAR ---
             let imageHtml = '';
             
-            // Jika URL gambar valid
+            // Jika URL gambar valid (bukan null)
             if (safeImageUrl) {
-                // Perhatikan onerror: Jika gambar dari API mati (seperti 503), ini akan memicu fallback
-                imageHtml = `<img src="${safeImageUrl}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML=\`<div class='fallback-image-box'>🖼️<br>Gambar Error<span>Fallback Lokal</span></div>\`;">`;
+                // AMPUH: Jika gambar gagal dimuat (termasuk Error 503 dari via.placeholder.com), 
+                // JavaScript di dalam onerror akan menggantinya dengan Fallback Box lokal
+                imageHtml = `<img src="${safeImageUrl}" alt="${title}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML=\`<div class='fallback-box'>🖼️<br>Gambar Error<span>Fallback Lokal</span></div>\`;">`;
             } 
-            // Jika URL gambar null atau rusak sejak awal
+            // Jika URL gambar null/rusak sejak awal
             else {
-                imageHtml = `<div class="fallback-image-box">🖼️<br>Tidak Ada Gambar<span>Fallback Lokal</span></div>`;
+                imageHtml = `<div class="fallback-box">🖼️<br>Tidak Ada Gambar<span>Fallback Lokal</span></div>`;
             }
 
+            // SUSUN HTML KARTU
             card.innerHTML = `
                 <div class="card-image-container">
                     ${imageHtml}
@@ -231,7 +241,7 @@
         }
 
         // ===============================================================
-        // 3. renderRow (Membuat kartu di dalam HTML)
+        // 3. renderRow (Menempelkan Kartu ke HTML)
         // ===============================================================
         function renderRow(containerId, items) {
             const container = document.getElementById(containerId);
@@ -240,17 +250,16 @@
             // Kosongkan container
             container.innerHTML = '';
 
-            // Validasi Data: Jika items bukan array, atau kosong
+            // Validasi Data
             if (!items || !Array.isArray(items) || items.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">📭 Tidak ada data untuk ditampilkan.</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 20px;">📭 Tidak ada data.</div>`;
                 return;
             }
 
-            // Loop data dan masukkan ke DOM
+            // Loop dan buat kartu
             items.forEach(item => {
                 if (item) {
-                    const card = createCard(item);
-                    container.appendChild(card);
+                    container.appendChild(createCard(item));
                 }
             });
         }
@@ -263,29 +272,28 @@
             
             try {
                 // Coba fetch API
-                const response = await fetch(YOUR_API_URL);
+                const response = await fetch(API_URL);
                 
                 if (!response.ok) throw new Error(`HTTP Status: ${response.status}`);
                 
                 const result = await response.json();
                 
-                // SESUAIKAN BAGIAN INI DENGAN STRUKTUR JSON API ANDA
-                // Misal: let items = result.data; atau let items = result.results;
+                // SESUAIKAN DENGAN STRUKTUR JSON API ANDA
+                // Misal: jika data ada di result.data, gunakan result.data
                 let items = result.data || result.results || result; 
 
-                // Jika items bukan array, ubah menjadi array
                 if (!Array.isArray(items)) items = [items];
 
                 renderRow(sectionId, items);
 
             } catch (error) {
-                console.warn(`Gagal fetch API untuk ${sectionId}:`, error.message);
+                console.warn(`API gagal untuk ${sectionId}:`, error.message);
                 
-                // JIKA API GAGAL -> PAKAI DATA FALLBACK (Dummy) AGAR SITUS TIDAK KOSONG
-                if (FALLBACK_DATA[fallbackKey]) {
-                    renderRow(sectionId, FALLBACK_DATA[fallbackKey]);
+                // JIKA API GAGAL -> PAKAI DATA DUMMY AGAR SITUS TETAP BERISI
+                if (DUMMY_DATA[fallbackKey]) {
+                    renderRow(sectionId, DUMMY_DATA[fallbackKey]);
                 } else {
-                    container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ff6b6b; padding: 20px;">⚠️ Gagal memuat data: ${error.message}</div>`;
+                    container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ff6b6b; padding: 20px;">⚠️ Gagal memuat data.</div>`;
                 }
             }
         }
