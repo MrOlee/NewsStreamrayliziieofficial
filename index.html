@@ -2,169 +2,174 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streaming Rayliziie Official - Premium Theater</title>
-    
-    <!-- External Dependencies -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-    <style>
-        :root {
-            --bg-primary: #0a0c10;
-            --bg-secondary: #12161f;
-            --bg-card: #1a202c;
-            --accent-primary: #E50914; 
-            --accent-secondary: #FF6B00; 
-            --text-main: #ffffff;
-            --text-muted: #a0aec0;
-            --border-color: rgba(255, 255, 255, 0.12);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--bg-primary); color: var(--text-main); padding-top: 100px; }
-
-        /* Status & Config */
-        .config-bar { position: fixed; top: 0; width: 100%; background: #111827; padding: 8px 4%; display: flex; align-items: center; justify-content: space-between; z-index: 1002; border-bottom: 1px solid var(--border-color); }
-        .config-input { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); padding: 4px 10px; color: #4ade80; border-radius: 4px; width: 300px; font-family: monospace; font-size: 0.8rem; }
-        .status-pill { padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid #4ade80; }
-        .status-pill.error { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: #ef4444; }
-
-        /* Navbar */
-        .navbar { position: fixed; top: 40px; width: 100%; height: 60px; background: rgba(10, 12, 16, 0.95); backdrop-filter: blur(12px); display: flex; align-items: center; padding: 0 4%; z-index: 1000; border-bottom: 1px solid var(--border-color); }
-        .logo-text { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.2rem; }
-        .logo-text span { background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* Grid */
-        .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; padding: 20px 4%; }
-        .media-card { background: var(--bg-card); border-radius: 8px; overflow: hidden; cursor: pointer; border: 1px solid var(--border-color); transition: all 0.2s; }
-        .media-card:hover { transform: translateY(-5px); border-color: var(--accent-primary); }
-        .poster-wrapper { position: relative; padding-top: 140%; background: #2d3748; }
-        .poster-img { position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover; }
-        .card-info { padding: 12px; }
-
-        /* Modal */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; overflow-y: auto; }
-        .modal-container { max-width: 800px; margin: 50px auto; background: var(--bg-secondary); border-radius: 12px; overflow: hidden; }
-        .player-wrapper { width: 100%; padding-top: 56.25%; background: black; position: relative; }
-        .player-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Streaming Rayliziie Official</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="description" content="Streaming Anime, Drama, Film & Live TV gratis - Rayliziie Official">
 </head>
 <body>
-
-    <div class="config-bar">
-        <input type="text" id="apiWorkerUrl" class="config-input" placeholder="Masukkan Worker URL..." onchange="updateWorkerUrl()">
-        <div id="statusPill" class="status-pill">CHECKING</div>
-    </div>
-
+    <!-- NAVBAR -->
     <nav class="navbar">
-        <span class="logo-text">Rayliziie<span>Official</span></span>
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <span class="logo-icon">▶</span>
+                    <span class="logo-text">Rayliziie</span>
+                    <span class="logo-badge">PRO</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" class="active" data-page="home">Beranda</a></li>
+                    <li><a href="#" data-page="anime">Anime</a></li>
+                    <li><a href="#" data-page="drama">Drama</a></li>
+                    <li><a href="#" data-page="film">Film</a></li>
+                    <li><a href="#" data-page="tv">TV Live</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Cari judul..." id="searchInput">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                <div class="nav-actions">
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <main id="app-root">
-        <div style="padding: 100px 4% 20px;">
-            <h2><i class="fa-solid fa-fire" style="color:var(--accent-secondary);"></i> Rekomendasi Hari Ini</h2>
-            <div class="media-grid" id="mainGrid"></div>
+    <!-- HERO BANNER -->
+    <section class="hero" id="heroSection">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">🔥 TRENDING</div>
+            <h1 class="hero-title">Streaming Tanpa Batas</h1>
+            <p class="hero-desc">Nikmati ribuan konten Anime, Drama Korea, Film & Live TV dengan kualitas terbaik</p>
+            <div class="hero-stats">
+                <span>🎬 10,000+ Konten</span>
+                <span>🌐 6 Provider</span>
+                <span>⚡ 4K UHD</span>
+            </div>
         </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="mainContent">
+        <!-- CATEGORY ROW -->
+        <section class="category-row">
+            <div class="section-header">
+                <h2>🔥 Trending Sekarang</h2>
+                <a href="#" class="view-all">Lihat Semua →</a>
+            </div>
+            <div class="content-grid" id="trendingGrid">
+                <!-- Dynamic content from API -->
+            </div>
+        </section>
+
+        <section class="category-row">
+            <div class="section-header">
+                <h2>📺 Anime Terbaru</h2>
+                <a href="#" class="view-all">Lihat Semua →</a>
+            </div>
+            <div class="content-grid" id="animeGrid">
+                <!-- Dynamic content from API -->
+            </div>
+        </section>
+
+        <section class="category-row">
+            <div class="section-header">
+                <h2>🎬 Drama Korea</h2>
+                <a href="#" class="view-all">Lihat Semua →</a>
+            </div>
+            <div class="content-grid" id="dramaGrid">
+                <!-- Dynamic content from API -->
+            </div>
+        </section>
+
+        <section class="category-row">
+            <div class="section-header">
+                <h2>🎥 Film & Bioskop</h2>
+                <a href="#" class="view-all">Lihat Semua →</a>
+            </div>
+            <div class="content-grid" id="filmGrid">
+                <!-- Dynamic content from API -->
+            </div>
+        </section>
+
+        <!-- SCHEDULE SECTION -->
+        <section class="schedule-section">
+            <div class="section-header">
+                <h2>📅 Jadwal Rilis Mingguan</h2>
+                <span class="schedule-update">Update: <span id="scheduleDate">Loading...</span></span>
+            </div>
+            <div class="schedule-grid" id="scheduleGrid">
+                <!-- Dynamic schedule -->
+            </div>
+        </section>
+
+        <!-- PROVIDER STATUS -->
+        <section class="provider-status">
+            <div class="section-header">
+                <h2>🔌 Status Provider</h2>
+                <span class="status-badge">Online</span>
+            </div>
+            <div class="provider-grid" id="providerGrid">
+                <!-- Dynamic provider status -->
+            </div>
+        </section>
     </main>
 
-    <div id="playerModal" class="modal">
-        <div class="modal-container">
-            <div class="player-wrapper"><video id="hlsPlayer" controls></video></div>
-            <div style="padding: 20px;"><h2 id="modalTitle">Loading...</h2></div>
-            <button onclick="closePlayer()" style="position:absolute; top:20px; right:20px; background:rgba(0,0,0,0.5); border:none; color:white; padding:10px 15px; border-radius:50%; cursor:pointer;">&times;</button>
+    <!-- MODAL PLAYER -->
+    <div class="modal" id="playerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Title</h3>
+                <button class="modal-close" id="closeModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="video-container">
+                    <video id="videoPlayer" controls autoplay>
+                        <source id="videoSource" src="" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-info">
+                    <div class="video-meta">
+                        <span class="quality" id="videoQuality">HD</span>
+                        <span class="year" id="videoYear">2024</span>
+                        <span class="duration" id="videoDuration">2h 15m</span>
+                    </div>
+                    <p class="video-desc" id="videoDesc">Deskripsi konten</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        const state = { hls: null };
+    <!-- LOADING OVERLAY -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <p>Memuat konten...</p>
+    </div>
 
-        function updateWorkerUrl() {
-            const url = document.getElementById('apiWorkerUrl').value;
-            localStorage.setItem('rayliziie_worker', url);
-            initApp();
-        }
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="logo-icon">▶</span>
+                <span>Streaming Rayliziie Official</span>
+            </div>
+            <p class="footer-desc">Platform streaming gratis dengan konten dari berbagai provider terkemuka</p>
+            <div class="footer-links">
+                <a href="#">Tentang</a>
+                <a href="#">Kebijakan Privasi</a>
+                <a href="#">Kontak</a>
+                <a href="#">DMCA</a>
+            </div>
+            <p class="footer-copy">© 2026 Streaming Rayliziie Official. All rights reserved.</p>
+        </div>
+    </footer>
 
-        function getApiUrl() {
-            return localStorage.getItem('rayliziie_worker') || 'https://your-worker-url.workers.dev';
-        }
-
-        async function fetchApi(endpoint) {
-            const pill = document.getElementById('statusPill');
-            const url = getApiUrl() + endpoint;
-            
-            // Validation
-            if (getApiUrl().includes('your-worker-url')) {
-                pill.className = 'status-pill error';
-                pill.innerText = 'URL NOT CONFIGURED';
-                return null;
-            }
-
-            try {
-                pill.innerText = 'LOADING...';
-                pill.className = 'status-pill';
-                
-                const res = await fetch(url);
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                
-                const data = await res.json();
-                pill.innerText = 'ONLINE';
-                return data;
-            } catch (e) {
-                console.error("Fetch Error:", e);
-                pill.innerText = 'ERROR';
-                pill.className = 'status-pill error';
-                return null;
-            }
-        }
-
-        async function initApp() {
-            const data = await fetchApi('/anime/home');
-            if(data && data.results) renderGrid(data.results);
-            else {
-                document.getElementById('mainGrid').innerHTML = '<p style="padding:20px; color:var(--text-muted);">Gagal memuat data. Periksa Worker URL Anda di atas.</p>';
-            }
-        }
-
-        function renderGrid(items) {
-            const grid = document.getElementById('mainGrid');
-            grid.innerHTML = items.map(item => `
-                <div class="media-card" onclick="playMedia('${item.id}', '${item.title}')">
-                    <div class="poster-wrapper"><img src="${item.thumb || 'https://placehold.co/300x450'}" class="poster-img"></div>
-                    <div class="card-info"><h4 class="card-title">${item.title}</h4></div>
-                </div>
-            `).join('');
-        }
-
-        function playMedia(id, title) {
-            const modal = document.getElementById('playerModal');
-            document.getElementById('modalTitle').innerText = title;
-            modal.style.display = 'block';
-            
-            const video = document.getElementById('hlsPlayer');
-            const streamUrl = getApiUrl() + `/play?id=${id}`; 
-            
-            if (Hls.isSupported()) {
-                if (state.hls) state.hls.destroy();
-                state.hls = new Hls();
-                state.hls.loadSource(streamUrl);
-                state.hls.attachMedia(video);
-            }
-            video.play();
-        }
-
-        function closePlayer() {
-            document.getElementById('playerModal').style.display = 'none';
-            document.getElementById('hlsPlayer').pause();
-        }
-
-        // Initialize on load
-        window.onload = () => {
-            const savedUrl = localStorage.getItem('rayliziie_worker');
-            if (savedUrl) document.getElementById('apiWorkerUrl').value = savedUrl;
-            initApp();
-        };
-    </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
