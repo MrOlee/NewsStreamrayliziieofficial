@@ -7,9 +7,7 @@
   <link rel="manifest" href="manifest.json" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* ======================================================
-       PREMIUM UI - RAYLIZIIE OFFICIAL
-       ====================================================== */
+    /* ===== SAME PREMIUM CSS ===== */
     * {
       margin: 0;
       padding: 0;
@@ -18,14 +16,11 @@
     :root {
       --bg: #0b0b12;
       --bg-card: #16161f;
-      --bg-card-hover: #1e1e2a;
       --text: #f0f0f5;
       --text-secondary: #9a9ab0;
       --accent: #e50914;
-      --accent-dim: rgba(229, 9, 20, 0.15);
       --radius: 12px;
-      --shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-      --font: 'Inter', system-ui, -apple-system, sans-serif;
+      --font: 'Inter', sans-serif;
     }
     html,
     body {
@@ -34,15 +29,12 @@
       color: var(--text);
       font-family: var(--font);
       overflow: hidden;
-      -webkit-font-smoothing: antialiased;
     }
     body {
       display: flex;
       justify-content: center;
       align-items: center;
     }
-
-    /* ===== APP CONTAINER ===== */
     #app {
       width: 100%;
       max-width: 480px;
@@ -55,8 +47,6 @@
       overflow: hidden;
       box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
     }
-
-    /* ===== LOADER ===== */
     .loader-overlay {
       position: fixed;
       inset: 0;
@@ -90,13 +80,10 @@
       color: var(--text-secondary);
       font-size: 14px;
     }
-
-    /* ===== HEADER ===== */
     .app-header {
       padding: 12px 20px;
       background: rgba(11, 11, 18, 0.92);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -136,13 +123,7 @@
       font-size: 20px;
       cursor: pointer;
       padding: 6px;
-      transition: 0.2s;
     }
-    .icon-btn:hover {
-      color: var(--text);
-    }
-
-    /* ===== SEARCH BAR ===== */
     .search-bar {
       padding: 8px 16px 12px;
       background: var(--bg);
@@ -169,11 +150,9 @@
       font-size: 14px;
       outline: none;
       border: 1px solid transparent;
-      transition: 0.2s;
     }
     .search-bar input:focus {
       border-color: var(--accent);
-      background: rgba(255, 255, 255, 0.08);
     }
     .search-bar input::placeholder {
       color: var(--text-secondary);
@@ -186,14 +165,7 @@
       border-radius: 50px;
       font-weight: 600;
       cursor: pointer;
-      transition: 0.2s;
-      flex-shrink: 0;
     }
-    .search-bar button:hover {
-      opacity: 0.85;
-    }
-
-    /* ===== MAIN CONTENT ===== */
     #mainContent {
       flex: 1;
       overflow-y: auto;
@@ -207,7 +179,6 @@
       background: var(--accent);
       border-radius: 10px;
     }
-
     .page {
       display: none;
       animation: fadeUp 0.35s ease;
@@ -225,8 +196,6 @@
         transform: translateY(0);
       }
     }
-
-    /* ===== HERO ===== */
     .hero-card {
       background: linear-gradient(145deg, #12121c, #1a1a28);
       border-radius: var(--radius);
@@ -248,7 +217,7 @@
     }
     .hero-badge {
       display: inline-block;
-      background: var(--accent-dim);
+      background: rgba(229, 9, 20, 0.15);
       color: var(--accent);
       font-size: 11px;
       font-weight: 700;
@@ -281,8 +250,6 @@
       color: var(--text-secondary);
       border: 1px solid rgba(255, 255, 255, 0.04);
     }
-
-    /* ===== ROWS ===== */
     .row {
       margin-bottom: 24px;
     }
@@ -298,15 +265,14 @@
     }
     .view-all {
       color: var(--text-secondary);
-      text-decoration: none;
       font-size: 12px;
       font-weight: 500;
-      transition: 0.2s;
-      padding: 4px 10px;
-      border-radius: 20px;
       cursor: pointer;
       background: none;
       border: none;
+      padding: 4px 10px;
+      border-radius: 20px;
+      transition: 0.2s;
     }
     .view-all:hover {
       color: #fff;
@@ -323,8 +289,6 @@
     .row-scroll::-webkit-scrollbar {
       display: none;
     }
-
-    /* ===== CONTENT CARD ===== */
     .card {
       flex: 0 0 130px;
       scroll-snap-align: start;
@@ -395,8 +359,16 @@
       text-align: center;
       width: 100%;
     }
-
-    /* ===== GRID PAGE (Anime/Drama/Film/TV) ===== */
+    .error-state {
+      color: #ff6b6b;
+      font-size: 13px;
+      padding: 12px 4px;
+      text-align: center;
+      width: 100%;
+      background: rgba(255, 0, 0, 0.05);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 0, 0, 0.1);
+    }
     .grid-page {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -405,10 +377,7 @@
     }
     .grid-page .card {
       flex: unset;
-      scroll-snap-align: unset;
     }
-
-    /* ===== SCHEDULE ===== */
     .schedule-card,
     .provider-card {
       background: var(--bg-card);
@@ -442,8 +411,6 @@
     .schedule-item .count {
       color: var(--text-secondary);
     }
-
-    /* ===== PROVIDER ===== */
     .provider-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -479,14 +446,11 @@
       color: var(--text-secondary);
       margin-top: 2px;
     }
-
-    /* ===== BOTTOM NAV ===== */
     .bottom-nav {
       display: flex;
       justify-content: space-around;
       background: rgba(11, 11, 18, 0.96);
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       padding: 6px 0 env(safe-area-inset-bottom);
       flex-shrink: 0;
@@ -524,21 +488,15 @@
       background: var(--accent);
       border-radius: 2px;
     }
-    .nav-item.active .nav-icon {
-      transform: scale(1.05);
-    }
     .nav-item:hover {
       color: var(--text);
     }
-
-    /* ===== MODAL PLAYER ===== */
     .modal {
       display: none;
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       z-index: 100;
       align-items: center;
       justify-content: center;
@@ -587,9 +545,6 @@
       cursor: pointer;
       padding: 4px 8px;
     }
-    .modal-close:hover {
-      color: #fff;
-    }
     .modal-body {
       padding: 16px;
     }
@@ -631,8 +586,6 @@
       max-height: 100px;
       overflow-y: auto;
     }
-
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 480px) {
       .hero-title {
         font-size: 22px;
@@ -656,16 +609,15 @@
 </head>
 <body>
 
-  <!-- ===== LOADER ===== -->
+  <!-- LOADER -->
   <div id="loader" class="loader-overlay">
     <div class="spinner"></div>
     <p>Memuat konten...</p>
   </div>
 
-  <!-- ===== APP ===== -->
+  <!-- APP -->
   <div id="app">
 
-    <!-- HEADER -->
     <header class="app-header">
       <div class="header-left">
         <span class="logo-icon">▶</span>
@@ -673,24 +625,21 @@
         <span class="badge-pro">PRO</span>
       </div>
       <div class="header-right">
-        <button id="searchToggle" class="icon-btn" aria-label="Cari">🔍</button>
+        <button id="searchToggle" class="icon-btn">🔍</button>
       </div>
     </header>
 
-    <!-- SEARCH BAR -->
     <div id="searchBar" class="search-bar hidden">
-      <input type="text" id="searchInput" placeholder="Cari judul anime, drama, film..." />
+      <input type="text" id="searchInput" placeholder="Cari judul..." />
       <button id="searchBtn">Cari</button>
     </div>
 
-    <!-- MAIN CONTENT -->
     <main id="mainContent">
 
-      <!-- PAGE: HOME -->
+      <!-- HOME -->
       <section id="page-home" class="page active">
-        <!-- Hero -->
         <div class="hero-card">
-          <div class="hero-badge">🔥 TRENDING</div>
+          <div class="hero-badge" id="heroBadge">🔥 TRENDING</div>
           <h1 class="hero-title">Streaming Tanpa Batas</h1>
           <p class="hero-desc">Anime, Drama, Film, & Live TV dalam genggaman</p>
           <div class="hero-stats">
@@ -700,51 +649,27 @@
           </div>
         </div>
 
-        <!-- Trending -->
         <div class="row">
-          <div class="row-header">
-            <h2>🔥 Trending</h2>
-          </div>
+          <div class="row-header"><h2>🔥 Trending</h2></div>
           <div class="row-scroll" id="trendingRow"></div>
         </div>
-
-        <!-- Anime -->
         <div class="row">
-          <div class="row-header">
-            <h2>📺 Anime</h2>
-            <button class="view-all" data-page="anime">Lihat semua</button>
-          </div>
+          <div class="row-header"><h2>📺 Anime</h2><button class="view-all" data-page="anime">Lihat semua</button></div>
           <div class="row-scroll" id="animeRow"></div>
         </div>
-
-        <!-- Drama -->
         <div class="row">
-          <div class="row-header">
-            <h2>🎭 Drama Korea</h2>
-            <button class="view-all" data-page="drama">Lihat semua</button>
-          </div>
+          <div class="row-header"><h2>🎭 Drama Korea</h2><button class="view-all" data-page="drama">Lihat semua</button></div>
           <div class="row-scroll" id="dramaRow"></div>
         </div>
-
-        <!-- Film -->
         <div class="row">
-          <div class="row-header">
-            <h2>🎬 Film</h2>
-            <button class="view-all" data-page="film">Lihat semua</button>
-          </div>
+          <div class="row-header"><h2>🎬 Film</h2><button class="view-all" data-page="film">Lihat semua</button></div>
           <div class="row-scroll" id="filmRow"></div>
         </div>
-
-        <!-- TV Live -->
         <div class="row">
-          <div class="row-header">
-            <h2>📺 TV Live</h2>
-            <button class="view-all" data-page="tv">Lihat semua</button>
-          </div>
+          <div class="row-header"><h2>📺 TV Live</h2><button class="view-all" data-page="tv">Lihat semua</button></div>
           <div class="row-scroll" id="tvRow"></div>
         </div>
 
-        <!-- Schedule -->
         <div class="schedule-card">
           <div class="row-header">
             <h2>📅 Jadwal Rilis</h2>
@@ -753,7 +678,6 @@
           <div id="scheduleList" class="schedule-list"></div>
         </div>
 
-        <!-- Provider Status -->
         <div class="provider-card">
           <div class="row-header">
             <h2>🔌 Provider</h2>
@@ -763,66 +687,42 @@
         </div>
       </section>
 
-      <!-- PAGE: ANIME -->
+      <!-- ANIME -->
       <section id="page-anime" class="page">
-        <div class="row-header">
-          <h2>📺 Semua Anime</h2>
-        </div>
+        <div class="row-header"><h2>📺 Semua Anime</h2></div>
         <div id="animeGrid" class="grid-page"></div>
       </section>
 
-      <!-- PAGE: DRAMA -->
+      <!-- DRAMA -->
       <section id="page-drama" class="page">
-        <div class="row-header">
-          <h2>🎭 Semua Drama</h2>
-        </div>
+        <div class="row-header"><h2>🎭 Semua Drama</h2></div>
         <div id="dramaGrid" class="grid-page"></div>
       </section>
 
-      <!-- PAGE: FILM -->
+      <!-- FILM -->
       <section id="page-film" class="page">
-        <div class="row-header">
-          <h2>🎬 Semua Film</h2>
-        </div>
+        <div class="row-header"><h2>🎬 Semua Film</h2></div>
         <div id="filmGrid" class="grid-page"></div>
       </section>
 
-      <!-- PAGE: TV LIVE -->
+      <!-- TV -->
       <section id="page-tv" class="page">
-        <div class="row-header">
-          <h2>📺 Live TV Channels</h2>
-        </div>
+        <div class="row-header"><h2>📺 Live TV</h2></div>
         <div id="tvGrid" class="grid-page"></div>
       </section>
 
     </main>
 
-    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
-      <button class="nav-item active" data-page="home">
-        <span class="nav-icon">🏠</span>
-        <span class="nav-label">Beranda</span>
-      </button>
-      <button class="nav-item" data-page="anime">
-        <span class="nav-icon">🎌</span>
-        <span class="nav-label">Anime</span>
-      </button>
-      <button class="nav-item" data-page="drama">
-        <span class="nav-icon">🎭</span>
-        <span class="nav-label">Drama</span>
-      </button>
-      <button class="nav-item" data-page="film">
-        <span class="nav-icon">🎬</span>
-        <span class="nav-label">Film</span>
-      </button>
-      <button class="nav-item" data-page="tv">
-        <span class="nav-icon">📺</span>
-        <span class="nav-label">TV Live</span>
-      </button>
+      <button class="nav-item active" data-page="home"><span class="nav-icon">🏠</span><span class="nav-label">Beranda</span></button>
+      <button class="nav-item" data-page="anime"><span class="nav-icon">🎌</span><span class="nav-label">Anime</span></button>
+      <button class="nav-item" data-page="drama"><span class="nav-icon">🎭</span><span class="nav-label">Drama</span></button>
+      <button class="nav-item" data-page="film"><span class="nav-icon">🎬</span><span class="nav-label">Film</span></button>
+      <button class="nav-item" data-page="tv"><span class="nav-icon">📺</span><span class="nav-label">TV Live</span></button>
     </nav>
   </div>
 
-  <!-- ===== MODAL PLAYER ===== -->
+  <!-- MODAL -->
   <div id="playerModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -842,19 +742,14 @@
     </div>
   </div>
 
-  <!-- ========================================================== -->
-  <!-- JAVASCRIPT -->
-  <!-- ========================================================== -->
   <script>
     // ================================================================
-    // RAYLIZIIE APP - FULL API INTEGRATION
+    // RAYLIZIIE - FULL API INTEGRATION WITH DEBUGGING
     // ================================================================
 
     const API = 'https://api-rayliziie.rayyankrens0304.workers.dev';
-
-    // ---- State ----
-    let currentPage = 'home';
-    let searchActive = false;
+    console.log('🚀 Rayliziie App Started');
+    console.log('📡 API Base:', API);
 
     // ---- DOM refs ----
     const loader = document.getElementById('loader');
@@ -875,22 +770,36 @@
     const closeModal = document.getElementById('closeModal');
     const videoPlayer = document.getElementById('videoPlayer');
 
-    // ---- Helpers ----
+    let currentPage = 'home';
+
     function showLoader(show) {
       loader.classList.toggle('hide', !show);
     }
 
+    // ---- API Call with logging ----
     async function apiCall(path, method = 'GET', body = null) {
       const opts = {
         method,
         headers: { 'Content-Type': 'application/json' },
       };
       if (body) opts.body = JSON.stringify(body);
-      const res = await fetch(`${API}${path}`, opts);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.json();
+
+      console.log(`📤 ${method} ${path}`);
+      const url = `${API}${path}`;
+      try {
+        const res = await fetch(url, opts);
+        console.log(`📥 Status: ${res.status} ${res.statusText}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        console.log(`📦 Response:`, data);
+        return data;
+      } catch (err) {
+        console.error(`❌ API Error ${path}:`, err);
+        throw err;
+      }
     }
 
+    // ---- Extract items from various response structures ----
     function extractItems(data) {
       if (!data) return [];
       if (Array.isArray(data)) return data;
@@ -899,12 +808,23 @@
       if (data.results && Array.isArray(data.results)) return data.results;
       if (data.channels && Array.isArray(data.channels)) return data.channels;
       if (data.list && Array.isArray(data.list)) return data.list;
+      if (data.anime && Array.isArray(data.anime)) return data.anime;
+      if (data.movies && Array.isArray(data.movies)) return data.movies;
+      if (data.dramas && Array.isArray(data.dramas)) return data.dramas;
+      // Try to find any array property
+      for (const key in data) {
+        if (Array.isArray(data[key]) && data[key].length > 0) {
+          console.log(`🔍 Found array in key: "${key}"`);
+          return data[key];
+        }
+      }
       return [];
     }
 
     function getImage(item) {
       return item.poster || item.thumbnail || item.image || item.cover || item.img ||
-        item.picture || item.photo || item.banner || 'https://via.placeholder.com/200x300/16161f/9a9ab0?text=No+Image';
+        item.picture || item.photo || item.banner ||
+        'https://via.placeholder.com/200x300/16161f/9a9ab0?text=No+Image';
     }
 
     function getTitle(item) {
@@ -928,7 +848,7 @@
     }
 
     // ---- Create Card ----
-    function createCard(item, clickHandler) {
+    function createCard(item) {
       const card = document.createElement('div');
       card.className = 'card';
       const img = getImage(item);
@@ -936,10 +856,10 @@
       const year = getYear(item);
       const rating = getRating(item);
       const episode = getEpisode(item);
-      const slug = getSlug(item);
 
       card.innerHTML = `
-        <img class="card-img" src="${img}" alt="${title}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x300/16161f/9a9ab0?text=No+Image'" />
+        <img class="card-img" src="${img}" alt="${title}" loading="lazy" 
+             onerror="this.src='https://via.placeholder.com/200x300/16161f/9a9ab0?text=No+Image'" />
         ${episode ? `<span class="card-badge">EP ${episode}</span>` : ''}
         ${rating ? `<span class="card-rating">⭐ ${rating}</span>` : ''}
         <div class="card-info">
@@ -947,12 +867,7 @@
           <div class="card-meta">${year ? `<span>${year}</span>` : ''}</div>
         </div>
       `;
-
-      if (typeof clickHandler === 'function') {
-        card.addEventListener('click', () => clickHandler(item));
-      } else {
-        card.addEventListener('click', () => openPlayer(item));
-      }
+      card.addEventListener('click', () => openPlayer(item));
       return card;
     }
 
@@ -963,7 +878,7 @@
       container.innerHTML = '';
       const list = Array.isArray(items) ? items.slice(0, limit) : [];
       if (!list.length) {
-        container.innerHTML = '<span class="empty-state">Belum ada konten</span>';
+        container.innerHTML = '<span class="empty-state">Tidak ada konten</span>';
         return;
       }
       list.forEach(item => {
@@ -971,14 +886,14 @@
       });
     }
 
-    // ---- Render Grid (for full page) ----
+    // ---- Render Grid ----
     function renderGrid(containerId, items) {
       const container = document.getElementById(containerId);
       if (!container) return;
       container.innerHTML = '';
       const list = Array.isArray(items) ? items : [];
       if (!list.length) {
-        container.innerHTML = '<span class="empty-state" style="grid-column:1/-1;">Belum ada konten</span>';
+        container.innerHTML = '<span class="empty-state" style="grid-column:1/-1;">Tidak ada konten</span>';
         return;
       }
       list.slice(0, 40).forEach(item => {
@@ -986,89 +901,146 @@
       });
     }
 
-    // ================================================================
-    // API FETCH FUNCTIONS
-    // ================================================================
-
+    // ---- LOAD HOME ----
     async function loadHome() {
       showLoader(true);
+      console.log('🏠 Loading Home...');
+
       try {
-        // 1. Trending from animekompi/home
-        const trendingData = await apiCall('/animekompi/home');
-        const trending = extractItems(trendingData);
-        renderRow('trendingRow', trending, 10);
-
-        // 2. Anime from animekompi/list
-        const animeData = await apiCall('/animekompi/list');
-        const anime = extractItems(animeData);
+        // 1. ANIMEKOMPI - try /list first (more likely to have data)
+        console.log('📡 Fetching anime from /animekompi/list');
+        let animeData = await apiCall('/animekompi/list');
+        let anime = extractItems(animeData);
+        if (!anime.length) {
+          console.log('⚠️ /list empty, trying /home');
+          animeData = await apiCall('/animekompi/home');
+          anime = extractItems(animeData);
+        }
         renderRow('animeRow', anime, 10);
+        // Store for grid
+        window._animeData = anime;
 
-        // 3. Drama from dramovnime/list (POST)
-        const dramaData = await apiCall('/dramovnime/list', 'POST', { page: 1, limit: 20 });
-        const drama = extractItems(dramaData);
-        renderRow('dramaRow', drama, 10);
+        // 2. TRENDING - use same anime data or try different
+        renderRow('trendingRow', anime.slice(0, 10), 10);
 
-        // 4. Film from filmbox/home
-        const filmData = await apiCall('/filmbox/home');
-        const film = extractItems(filmData);
-        renderRow('filmRow', film, 10);
-
-        // 5. TV Live from vidio/channels
-        const tvData = await apiCall('/vidio/channels');
-        const tv = extractItems(tvData);
-        renderRow('tvRow', tv, 10);
-
-        // 6. Schedule from animekompi/schedule
-        const schedData = await apiCall('/animekompi/schedule');
-        const schedList = extractItems(schedData);
-        const scheduleContainer = document.getElementById('scheduleList');
-        if (schedList.length) {
-          scheduleContainer.innerHTML = schedList.map(item => `
-            <div class="schedule-item">
-              <span class="day">${item.day || item.hari || 'Hari'}</span>
-              <span class="count">${item.count || item.jumlah || 0} rilis</span>
-            </div>
-          `).join('');
-          document.getElementById('scheduleDate').textContent =
-            `Update: ${new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}`;
-        } else {
-          scheduleContainer.innerHTML = '<span class="empty-state">Jadwal belum tersedia</span>';
+        // 3. DRAMA - dramovnime/list (POST)
+        console.log('📡 Fetching drama from /dramovnime/list (POST)');
+        try {
+          const dramaData = await apiCall('/dramovnime/list', 'POST', { page: 1, limit: 20 });
+          const drama = extractItems(dramaData);
+          renderRow('dramaRow', drama, 10);
+          window._dramaData = drama;
+        } catch (e) {
+          console.warn('⚠️ Drama failed, trying /tab');
+          try {
+            const dramaData = await apiCall('/dramovnime/tab');
+            const drama = extractItems(dramaData);
+            renderRow('dramaRow', drama, 10);
+            window._dramaData = drama;
+          } catch (e2) {
+            renderRow('dramaRow', [], 10);
+            document.getElementById('dramaRow').innerHTML =
+              '<span class="error-state">Gagal memuat drama: ' + e2.message + '</span>';
+          }
         }
 
-        // 7. Provider list from root
-        const rootData = await apiCall('/');
-        const providerGrid = document.getElementById('providerList');
-        if (rootData?.supported_providers) {
-          const names = Object.keys(rootData.supported_providers);
-          providerGrid.innerHTML = names.map(name => {
-            const eps = rootData.supported_providers[name]?.length || 0;
-            return `
-              <div class="provider-item">
-                <div class="name">${name}</div>
-                <span class="status"></span>
-                <div class="eps">${eps} endpoint</div>
+        // 4. FILM - filmbox/home
+        console.log('📡 Fetching film from /filmbox/home');
+        try {
+          const filmData = await apiCall('/filmbox/home');
+          const film = extractItems(filmData);
+          renderRow('filmRow', film, 10);
+          window._filmData = film;
+        } catch (e) {
+          console.warn('⚠️ Film failed, trying /trending');
+          try {
+            const filmData = await apiCall('/filmbox/trending');
+            const film = extractItems(filmData);
+            renderRow('filmRow', film, 10);
+            window._filmData = film;
+          } catch (e2) {
+            renderRow('filmRow', [], 10);
+            document.getElementById('filmRow').innerHTML =
+              '<span class="error-state">Gagal memuat film: ' + e2.message + '</span>';
+          }
+        }
+
+        // 5. TV - vidio/channels
+        console.log('📡 Fetching TV from /vidio/channels');
+        try {
+          const tvData = await apiCall('/vidio/channels');
+          const tv = extractItems(tvData);
+          renderRow('tvRow', tv, 10);
+          window._tvData = tv;
+        } catch (e) {
+          renderRow('tvRow', [], 10);
+          document.getElementById('tvRow').innerHTML =
+            '<span class="error-state">Gagal memuat TV: ' + e.message + '</span>';
+        }
+
+        // 6. SCHEDULE
+        console.log('📡 Fetching schedule from /animekompi/schedule');
+        try {
+          const schedData = await apiCall('/animekompi/schedule');
+          const sched = extractItems(schedData);
+          const schedContainer = document.getElementById('scheduleList');
+          if (sched.length) {
+            schedContainer.innerHTML = sched.map(item => `
+              <div class="schedule-item">
+                <span class="day">${item.day || item.hari || 'Hari'}</span>
+                <span class="count">${item.count || item.jumlah || 0} rilis</span>
               </div>
-            `;
-          }).join('');
-        } else {
-          providerGrid.innerHTML = '<span class="empty-state" style="grid-column:1/-1;">Provider tidak tersedia</span>';
+            `).join('');
+            document.getElementById('scheduleDate').textContent =
+              `Update: ${new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}`;
+          } else {
+            schedContainer.innerHTML = '<span class="empty-state">Jadwal belum tersedia</span>';
+          }
+        } catch (e) {
+          document.getElementById('scheduleList').innerHTML =
+            '<span class="error-state">Gagal memuat jadwal: ' + e.message + '</span>';
+        }
+
+        // 7. PROVIDER LIST
+        console.log('📡 Fetching providers from /');
+        try {
+          const rootData = await apiCall('/');
+          const providerGrid = document.getElementById('providerList');
+          if (rootData?.supported_providers) {
+            const names = Object.keys(rootData.supported_providers);
+            providerGrid.innerHTML = names.map(name => {
+              const eps = rootData.supported_providers[name]?.length || 0;
+              return `
+                <div class="provider-item">
+                  <div class="name">${name}</div>
+                  <span class="status"></span>
+                  <div class="eps">${eps} endpoint</div>
+                </div>
+              `;
+            }).join('');
+          } else {
+            providerGrid.innerHTML = '<span class="empty-state" style="grid-column:1/-1;">Provider tidak tersedia</span>';
+          }
+        } catch (e) {
+          document.getElementById('providerList').innerHTML =
+            '<span class="error-state" style="grid-column:1/-1;">Gagal memuat provider: ' + e.message + '</span>';
         }
 
       } catch (err) {
-        console.error('Home load error:', err);
-        // Show error messages in containers
+        console.error('💥 Home load error:', err);
+        // Show error in all rows
         ['trendingRow', 'animeRow', 'dramaRow', 'filmRow', 'tvRow'].forEach(id => {
           const el = document.getElementById(id);
-          if (el) el.innerHTML = '<span class="empty-state">Gagal memuat data</span>';
+          if (el) el.innerHTML = `<span class="error-state">Error: ${err.message}</span>`;
         });
-        document.getElementById('scheduleList').innerHTML = '<span class="empty-state">Gagal memuat jadwal</span>';
       }
+
       showLoader(false);
+      console.log('✅ Home loaded');
     }
 
-    // ---- Load Category Page ----
+    // ---- LOAD CATEGORY PAGE ----
     async function loadCategoryPage(page) {
-      const container = pages[page];
       const gridId = page === 'anime' ? 'animeGrid' :
         page === 'drama' ? 'dramaGrid' :
         page === 'film' ? 'filmGrid' :
@@ -1081,29 +1053,63 @@
       try {
         let data;
         if (page === 'anime') {
+          // Use cached or fetch new
+          if (window._animeData && window._animeData.length) {
+            renderGrid(gridId, window._animeData);
+            return;
+          }
           data = await apiCall('/animekompi/list');
+          const items = extractItems(data);
+          if (!items.length) {
+            data = await apiCall('/animekompi/home');
+          }
+          const finalItems = extractItems(data);
+          window._animeData = finalItems;
+          renderGrid(gridId, finalItems);
         } else if (page === 'drama') {
+          if (window._dramaData && window._dramaData.length) {
+            renderGrid(gridId, window._dramaData);
+            return;
+          }
           data = await apiCall('/dramovnime/list', 'POST', { page: 1, limit: 40 });
+          const items = extractItems(data);
+          window._dramaData = items;
+          renderGrid(gridId, items);
         } else if (page === 'film') {
+          if (window._filmData && window._filmData.length) {
+            renderGrid(gridId, window._filmData);
+            return;
+          }
           data = await apiCall('/filmbox/home');
+          const items = extractItems(data);
+          if (!items.length) {
+            data = await apiCall('/filmbox/trending');
+          }
+          const finalItems = extractItems(data);
+          window._filmData = finalItems;
+          renderGrid(gridId, finalItems);
         } else if (page === 'tv') {
+          if (window._tvData && window._tvData.length) {
+            renderGrid(gridId, window._tvData);
+            return;
+          }
           data = await apiCall('/vidio/channels');
+          const items = extractItems(data);
+          window._tvData = items;
+          renderGrid(gridId, items);
         }
-        const items = extractItems(data);
-        renderGrid(gridId, items);
       } catch (err) {
         console.error(`Load ${page} error:`, err);
-        grid.innerHTML = '<span class="empty-state" style="grid-column:1/-1;">Gagal memuat konten</span>';
+        grid.innerHTML = `<span class="error-state" style="grid-column:1/-1;">Gagal memuat: ${err.message}</span>`;
       }
     }
 
-    // ---- Search ----
+    // ---- SEARCH ----
     async function performSearch(query) {
       if (!query.trim()) return;
       showLoader(true);
       const results = [];
       try {
-        // Search across multiple providers
         const providers = ['animekompi', 'filmbox', 'viu', 'iqiyi'];
         for (const p of providers) {
           try {
@@ -1119,30 +1125,21 @@
             if (items.length) results.push(...items.slice(0, 5));
           } catch (e) { /* skip */ }
         }
-
         showLoader(false);
         if (!results.length) {
           alert('Tidak ditemukan hasil untuk: ' + query);
           return;
         }
-
-        // Navigate to home and show results in trending row
         navigateTo('home');
-        const row = document.getElementById('trendingRow');
-        row.innerHTML = '';
-        results.slice(0, 12).forEach(item => {
-          row.appendChild(createCard(item));
-        });
-        // Update hero badge to show search results
-        document.querySelector('.hero-badge').textContent = `🔍 Hasil untuk: "${query}"`;
-
+        renderRow('trendingRow', results, 12);
+        document.getElementById('heroBadge').textContent = `🔍 Hasil: "${query}"`;
       } catch (err) {
         showLoader(false);
         alert('Error saat mencari: ' + err.message);
       }
     }
 
-    // ---- Player ----
+    // ---- PLAYER ----
     async function openPlayer(item) {
       const slug = getSlug(item);
       const title = getTitle(item);
@@ -1154,7 +1151,6 @@
       document.getElementById('videoDesc').textContent = desc;
       document.getElementById('videoQuality').textContent = 'HD';
 
-      // Try to get stream URL
       if (slug) {
         try {
           const playData = await apiCall(`/animekompi/play?slug=${slug}`);
@@ -1174,43 +1170,26 @@
         videoPlayer.src = '';
         videoPlayer.poster = 'https://via.placeholder.com/800x450/16161f/9a9ab0?text=No+Stream+URL';
       }
-
       modal.classList.add('open');
     }
 
-    // ---- Navigation ----
+    // ---- NAVIGATION ----
     function navigateTo(page) {
       currentPage = page;
-      navItems.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.page === page);
-      });
-      Object.keys(pages).forEach(key => {
-        pages[key].classList.toggle('active', key === page);
-      });
-      // Reset hero badge if going home
+      navItems.forEach(btn => btn.classList.toggle('active', btn.dataset.page === page));
+      Object.keys(pages).forEach(key => pages[key].classList.toggle('active', key === page));
       if (page === 'home') {
-        document.querySelector('.hero-badge').textContent = '🔥 TRENDING';
+        document.getElementById('heroBadge').textContent = '🔥 TRENDING';
       }
-      // Load category if not home
       if (page !== 'home') {
         loadCategoryPage(page);
       }
-      // Scroll to top
       mainContent.scrollTop = 0;
     }
 
-    // ================================================================
-    // EVENT LISTENERS
-    // ================================================================
+    // ---- EVENTS ----
+    navItems.forEach(btn => btn.addEventListener('click', () => navigateTo(btn.dataset.page)));
 
-    // Nav items
-    navItems.forEach(btn => {
-      btn.addEventListener('click', () => {
-        navigateTo(btn.dataset.page);
-      });
-    });
-
-    // View all buttons
     document.querySelectorAll('.view-all').forEach(btn => {
       btn.addEventListener('click', () => {
         const page = btn.dataset.page;
@@ -1218,20 +1197,16 @@
       });
     });
 
-    // Search toggle
     searchToggle.addEventListener('click', () => {
-      searchActive = !searchActive;
-      searchBar.classList.toggle('hidden', !searchActive);
-      if (searchActive) searchInput.focus();
+      const hidden = searchBar.classList.toggle('hidden');
+      if (!hidden) searchInput.focus();
     });
 
-    // Search
     searchBtn.addEventListener('click', () => performSearch(searchInput.value));
     searchInput.addEventListener('keyup', (e) => {
       if (e.key === 'Enter') performSearch(searchInput.value);
     });
 
-    // Modal close
     closeModal.addEventListener('click', () => {
       modal.classList.remove('open');
       videoPlayer.pause();
@@ -1245,24 +1220,15 @@
       }
     });
 
-    // ================================================================
-    // INIT
-    // ================================================================
-
+    // ---- INIT ----
     document.addEventListener('DOMContentLoaded', () => {
       loadHome();
-
-      // Register Service Worker if available
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-          .then(() => console.log('SW registered'))
-          .catch(() => console.log('SW registration skipped'));
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
       }
     });
 
-    // Expose for debugging
-    console.log('✅ Rayliziie App loaded. API:', API);
+    console.log('✅ Rayliziie App ready!');
   </script>
-
 </body>
 </html>
