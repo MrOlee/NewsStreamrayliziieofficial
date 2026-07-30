@@ -2,700 +2,91 @@
 <html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streaming Rayliziie Official - Platform Streaming Terpadu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rayliziie | Official Streaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            accent: '#a855f7'
-                        },
-                        darkbg: '#0b0d14',
-                        darkcard: '#131722',
-                        darkborder: '#1f293d'
-                    }
-                }
-            }
+            theme: { extend: { colors: { brand: { 500: '#6366f1', 600: '#4f46e5' }, darkbg: '#0b0d14', darkcard: '#131722', darkborder: '#1f293d' } } }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0b0d14; color: #f3f4f6; overflow-x: hidden; }
-        .glass-panel { background: rgba(19, 23, 34, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .glass-header { background: rgba(11, 13, 20, 0.92); backdrop-filter: blur(14px); }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0b0d14; }
-        ::-webkit-scrollbar-thumb { background: #2a334d; border-radius: 9999px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
-        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #0b0d14; color: #f3f4f6; -webkit-tap-highlight-color: transparent; }
+        .glass { background: rgba(19, 23, 34, 0.8); backdrop-filter: blur(12px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+<body class="min-h-screen pb-20">
 
-    <header class="sticky top-0 z-40 w-full glass-header border-b border-darkborder/60 px-4 lg:px-8 py-3">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg bg-darkcard text-gray-300 hover:text-white border border-darkborder">
-                    <i class="ph ph-list text-2xl"></i>
-                </button>
-                <a href="#" onclick="switchCategory('anime')" class="flex items-center gap-3 group">
-                    <div class="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-[2px] shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition duration-300">
-                        <div class="w-full h-full bg-darkbg rounded-[10px] flex items-center justify-center">
-                            <span class="font-extrabold text-xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300">R</span>
-                        </div>
-                    </div>
-                    <div class="hidden sm:flex flex-col">
-                        <span class="font-black text-lg tracking-wider text-white flex items-center gap-1">
-                            RAYLIZIIE <span class="text-xs px-1.5 py-0.5 rounded bg-brand-600/30 text-indigo-400 font-semibold border border-indigo-500/30">OFFICIAL</span>
-                        </span>
-                        <span class="text-[10px] text-gray-400 tracking-widest uppercase font-medium">Streaming Platform</span>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Category Switcher Nav -->
-            <nav class="hidden md:flex items-center bg-darkcard/80 p-1 rounded-xl border border-darkborder">
-                <button id="cat-btn-anime" onclick="switchCategory('anime')" class="px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 text-white bg-brand-600 shadow-lg">
-                    <i class="ph ph-sword text-lg"></i> Anime
-                </button>
-                <button id="cat-btn-donghua" onclick="switchCategory('donghua')" class="px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 text-gray-400 hover:text-white">
-                    <i class="ph ph-yin-yang text-lg"></i> Donghua
-                </button>
-                <button id="cat-btn-films" onclick="switchCategory('films')" class="px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 text-gray-400 hover:text-white">
-                    <i class="ph ph-film-strip text-lg"></i> Films
-                </button>
-                <button id="cat-btn-drakor" onclick="switchCategory('drakor')" class="px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 text-gray-400 hover:text-white">
-                    <i class="ph ph-heart text-lg"></i> Drakor
-                </button>
-            </nav>
-
-            <!-- Search Bar -->
-            <div class="flex items-center gap-3">
-                <div class="relative w-40 sm:w-64">
-                    <input type="text" id="global-search-input" onkeyup="handleSearchInput(event)" placeholder="Cari tontonan..." 
-                           class="w-full bg-darkcard/90 border border-darkborder/80 text-sm text-gray-200 placeholder-gray-500 rounded-full pl-10 pr-4 py-2 focus:outline-none focus:border-brand-500 transition">
-                    <i class="ph ph-magnifying-glass absolute left-3.5 top-2.5 text-gray-400 text-base"></i>
-                </div>
-            </div>
+    <header class="sticky top-0 z-50 glass border-b border-white/5 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <h1 class="text-xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">RAYLIZIIE</h1>
+        </div>
+        <div class="relative">
+            <input type="text" id="search-input" placeholder="Cari..." class="bg-white/5 border border-white/10 rounded-full py-1.5 pl-4 pr-10 text-xs w-40 focus:outline-none focus:border-indigo-500">
         </div>
     </header>
 
-    <div id="status-bar" class="bg-indigo-950/60 border-b border-indigo-800/40 px-4 py-1.5 text-xs text-indigo-200 flex items-center justify-between">
-        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
-            <span id="api-status-text" class="flex items-center gap-2 font-medium">
-                <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                Menghubungkan ke Worker Proxy...
-            </span>
-            <div class="flex items-center gap-2">
-                <button onclick="toggleDebugModal()" class="px-2.5 py-0.5 rounded-md bg-indigo-900/60 hover:bg-indigo-800 text-[10px] font-bold text-indigo-300 border border-indigo-700/50 transition flex items-center gap-1">
-                    <i class="ph ph-code"></i> Debug Data
-                </button>
-                <span id="proxy-source-badge" class="px-2 py-0.5 rounded bg-indigo-900/80 text-[10px] font-bold uppercase border border-indigo-700">
-                    AUTO GATEWAY
-                </span>
+    <main class="max-w-lg mx-auto p-4">
+        <div id="hero" class="relative w-full aspect-video rounded-2xl overflow-hidden mb-6 shadow-2xl">
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-4">
+                <span class="text-[10px] font-bold bg-indigo-600 px-2 py-0.5 rounded text-white">LATEST</span>
+                <h2 class="text-lg font-bold text-white mt-1" id="hero-title">Loading...</h2>
             </div>
         </div>
-    </div>
 
-    <div class="flex-1 flex max-w-7xl w-full mx-auto px-4 lg:px-8 py-6 gap-8 relative">
-        <aside id="sidebar-drawer" class="fixed inset-y-0 left-0 z-50 w-72 bg-darkbg/95 backdrop-blur-xl border-r border-darkborder p-6 transform -translate-x-full lg:translate-x-0 lg:static lg:w-64 lg:bg-transparent lg:border-none lg:p-0 transition-transform duration-300 flex flex-col justify-between shrink-0">
-            <div class="space-y-6">
-                <div class="flex items-center justify-between lg:hidden pb-4 border-b border-darkborder">
-                    <span class="font-extrabold text-lg text-white">RAYLIZIIE OFFICIAL</span>
-                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white text-xl"><i class="ph ph-x"></i></button>
-                </div>
-                <div>
-                    <p id="sidebar-category-label" class="text-xs font-bold text-gray-400 uppercase tracking-wider px-3 mb-3 flex items-center gap-2">
-                        <i class="ph ph-squares-four text-brand-500"></i> Navigasi ANIME
-                    </p>
-                    <div id="subnav-container" class="space-y-1"></div>
-                </div>
-                <div class="glass-panel rounded-2xl p-4 border border-darkborder/80 space-y-2">
-                    <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="ph ph-info text-sm"></i> Info Platform
-                    </h4>
-                    <p class="text-[11px] text-gray-300 leading-relaxed">
-                        Selamat datang di <strong class="text-white">Streaming Rayliziie Official</strong>. Menyajikan Anime, Donghua, Films, & Drakor terlengkap Sub Indo.
-                    </p>
-                </div>
+        <section class="mb-6">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="font-bold text-sm">Terpopuler</h3>
             </div>
-            <div class="pt-6 text-[11px] text-gray-500 border-t border-darkborder/50">
-                <p>&copy; 2026 Rayliziie Official.</p>
+            <div id="content-grid" class="grid grid-cols-2 gap-4">
+                <!-- Data will load here -->
             </div>
-        </aside>
+        </section>
+    </main>
 
-        <main class="flex-1 min-w-0">
-            <!-- Hero Banner -->
-            <div id="hero-banner" class="relative w-full h-64 sm:h-80 md:h-96 rounded-3xl overflow-hidden mb-8 border border-darkborder/80 shadow-2xl group">
-                <img id="hero-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-darkbg via-darkbg/50 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 p-6 sm:p-8 max-w-2xl">
-                    <span id="hero-type-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-brand-600 text-white mb-2 inline-block shadow">HOT FEATURED</span>
-                    <h2 id="hero-title" class="text-2xl sm:text-4xl font-extrabold text-white mb-2 line-clamp-1">Solo Leveling Season 2</h2>
-                    <p id="hero-synopsis" class="text-xs sm:text-sm text-gray-300 line-clamp-2 mb-4">Saksikan pertarungan Jinwoo menaklukkan Gate tingkat tinggi.</p>
-                    <button onclick="openCardDetail(0)" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white font-bold text-sm shadow-xl flex items-center gap-2 hover:scale-105 transition">
-                        <i class="ph ph-play-fill text-lg"></i> Tonton Sekarang
-                    </button>
-                </div>
-            </div>
-
-            <!-- Content Grid Section -->
-            <div class="space-y-6">
-                <div class="flex flex-col gap-4 pb-2 border-b border-darkborder/80">
-                    <h3 id="current-view-title" class="text-xl sm:text-2xl font-black text-white flex items-center gap-3">
-                        <span id="view-title-text">ANIME - HOME</span>
-                    </h3>
-                    <div id="secondary-filter-bar" class="hidden flex items-center gap-2 overflow-x-auto pb-2"></div>
-                    <div id="sub-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1"></div>
-                </div>
-
-                <div id="content-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6"></div>
-            </div>
-        </main>
-    </div>
-
-    <div id="detail-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-        <div class="bg-darkcard border border-darkborder w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative my-8 max-h-[90vh] flex flex-col">
-            <button onclick="closeDetailModal()" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 text-gray-300 hover:text-white flex items-center justify-center hover:bg-red-600 transition">
-                <i class="ph ph-x text-xl"></i>
-            </button>
-
-            <!-- Video Player Area (Native DOM HTML5 Player) -->
-            <div id="modal-player-container" class="relative aspect-video bg-black w-full overflow-hidden shrink-0">
-                <video id="main-video-player" controls playsinline class="w-full h-full object-contain hidden bg-black">
-                    <source id="video-source-element" src="" type="video/mp4">
-                    Browser Anda tidak mendukung player HTML5 video.
-                </video>
-                <iframe id="modal-video-iframe" class="w-full h-full border-0 hidden" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                
-                <div id="modal-poster-cover" class="w-full h-full relative">
-                    <img id="modal-backdrop-img" src="" class="w-full h-full object-cover opacity-40 blur-sm">
-                    <div class="absolute inset-0 bg-gradient-to-t from-darkcard via-darkcard/50 to-transparent"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                        <button onclick="startVideoPlayer()" class="w-16 h-16 rounded-full bg-brand-600 text-white flex items-center justify-center text-3xl shadow-2xl hover:scale-110 transition group">
-                            <i class="ph ph-play-fill translate-x-0.5 group-hover:scale-110 transition"></i>
-                        </button>
-                        <p class="text-xs text-gray-200 mt-3 font-semibold uppercase tracking-wider">Klik untuk Memutar Stream Video</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Detail Info & Interactive Episode Grid -->
-            <div class="p-6 sm:p-8 overflow-y-auto space-y-6">
-                <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-darkbg border border-darkborder/80">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold text-gray-400 uppercase">Server:</span>
-                        <select id="server-selector" onchange="switchServer(this.value)" class="bg-darkcard text-xs text-white px-3 py-1.5 rounded-lg border border-darkborder focus:outline-none focus:border-brand-500">
-                            <option value="s1">Server 1 (HD Auto Stream)</option>
-                            <option value="s2">Server 2 (Fast Stream)</option>
-                            <option value="s3">Server 3 (VIP Sub Indo)</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold border border-emerald-500/30">SUB INDO</span>
-                        <span class="px-2 py-0.5 rounded bg-brand-500/20 text-indigo-300 text-[10px] font-bold border border-brand-500/30">1080p / 720p</span>
-                        <button onclick="triggerDownload()" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1 transition">
-                            <i class="ph ph-download-simple"></i> Download
-                        </button>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-6 items-start">
-                    <img id="modal-poster-img" src="" class="w-28 sm:w-36 rounded-2xl border border-darkborder shadow-xl object-cover aspect-[2/3] shrink-0">
-                    <div class="flex-1">
-                        <h2 id="modal-title" class="text-2xl sm:text-3xl font-black text-white mb-2">Judul Tontonan</h2>
-                        <p id="modal-genres" class="text-xs text-brand-500 font-bold uppercase tracking-wider mb-4">ACTION • FANTASY • HD</p>
-                        <p id="modal-synopsis" class="text-xs sm:text-sm text-gray-300 leading-relaxed">Sinopsis dimuat...</p>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                        <i class="ph ph-list-numbers text-brand-500 text-lg"></i> Daftar Episode
-                    </h3>
-                    <div id="modal-episodes-grid" class="grid grid-cols-3 sm:grid-cols-6 gap-2"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="debug-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="bg-darkcard border border-darkborder w-full max-w-3xl rounded-2xl p-6 flex flex-col max-h-[80vh]">
-            <div class="flex items-center justify-between pb-4 border-b border-darkborder">
-                <h3 class="font-bold text-sm text-white flex items-center gap-2"><i class="ph ph-bug text-brand-500"></i> API Live Data Inspector</h3>
-                <button onclick="toggleDebugModal()" class="text-gray-400 hover:text-white"><i class="ph ph-x text-lg"></i></button>
-            </div>
-            <pre id="debug-json-content" class="text-xs text-emerald-400 overflow-auto p-4 bg-black/80 rounded-xl my-4 font-mono flex-1">Memuat JSON response...</pre>
-        </div>
-    </div>
+    <nav class="fixed bottom-0 left-0 w-full glass border-t border-white/5 p-3 flex justify-around z-50">
+        <button onclick="switchCategory('anime')" class="flex flex-col items-center gap-1"><i class="ph ph-sword text-lg"></i><span class="text-[9px]">Anime</span></button>
+        <button onclick="switchCategory('donghua')" class="flex flex-col items-center gap-1"><i class="ph ph-yin-yang text-lg"></i><span class="text-[9px]">Donghua</span></button>
+        <button onclick="switchCategory('films')" class="flex flex-col items-center gap-1"><i class="ph ph-film-strip text-lg"></i><span class="text-[9px]">Film</span></button>
+        <button onclick="switchCategory('drakor')" class="flex flex-col items-center gap-1"><i class="ph ph-heart text-lg"></i><span class="text-[9px]">Drakor</span></button>
+    </nav>
 
     <script>
-        const WORKER_URL = 'https://api-rayliziie.rayyankrens0304.workers.dev';
+        const API = 'https://api-rayliziie.rayyankrens0304.workers.dev';
+        let items = [];
 
-        let currentCategory = 'anime';
-        let currentSubTab = 'home';
-        let currentFilterOption = '';
-        let currentItems = [];
-        let rawLastResponse = null;
-        let selectedEpisodeNum = 1;
-
-        const FALLBACK_IMAGE = 'https://placehold.co/300x450/131722/6366f1?text=Rayliziie';
-
-        const SAMPLE_VIDEOS = [
-            'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-            'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-            'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-            'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
-        ];
-
-        window.addEventListener('DOMContentLoaded', () => {
-            switchCategory('anime');
-        });
-
-        function toggleSidebar() {
-            document.getElementById('sidebar-drawer').classList.toggle('-translate-x-full');
-        }
-
-        function toggleDebugModal() {
-            const modal = document.getElementById('debug-modal');
-            modal.classList.toggle('hidden');
-            if (!modal.classList.contains('hidden')) {
-                document.getElementById('debug-json-content').innerText = JSON.stringify(rawLastResponse, null, 2);
-            }
-        }
-
-        function switchCategory(category) {
-            currentCategory = category;
-            currentSubTab = 'home';
-            currentFilterOption = '';
-
-            ['anime', 'donghua', 'films', 'drakor'].forEach(cat => {
-                const btn = document.getElementById(`cat-btn-${cat}`);
-                if(btn) btn.className = (cat === category) 
-                    ? "px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 text-white bg-brand-600 shadow-lg"
-                    : "px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 text-gray-400 hover:text-white";
-            });
-
-            document.getElementById('sidebar-category-label').innerHTML = `<i class="ph ph-squares-four text-brand-500"></i> Navigasi ${category.toUpperCase()}`;
-
-            renderSidebarSubnav();
-            renderSubFilterPills();
-            renderSecondaryFilters();
-            loadCategoryData();
-        }
-
-        function renderSidebarSubnav() {
-            const navs = [
-                { id: 'home', label: 'Home Featured', icon: 'ph-house' },
-                { id: 'genre', label: 'Genre List', icon: 'ph-tag' },
-                { id: 'schedule', label: 'Jadwal Rilis', icon: 'ph-calendar' },
-                { id: 'ongoing', label: 'Ongoing Series', icon: 'ph-lightning' },
-                { id: 'alphabet', label: 'Alphabet (#, A-Z)', icon: 'ph-text-a-underline' },
-                { id: 'list', label: 'Katalog Lengkap', icon: 'ph-film-reels' },
-            ];
-
-            document.getElementById('subnav-container').innerHTML = navs.map(n => `
-                <button onclick="selectSubTab('${n.id}')" 
-                        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${currentSubTab === n.id ? 'bg-brand-600/20 text-brand-500 font-bold border border-brand-500/30' : 'text-gray-400 hover:bg-darkcard hover:text-gray-200'}">
-                    <i class="ph ${n.icon} text-lg"></i> ${n.label}
-                </button>
-            `).join('');
-        }
-
-        function renderSubFilterPills() {
-            const pills = [
-                { id: 'home', label: 'Home' },
-                { id: 'genre', label: 'Genre' },
-                { id: 'schedule', label: 'Jadwal Rilis' },
-                { id: 'ongoing', label: 'Ongoing' },
-                { id: 'alphabet', label: 'A-Z List' },
-                { id: 'list', label: 'Semua' }
-            ];
-
-            document.getElementById('sub-filter-pills').innerHTML = pills.map(p => `
-                <button onclick="selectSubTab('${p.id}')" 
-                        class="px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition ${currentSubTab === p.id ? 'bg-brand-600 text-white shadow-md' : 'bg-darkcard border border-darkborder text-gray-400 hover:text-white'}">
-                    ${p.label}
-                </button>
-            `).join('');
-        }
-
-        function renderSecondaryFilters() {
-            const bar = document.getElementById('secondary-filter-bar');
-            bar.innerHTML = '';
-            
-            if (currentSubTab === 'schedule') {
-                bar.classList.remove('hidden');
-                const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu', 'Setiap Hari'];
-                bar.innerHTML = days.map(d => `
-                    <button onclick="applySecondaryFilter('${d}')" class="px-3 py-1 rounded-lg text-xs font-bold transition ${currentFilterOption === d ? 'bg-purple-600 text-white' : 'bg-darkcard border border-darkborder text-gray-400 hover:text-white'}">
-                        ${d}
-                    </button>
-                `).join('');
-            } else if (currentSubTab === 'alphabet') {
-                bar.classList.remove('hidden');
-                const alpha = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-                bar.innerHTML = alpha.map(a => `
-                    <button onclick="applySecondaryFilter('${a}')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition ${currentFilterOption === a ? 'bg-purple-600 text-white' : 'bg-darkcard border border-darkborder text-gray-400 hover:text-white'}">
-                        ${a}
-                    </button>
-                `).join('');
-            } else if (currentSubTab === 'genre') {
-                bar.classList.remove('hidden');
-                const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Slice of Life', 'Wuxia', 'Xianxia', 'Box Office'];
-                bar.innerHTML = genres.map(g => `
-                    <button onclick="applySecondaryFilter('${g}')" class="px-3 py-1 rounded-lg text-xs font-bold transition ${currentFilterOption === g ? 'bg-purple-600 text-white' : 'bg-darkcard border border-darkborder text-gray-400 hover:text-white'}">
-                        ${g}
-                    </button>
-                `).join('');
-            } else {
-                bar.classList.add('hidden');
-            }
-        }
-
-        function applySecondaryFilter(opt) {
-            currentFilterOption = opt;
-            renderSecondaryFilters();
-            loadCategoryData();
-        }
-
-        function selectSubTab(tab) {
-            currentSubTab = tab;
-            currentFilterOption = '';
-            renderSidebarSubnav();
-            renderSubFilterPills();
-            renderSecondaryFilters();
-            loadCategoryData();
-        }
-
-        function extractArraySafely(responseJson) {
-            if (!responseJson) return [];
-            if (Array.isArray(responseJson)) return responseJson;
-
-            const collectedItems = [];
-            const seenTitles = new Set();
-
-            function traverse(obj, depth = 0) {
-                if (!obj || depth > 5) return;
-                
-                if (Array.isArray(obj)) {
-                    for (const item of obj) {
-                        if (item && typeof item === 'object') {
-                            const title = item.title || item.name || item.series_name || item.movie_name;
-                            if (title && !seenTitles.has(title)) {
-                                seenTitles.add(title);
-                                collectedItems.push(item);
-                            } else if (!title && (item.cover_url || item.poster || item.poster_url || item.image || item.thumbnail_url)) {
-                                collectedItems.push(item);
-                            }
-                        }
-                    }
-                    return;
-                }
-
-                if (typeof obj === 'object') {
-                    for (const key in obj) {
-                        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                            traverse(obj[key], depth + 1);
-                        }
-                    }
-                }
-            }
-
-            traverse(responseJson);
-            return collectedItems;
-        }
-
-        function getBestPosterUrl(item) {
-            if (!item) return FALLBACK_IMAGE;
-            const img = item.cover_url || item.poster_url || item.poster || item.image || item.image_url || item.cover || item.thumbnail_url || item.series_image_url || item.thumb;
-            if (!img || typeof img !== 'string') return FALLBACK_IMAGE;
-            if (img.startsWith('http://') || img.startsWith('https://')) return img;
-            if (img.startsWith('//')) return 'https:' + img;
-            return img;
-        }
-
-        async function loadCategoryData() {
+        async function switchCategory(cat) {
             const grid = document.getElementById('content-grid');
-            const statusText = document.getElementById('api-status-text');
-            const sourceBadge = document.getElementById('proxy-source-badge');
-            
-            document.getElementById('view-title-text').innerText = `${currentCategory.toUpperCase()} - ${currentSubTab.toUpperCase()} ${currentFilterOption ? '(' + currentFilterOption + ')' : ''}`;
-
-            let endpoint = `/${currentCategory}/${currentSubTab}`;
-            if (currentFilterOption) {
-                endpoint += `?filter=${encodeURIComponent(currentFilterOption)}`;
-            }
-
-            grid.innerHTML = `
-                <div class="col-span-full py-16 flex flex-col items-center justify-center text-center">
-                    <i class="ph ph-spinner animate-spin text-4xl text-brand-500 mb-3"></i>
-                    <p class="text-sm font-semibold text-gray-300">Mengambil data live dari Worker Proxy...</p>
-                </div>
-            `;
-
+            grid.innerHTML = '<div class="col-span-2 text-center text-xs py-10">Loading...</div>';
             try {
-                statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> Requesting: ${endpoint}`;
-                
-                const response = await fetch(`${WORKER_URL}${endpoint}`);
-                const proxySource = response.headers.get('X-Proxy-Source') || 'Worker Aggregator';
-                sourceBadge.innerText = proxySource.toUpperCase();
-
-                const rawData = await response.json();
-                rawLastResponse = rawData;
-
-                let items = extractArraySafely(rawData);
-
-                // STRICT DONGHUA FILTERING (Cleans Japanese anime entries)
-                if (currentCategory === 'donghua') {
-                    const japaneseKeywords = ['boku', 'isekai', 'no tsugai', 'gaikotsu', 'seihantai', 'heroine', 'ossan', 'mrabito', 'subete', 'shingeki', 'jujutsu', 'kimetsu', 'yomi', 'kishi', 'suterare', 'gohan', 'tabi'];
-                    items = items.filter(it => {
-                        const title = (it.title || it.name || '').toLowerCase();
-                        return !japaneseKeywords.some(kw => title.includes(kw));
-                    });
-
-                    if (items.length < 3) {
-                        items = generateFallbackData('donghua');
-                    }
-                }
-
-                if (items && items.length > 0) {
-                    statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> Terhubung Live (${items.length} item) - Provider: ${proxySource}`;
-                    renderCards(items);
-                } else {
-                    statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span> Server merespons tanpa data, menampilkan katalog cadangan`;
-                    renderCards(generateFallbackData(currentCategory));
-                }
-            } catch (err) {
-                statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-400"></span> Gagal terhubung ke worker, menampilkan katalog cadangan`;
-                renderCards(generateFallbackData(currentCategory));
+                const res = await fetch(`${API}/${cat}/home`);
+                const data = await res.json();
+                items = data.slice(0, 10);
+                render(items);
+            } catch(e) {
+                grid.innerHTML = '<div class="col-span-2 text-center text-xs py-10 text-red-400">Offline/Error</div>';
             }
         }
 
-        function renderCards(items) {
+        function render(data) {
             const grid = document.getElementById('content-grid');
+            const heroTitle = document.getElementById('hero-title');
+            if(data[0]) heroTitle.innerText = data[0].title || 'Tontonan Pilihan';
             
-            if (!items || items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-gray-400">Tidak ada konten ditemukan.</div>`;
-                return;
-            }
-
-            if (items[0]) {
-                const hero = items[0];
-                document.getElementById('hero-title').innerText = hero.title || hero.name || 'Featured Content';
-                document.getElementById('hero-synopsis').innerText = hero.synopsis || hero.description || 'Saksikan tontonan kualitas HD terbaik sub Indo.';
-                document.getElementById('hero-img').src = getBestPosterUrl(hero);
-            }
-
-            grid.innerHTML = items.map((item, index) => {
-                const title = item.title || item.name || 'Tontonan HD';
-                const poster = getBestPosterUrl(item);
-                const episode = item.episode || item.latest_episode || (item.release_year ? 'Tahun ' + item.release_year : 'HD');
-                const dayTag = item.day || item.release_day || '';
-                const rating = item.rating || item.score || '8.9';
-
-                return `
-                    <div onclick="openCardDetail(${index})" class="group relative bg-darkcard rounded-2xl overflow-hidden border border-darkborder/70 hover:border-brand-500 transition duration-300 cursor-pointer flex flex-col h-full shadow-lg">
-                        <div class="relative aspect-[2/3] w-full overflow-hidden bg-darkbg">
-                            <img src="${poster}" alt="${title}" loading="lazy" 
-                                 onerror="this.onerror=null; this.src='${FALLBACK_IMAGE}';"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                            <div class="absolute top-2 left-2 flex flex-col gap-1">
-                                <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-brand-600/90 backdrop-blur-md text-white shadow">${episode}</span>
-                                ${dayTag ? `<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-900/90 backdrop-blur-md text-indigo-200 border border-indigo-500/30 shadow">★ ${dayTag}</span>` : ''}
-                            </div>
-                            <div class="absolute top-2 right-2 px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500 text-black shadow flex items-center gap-1"><i class="ph ph-star-fill"></i> ${rating}</div>
-                        </div>
-                        <div class="p-3 flex flex-col justify-between flex-1">
-                            <h4 class="font-bold text-xs sm:text-sm text-gray-100 line-clamp-2 group-hover:text-brand-500 transition">${title}</h4>
-                        </div>
+            grid.innerHTML = data.map(i => `
+                <div class="bg-darkcard rounded-xl overflow-hidden">
+                    <div class="aspect-[2/3] bg-white/5 relative">
+                        <img src="${i.cover_url || i.poster}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x300/131722/6366f1?text=No+Img'">
                     </div>
-                `;
-            }).join('');
-
-            currentItems = items;
+                    <div class="p-2"><h4 class="text-[11px] font-bold line-clamp-1">${i.title || i.name}</h4></div>
+                </div>
+            `).join('');
         }
 
-        async function openCardDetail(index) {
-            const item = currentItems[index];
-            if (!item) return;
-
-            const title = item.title || item.name || 'Detail Tontonan';
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-synopsis').innerText = item.synopsis || item.description || 'Sinopsis dimuat...';
-            
-            const posterUrl = getBestPosterUrl(item);
-            document.getElementById('modal-poster-img').src = posterUrl;
-            document.getElementById('modal-backdrop-img').src = posterUrl;
-
-            closeDetailModalPlayer();
-
-            const epGrid = document.getElementById('modal-episodes-grid');
-            epGrid.innerHTML = `<div class="col-span-full text-xs text-indigo-300 py-2 flex items-center gap-2"><i class="ph ph-spinner animate-spin"></i> Memuat episode...</div>`;
-
-            document.getElementById('detail-modal').classList.remove('hidden');
-
-            try {
-                const itemSlug = item.slug || item.id || encodeURIComponent(title.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
-                const res = await fetch(`${WORKER_URL}/${currentCategory}/detail?id=${itemSlug}`);
-                const detailData = await res.json();
-                const epList = detailData.episodes || detailData.episode_list || [];
-                
-                if (Array.isArray(epList) && epList.length > 0) {
-                    epGrid.innerHTML = epList.map((ep, idx) => `
-                        <button id="ep-btn-${idx + 1}" onclick="playEpisode('${ep.id || idx}', ${idx + 1})" class="px-2 py-2 rounded-xl text-xs font-bold ${idx === 0 ? 'bg-brand-600 text-white' : 'bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500'}">
-                            ${ep.title || `Ep ${idx + 1}`}
-                        </button>
-                    `).join('');
-                } else {
-                    renderDefaultEpisodes(epGrid, item);
-                }
-            } catch (err) {
-                renderDefaultEpisodes(epGrid, item);
-            }
-        }
-
-        function renderDefaultEpisodes(epGrid, item) {
-            let epBtns = '';
-            const totalEp = parseInt(item.episode_count || 16);
-            for(let i = 1; i <= Math.min(totalEp, 24); i++) {
-                epBtns += `<button id="ep-btn-${i}" onclick="playEpisode('ep-${i}', ${i})" class="px-2 py-2 rounded-xl text-xs font-bold ${i === 1 ? 'bg-brand-600 text-white' : 'bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500'}">Ep ${i}</button>`;
-            }
-            epGrid.innerHTML = epBtns;
-        }
-
-        function closeDetailModalPlayer() {
-            const videoPlayer = document.getElementById('main-video-player');
-            const iframe = document.getElementById('modal-video-iframe');
-            
-            videoPlayer.pause();
-            videoPlayer.classList.add('hidden');
-            iframe.src = '';
-            iframe.classList.add('hidden');
-            
-            document.getElementById('modal-poster-cover').classList.remove('hidden');
-        }
-
-        function closeDetailModal() {
-            closeDetailModalPlayer();
-            document.getElementById('detail-modal').classList.add('hidden');
-        }
-
-        function playEpisode(epId, epNum) {
-            selectedEpisodeNum = epNum;
-            
-            const totalBtns = document.getElementById('modal-episodes-grid').children.length;
-            for (let i = 1; i <= totalBtns; i++) {
-                const btn = document.getElementById(`ep-btn-${i}`);
-                if (btn) {
-                    if (i === epNum) {
-                        btn.className = 'px-2 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-lg';
-                    } else {
-                        btn.className = 'px-2 py-2 rounded-xl text-xs font-bold bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500';
-                    }
-                }
-            }
-
-            const videoPlayer = document.getElementById('main-video-player');
-            const sourceElem = document.getElementById('video-source-element');
-            const iframe = document.getElementById('modal-video-iframe');
-            const posterCover = document.getElementById('modal-poster-cover');
-            
-            posterCover.classList.add('hidden');
-            iframe.classList.add('hidden');
-            videoPlayer.classList.remove('hidden');
-
-            const videoUrl = SAMPLE_VIDEOS[(epNum - 1) % SAMPLE_VIDEOS.length];
-            
-            sourceElem.src = videoUrl;
-            videoPlayer.load();
-            videoPlayer.play().catch(err => {
-                console.log('Autoplay deferred:', err);
-            });
-        }
-
-        function switchServer(serverVal) {
-            if (serverVal === 's2') {
-                const videoPlayer = document.getElementById('main-video-player');
-                const iframe = document.getElementById('modal-video-iframe');
-                videoPlayer.pause();
-                videoPlayer.classList.add('hidden');
-                iframe.classList.remove('hidden');
-                iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
-            } else {
-                playEpisode(`ep-${selectedEpisodeNum}`, selectedEpisodeNum);
-            }
-        }
-
-        function startVideoPlayer() {
-            playEpisode('ep-1', 1);
-        }
-
-        function triggerDownload() {
-            const tempLink = document.createElement('a');
-            tempLink.href = SAMPLE_VIDEOS[(selectedEpisodeNum - 1) % SAMPLE_VIDEOS.length];
-            tempLink.download = `Episode_${selectedEpisodeNum}_Rayliziie.mp4`;
-            tempLink.target = '_blank';
-            document.body.appendChild(tempLink);
-            tempLink.click();
-            document.body.removeChild(tempLink);
-        }
-
-        function handleSearchInput(e) {
-            const query = e.target.value.toLowerCase().trim();
-            if(!query) {
-                renderCards(currentItems);
-                return;
-            }
-            const filtered = currentItems.filter(item => {
-                const title = (item.title || item.name || '').toLowerCase();
-                return title.includes(query);
-            });
-            renderCards(filtered);
-        }
-
-        function generateFallbackData(cat) {
-            if (cat === 'donghua') {
-                return [
-                    { title: "Battle Through The Heavens Season 5 (BTTH)", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "EP 112", day: "Minggu", rating: "9.9", synopsis: "Xiao Yan terus berjuang meningkatkan kekuatannya.", episode_count: 120 },
-                    { title: "Tales of Demon and God Season 10", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 437", day: "Kamis", rating: "9.8", synopsis: "Nie Li kembali bertarung di Kota Glory.", episode_count: 450 },
-                    { title: "Slay the Gods Season 2", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 8", day: "Kamis", rating: "9.7", synopsis: "Lin Qiye membantai makhluk dewa mistik.", episode_count: 24 },
-                    { title: "A Will Eternal Final Season", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "EP 4", day: "Rabu", rating: "9.6", synopsis: "Bai Xiaochun mencapai puncak keabadian.", episode_count: 52 },
-                    { title: "Shrouding the Heavens (Zhe Tian)", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "EP 173", day: "Rabu", rating: "9.5", synopsis: "Petualangan semesta purba.", episode_count: 200 },
-                    { title: "Swallowed Star (Tunshi Xingkong)", cover_url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=400", episode: "EP 234", day: "Selasa", rating: "9.9", synopsis: "Luo Feng mempertahankan bumi dari alien.", episode_count: 260 },
-                    { title: "Renegade Immortal (Xian Ni)", cover_url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400", episode: "EP 151", day: "Senin", rating: "9.8", synopsis: "Wang Lin melintasi penderitaan membalas dendam.", episode_count: 180 },
-                    { title: "Soul Land Season 2 (Douluo Dalu II)", cover_url: "https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=400", episode: "EP 65", day: "Sabtu", rating: "9.8", synopsis: "Huo Yuhao membangkitkan sekte Tang.", episode_count: 100 }
-                ];
-            } else if (cat === 'films') {
-                return [
-                    { title: "Oppenheimer", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "Movie", rating: "9.1", synopsis: "Fisikawan J. Robert Oppenheimer mengembangkan bom atom.", episode_count: 1 },
-                    { title: "Dune: Part Two", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "Movie", rating: "8.9", synopsis: "Paul Atreides bersatu dengan suku Fremen.", episode_count: 1 },
-                    { title: "Avatar: The Way of Water", cover_url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400", episode: "Movie", rating: "8.8", synopsis: "Jake Sully dan Neytiri melindungi keluarga mereka di Pandora.", episode_count: 1 },
-                    { title: "Interstellar", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "Movie", rating: "9.3", synopsis: "Petualangan melintasi lubang cacing di luar angkasa.", episode_count: 1 }
-                ];
-            } else if (cat === 'drakor') {
-                return [
-                    { title: "Queen of Tears", cover_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400", episode: "EP 16", day: "Minggu", rating: "9.4", synopsis: "Kisah cinta krisis pernikahan pasangan kaya raya.", episode_count: 16 },
-                    { title: "Lovely Runner", cover_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400", episode: "EP 16", day: "Selasa", rating: "9.7", synopsis: "Wanita yang kembali ke masa lalu menyelamatkan idola.", episode_count: 16 },
-                    { title: "Guardian: The Lonely and Great God (Goblin)", cover_url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=400", episode: "EP 16", day: "Completed", rating: "9.8", synopsis: "Kisah Goblin abadi yang mencari pengantin manusia.", episode_count: 16 },
-                    { title: "Crash Landing on You", cover_url: "https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=400", episode: "EP 16", day: "Completed", rating: "9.6", synopsis: "Pewaris kaya Korea Selatan mendarat darurat di Korea Utara.", episode_count: 16 }
-                ];
-            } else {
-                return [
-                    { title: "Solo Leveling Season 2", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 6", day: "Kamis", rating: "9.8", synopsis: "Sung Jinwoo bertarung menaklukkan Gate.", episode_count: 12 },
-                    { title: "Tomb Raider King", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 4", day: "Kamis", rating: "9.4", synopsis: "Pencuri peninggalan kuno kembali ke masa lalu.", episode_count: 24 },
-                    { title: "Demon Slayer: Hashira Training Arc", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "EP 8", day: "Minggu", rating: "9.7", synopsis: "Tanjiro menjalani latihan keras bersama para Hashira.", episode_count: 8 },
-                    { title: "Jujutsu Kaisen Season 2", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "EP 23", day: "Kamis", rating: "9.8", synopsis: "Insiden Shibuya mengguncang dunia penyihir Jujutsu.", episode_count: 23 }
-                ];
-            }
-        }
+        switchCategory('anime');
     </script>
 </body>
 </html>
