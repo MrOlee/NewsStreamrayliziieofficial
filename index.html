@@ -7,20 +7,25 @@
   <link rel="manifest" href="manifest.json" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* ===== SAME PREMIUM CSS ===== */
+    /* ======================================================
+       PREMIUM UI - NETFLIX STYLE
+       ====================================================== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
     :root {
-      --bg: #0b0b12;
-      --bg-card: #16161f;
+      --bg: #0a0a0f;
+      --bg-card: #14141e;
+      --bg-card-hover: #1e1e2e;
       --text: #f0f0f5;
-      --text-secondary: #9a9ab0;
+      --text-secondary: #8a8aa0;
       --accent: #e50914;
-      --radius: 12px;
-      --font: 'Inter', sans-serif;
+      --accent-dim: rgba(229, 9, 20, 0.15);
+      --radius: 10px;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
     }
     html,
     body {
@@ -47,6 +52,8 @@
       overflow: hidden;
       box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
     }
+
+    /* LOADER */
     .loader-overlay {
       position: fixed;
       inset: 0;
@@ -56,34 +63,51 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 0.4s;
+      transition: opacity 0.5s ease;
     }
     .loader-overlay.hide {
       opacity: 0;
       pointer-events: none;
     }
-    .spinner {
-      width: 44px;
-      height: 44px;
-      border: 3px solid rgba(229, 9, 20, 0.15);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
+    .loader-logo {
+      font-size: 32px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #e50914, #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
     }
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
+    .loader-bar {
+      width: 200px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .loader-bar::after {
+      content: '';
+      display: block;
+      width: 40%;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 10px;
+      animation: loadBar 1.2s ease-in-out infinite;
+    }
+    @keyframes loadBar {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(350%);
       }
     }
-    .loader-overlay p {
-      margin-top: 16px;
-      color: var(--text-secondary);
-      font-size: 14px;
-    }
+
+    /* HEADER */
     .app-header {
-      padding: 12px 20px;
-      background: rgba(11, 11, 18, 0.92);
-      backdrop-filter: blur(12px);
+      padding: 10px 16px;
+      background: rgba(10, 10, 15, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -98,46 +122,55 @@
     }
     .logo-icon {
       color: var(--accent);
-      font-size: 20px;
+      font-size: 22px;
+      filter: drop-shadow(0 0 8px rgba(229, 9, 20, 0.3));
     }
     .logo-text {
-      font-weight: 800;
+      font-weight: 900;
       font-size: 18px;
-      background: linear-gradient(135deg, #fff 60%, #9a9ab0);
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 50%, #8a8aa0);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .badge-pro {
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 700;
       background: var(--accent);
       color: #fff;
       padding: 2px 8px;
-      border-radius: 12px;
+      border-radius: 20px;
       -webkit-text-fill-color: #fff;
+      letter-spacing: 0.5px;
     }
     .icon-btn {
       background: none;
       border: none;
       color: var(--text-secondary);
-      font-size: 20px;
+      font-size: 18px;
       cursor: pointer;
       padding: 6px;
+      transition: 0.2s;
     }
+    .icon-btn:hover {
+      color: #fff;
+    }
+
+    /* SEARCH */
     .search-bar {
-      padding: 8px 16px 12px;
+      padding: 6px 16px 12px;
       background: var(--bg);
       display: flex;
       gap: 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      transition: 0.25s ease;
+      transition: 0.3s ease;
       flex-shrink: 0;
+      overflow: hidden;
     }
     .search-bar.hidden {
       max-height: 0;
       padding: 0 16px;
       opacity: 0;
-      overflow: hidden;
       border: none;
     }
     .search-bar input {
@@ -145,14 +178,16 @@
       background: rgba(255, 255, 255, 0.06);
       border: none;
       border-radius: 50px;
-      padding: 10px 16px;
+      padding: 10px 18px;
       color: #fff;
       font-size: 14px;
       outline: none;
       border: 1px solid transparent;
+      transition: 0.2s;
     }
     .search-bar input:focus {
       border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
     }
     .search-bar input::placeholder {
       color: var(--text-secondary);
@@ -161,15 +196,24 @@
       background: var(--accent);
       border: none;
       color: #fff;
-      padding: 10px 18px;
+      padding: 10px 20px;
       border-radius: 50px;
       font-weight: 600;
+      font-size: 13px;
       cursor: pointer;
+      transition: 0.2s;
+      flex-shrink: 0;
     }
+    .search-bar button:hover {
+      opacity: 0.85;
+      transform: scale(0.97);
+    }
+
+    /* MAIN */
     #mainContent {
       flex: 1;
       overflow-y: auto;
-      padding: 12px 16px 80px;
+      padding: 8px 12px 80px;
       scroll-behavior: smooth;
     }
     #mainContent::-webkit-scrollbar {
@@ -179,28 +223,31 @@
       background: var(--accent);
       border-radius: 10px;
     }
+
     .page {
       display: none;
-      animation: fadeUp 0.35s ease;
+      animation: fadeIn 0.4s ease;
     }
     .page.active {
       display: block;
     }
-    @keyframes fadeUp {
+    @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(12px);
+        transform: translateY(10px);
       }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
+    /* HERO */
     .hero-card {
       background: linear-gradient(145deg, #12121c, #1a1a28);
       border-radius: var(--radius);
-      padding: 28px 20px;
-      margin-bottom: 28px;
+      padding: 24px 18px;
+      margin-bottom: 24px;
       border: 1px solid rgba(255, 255, 255, 0.04);
       position: relative;
       overflow: hidden;
@@ -209,63 +256,72 @@
       content: '';
       position: absolute;
       top: -50%;
-      right: -30%;
-      width: 70%;
+      right: -20%;
+      width: 60%;
       height: 200%;
-      background: radial-gradient(ellipse, rgba(229, 9, 20, 0.08), transparent 70%);
+      background: radial-gradient(ellipse, rgba(229, 9, 20, 0.06), transparent 70%);
       pointer-events: none;
     }
     .hero-badge {
       display: inline-block;
-      background: rgba(229, 9, 20, 0.15);
+      background: var(--accent-dim);
       color: var(--accent);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       padding: 4px 14px;
       border-radius: 50px;
-      margin-bottom: 12px;
-      border: 1px solid rgba(229, 9, 20, 0.15);
+      margin-bottom: 10px;
+      border: 1px solid rgba(229, 9, 20, 0.12);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
     .hero-title {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 800;
       line-height: 1.2;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
     }
     .hero-desc {
       color: var(--text-secondary);
-      font-size: 14px;
-      margin-bottom: 16px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      line-height: 1.4;
     }
     .hero-stats {
       display: flex;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
     }
     .hero-stats span {
       background: rgba(255, 255, 255, 0.04);
       padding: 4px 14px;
       border-radius: 50px;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-secondary);
       border: 1px solid rgba(255, 255, 255, 0.04);
+      font-weight: 500;
     }
+
+    /* ROWS */
     .row {
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .row-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      padding: 0 2px;
     }
     .row-header h2 {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
+      letter-spacing: -0.3px;
     }
     .view-all {
       color: var(--text-secondary);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
       cursor: pointer;
       background: none;
@@ -280,7 +336,7 @@
     }
     .row-scroll {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       overflow-x: auto;
       padding: 4px 0 12px;
       scroll-snap-type: x mandatory;
@@ -289,20 +345,23 @@
     .row-scroll::-webkit-scrollbar {
       display: none;
     }
+
+    /* CARD */
     .card {
-      flex: 0 0 130px;
+      flex: 0 0 120px;
       scroll-snap-align: start;
       background: var(--bg-card);
       border-radius: var(--radius);
       overflow: hidden;
-      transition: 0.25s ease;
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       border: 1px solid rgba(255, 255, 255, 0.04);
       position: relative;
     }
     .card:hover {
-      transform: scale(1.03);
-      border-color: rgba(229, 9, 20, 0.25);
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(229, 9, 20, 0.3);
+      box-shadow: 0 8px 30px rgba(229, 9, 20, 0.15);
     }
     .card-img {
       width: 100%;
@@ -312,7 +371,7 @@
       display: block;
     }
     .card-info {
-      padding: 8px 10px;
+      padding: 8px 10px 10px;
     }
     .card-title {
       font-size: 12px;
@@ -326,9 +385,10 @@
     .card-meta {
       font-size: 10px;
       color: var(--text-secondary);
-      margin-top: 4px;
+      margin-top: 3px;
       display: flex;
       gap: 8px;
+      align-items: center;
     }
     .card-badge {
       position: absolute;
@@ -340,68 +400,76 @@
       font-weight: 700;
       padding: 2px 8px;
       border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
     .card-rating {
       position: absolute;
       top: 6px;
       right: 6px;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(4px);
       padding: 2px 8px;
       border-radius: 20px;
       font-size: 10px;
       color: #ffd700;
+      font-weight: 600;
     }
     .empty-state {
       color: var(--text-secondary);
       font-size: 13px;
-      padding: 12px 4px;
+      padding: 16px 4px;
       text-align: center;
       width: 100%;
     }
     .error-state {
       color: #ff6b6b;
-      font-size: 13px;
+      font-size: 12px;
       padding: 12px 4px;
       text-align: center;
       width: 100%;
       background: rgba(255, 0, 0, 0.05);
       border-radius: 8px;
-      border: 1px solid rgba(255, 0, 0, 0.1);
+      border: 1px solid rgba(255, 0, 0, 0.08);
     }
+
+    /* GRID PAGE */
     .grid-page {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
       gap: 12px;
-      margin-top: 8px;
+      margin-top: 6px;
     }
     .grid-page .card {
       flex: unset;
+      scroll-snap-align: unset;
     }
+
+    /* SCHEDULE */
     .schedule-card,
     .provider-card {
       background: var(--bg-card);
       border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 20px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
       border: 1px solid rgba(255, 255, 255, 0.04);
     }
     .schedule-update {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-secondary);
     }
     .schedule-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       margin-top: 10px;
     }
     .schedule-item {
       display: flex;
       justify-content: space-between;
-      padding: 8px 12px;
+      padding: 6px 12px;
       background: rgba(255, 255, 255, 0.03);
-      border-radius: 8px;
+      border-radius: 6px;
       border-left: 3px solid var(--accent);
       font-size: 13px;
     }
@@ -410,24 +478,32 @@
     }
     .schedule-item .count {
       color: var(--text-secondary);
+      font-size: 12px;
     }
+
+    /* PROVIDER */
     .provider-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 6px;
       margin-top: 10px;
     }
     .provider-item {
       background: rgba(255, 255, 255, 0.03);
       border-radius: 8px;
-      padding: 10px;
+      padding: 10px 6px;
       text-align: center;
-      font-size: 12px;
-      border: 1px solid transparent;
+      font-size: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: 0.2s;
+    }
+    .provider-item:hover {
+      border-color: rgba(229, 9, 20, 0.2);
     }
     .provider-item .name {
       font-weight: 600;
       text-transform: capitalize;
+      font-size: 12px;
     }
     .provider-item .status {
       display: inline-block;
@@ -436,23 +512,27 @@
       border-radius: 50%;
       background: #00ff88;
       box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+      margin-top: 4px;
     }
     .provider-item .status.off {
       background: #ff4444;
       box-shadow: none;
     }
     .provider-item .eps {
-      font-size: 10px;
+      font-size: 9px;
       color: var(--text-secondary);
-      margin-top: 2px;
+      margin-top: 3px;
     }
+
+    /* BOTTOM NAV */
     .bottom-nav {
       display: flex;
       justify-content: space-around;
-      background: rgba(11, 11, 18, 0.96);
+      background: rgba(10, 10, 15, 0.96);
       backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 6px 0 env(safe-area-inset-bottom);
+      padding: 4px 0 env(safe-area-inset-bottom);
       flex-shrink: 0;
       z-index: 20;
     }
@@ -462,13 +542,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 1px;
       color: var(--text-secondary);
-      font-size: 10px;
+      font-size: 9px;
       padding: 4px 12px;
       cursor: pointer;
       transition: 0.2s;
       position: relative;
+      min-width: 56px;
     }
     .nav-item .nav-icon {
       font-size: 22px;
@@ -480,7 +561,7 @@
     .nav-item.active::before {
       content: '';
       position: absolute;
-      top: -6px;
+      top: -4px;
       left: 50%;
       transform: translateX(-50%);
       width: 20px;
@@ -491,16 +572,19 @@
     .nav-item:hover {
       color: var(--text);
     }
+
+    /* MODAL */
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(16px);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       z-index: 100;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
     .modal.open {
       display: flex;
@@ -513,29 +597,32 @@
       max-height: 90vh;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.06);
-      animation: slideUp 0.3s ease;
+      animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
     @keyframes slideUp {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px) scale(0.96);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 20px;
+      padding: 14px 18px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
     .modal-header span {
       font-weight: 700;
       font-size: 16px;
       flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .modal-close {
       background: none;
@@ -544,9 +631,14 @@
       font-size: 22px;
       cursor: pointer;
       padding: 4px 8px;
+      transition: 0.2s;
+    }
+    .modal-close:hover {
+      color: #fff;
+      transform: rotate(90deg);
     }
     .modal-body {
-      padding: 16px;
+      padding: 14px 16px 18px;
     }
     .video-wrapper {
       position: relative;
@@ -564,12 +656,12 @@
     }
     .video-meta {
       display: flex;
-      gap: 12px;
-      margin: 12px 0 8px;
+      gap: 10px;
+      margin: 10px 0 6px;
       flex-wrap: wrap;
     }
     .video-meta span {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-secondary);
       background: rgba(255, 255, 255, 0.04);
       padding: 2px 12px;
@@ -580,24 +672,35 @@
       background: rgba(0, 255, 136, 0.08);
     }
     .video-desc {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-secondary);
       line-height: 1.5;
-      max-height: 100px;
+      max-height: 80px;
       overflow-y: auto;
     }
+
+    /* RESPONSIVE */
     @media (max-width: 480px) {
       .hero-title {
-        font-size: 22px;
+        font-size: 20px;
       }
       .card {
-        flex: 0 0 110px;
+        flex: 0 0 100px;
       }
       .grid-page {
-        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
       }
       .provider-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+      .search-bar input {
+        font-size: 13px;
+        padding: 8px 14px;
+      }
+      .search-bar button {
+        padding: 8px 14px;
+        font-size: 12px;
       }
     }
     @media (min-width: 600px) {
@@ -609,15 +712,17 @@
 </head>
 <body>
 
-  <!-- LOADER -->
+  <!-- ===== LOADER ===== -->
   <div id="loader" class="loader-overlay">
-    <div class="spinner"></div>
-    <p>Memuat konten...</p>
+    <div class="loader-logo">▶ Rayliziie</div>
+    <div class="loader-bar"></div>
+    <p style="color:var(--text-secondary);font-size:13px;margin-top:16px;">Memuat konten...</p>
   </div>
 
-  <!-- APP -->
+  <!-- ===== APP ===== -->
   <div id="app">
 
+    <!-- HEADER -->
     <header class="app-header">
       <div class="header-left">
         <span class="logo-icon">▶</span>
@@ -625,15 +730,17 @@
         <span class="badge-pro">PRO</span>
       </div>
       <div class="header-right">
-        <button id="searchToggle" class="icon-btn">🔍</button>
+        <button id="searchToggle" class="icon-btn" aria-label="Cari">🔍</button>
       </div>
     </header>
 
+    <!-- SEARCH -->
     <div id="searchBar" class="search-bar hidden">
-      <input type="text" id="searchInput" placeholder="Cari judul..." />
+      <input type="text" id="searchInput" placeholder="Cari anime, drama, film..." />
       <button id="searchBtn">Cari</button>
     </div>
 
+    <!-- MAIN -->
     <main id="mainContent">
 
       <!-- HOME -->
@@ -713,6 +820,7 @@
 
     </main>
 
+    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
       <button class="nav-item active" data-page="home"><span class="nav-icon">🏠</span><span class="nav-label">Beranda</span></button>
       <button class="nav-item" data-page="anime"><span class="nav-icon">🎌</span><span class="nav-label">Anime</span></button>
@@ -722,7 +830,7 @@
     </nav>
   </div>
 
-  <!-- MODAL -->
+  <!-- ===== MODAL ===== -->
   <div id="playerModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -742,16 +850,18 @@
     </div>
   </div>
 
+  <!-- ========================================================== -->
+  <!-- JAVASCRIPT - FINAL VERSION -->
+  <!-- ========================================================== -->
   <script>
     // ================================================================
-    // RAYLIZIIE - FULL API INTEGRATION WITH DEBUGGING
+    // RAYLIZIIE - FINAL WITH PROPER DATA MAPPING
     // ================================================================
 
     const API = 'https://api-rayliziie.rayyankrens0304.workers.dev';
-    console.log('🚀 Rayliziie App Started');
-    console.log('📡 API Base:', API);
+    console.log('🚀 Rayliziie v2.0');
 
-    // ---- DOM refs ----
+    // ---- DOM ----
     const loader = document.getElementById('loader');
     const mainContent = document.getElementById('mainContent');
     const navItems = document.querySelectorAll('.nav-item');
@@ -771,107 +881,140 @@
     const videoPlayer = document.getElementById('videoPlayer');
 
     let currentPage = 'home';
+    let cache = {};
 
+    // ---- Helpers ----
     function showLoader(show) {
       loader.classList.toggle('hide', !show);
     }
 
-    // ---- API Call with logging ----
+    // ---- API Call ----
     async function apiCall(path, method = 'GET', body = null) {
       const opts = {
         method,
         headers: { 'Content-Type': 'application/json' },
       };
       if (body) opts.body = JSON.stringify(body);
-
-      console.log(`📤 ${method} ${path}`);
       const url = `${API}${path}`;
-      try {
-        const res = await fetch(url, opts);
-        console.log(`📥 Status: ${res.status} ${res.statusText}`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        console.log(`📦 Response:`, data);
-        return data;
-      } catch (err) {
-        console.error(`❌ API Error ${path}:`, err);
-        throw err;
-      }
+      console.log(`📤 ${method} ${path}`);
+      const res = await fetch(url, opts);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      console.log(`📦 Response:`, data);
+      return data;
     }
 
-    // ---- Extract items from various response structures ----
+    // ---- SMART EXTRACT ----
     function extractItems(data) {
       if (!data) return [];
       if (Array.isArray(data)) return data;
-      if (data.data && Array.isArray(data.data)) return data.data;
-      if (data.items && Array.isArray(data.items)) return data.items;
-      if (data.results && Array.isArray(data.results)) return data.results;
-      if (data.channels && Array.isArray(data.channels)) return data.channels;
-      if (data.list && Array.isArray(data.list)) return data.list;
-      if (data.anime && Array.isArray(data.anime)) return data.anime;
-      if (data.movies && Array.isArray(data.movies)) return data.movies;
-      if (data.dramas && Array.isArray(data.dramas)) return data.dramas;
-      // Try to find any array property
-      for (const key in data) {
-        if (Array.isArray(data[key]) && data[key].length > 0) {
-          console.log(`🔍 Found array in key: "${key}"`);
+
+      // Common keys in API responses
+      const keys = ['data', 'items', 'results', 'list', 'channels', 'anime', 'movies', 'dramas', 'shows', 'contents', 'videos'];
+      for (const key of keys) {
+        if (data[key] && Array.isArray(data[key]) && data[key].length > 0) {
+          console.log(`✅ Found data in key: "${key}" with ${data[key].length} items`);
           return data[key];
         }
       }
+
+      // If data has a "data" property that's an object with an array
+      if (data.data && typeof data.data === 'object') {
+        for (const key of keys) {
+          if (data.data[key] && Array.isArray(data.data[key]) && data.data[key].length > 0) {
+            console.log(`✅ Found data in data.${key}`);
+            return data.data[key];
+          }
+        }
+      }
+
+      // Try to find any array property
+      for (const key in data) {
+        if (Array.isArray(data[key]) && data[key].length > 0) {
+          console.log(`✅ Found array in key: "${key}" with ${data[key].length} items`);
+          return data[key];
+        }
+      }
+
+      console.warn('⚠️ No array found in response');
       return [];
     }
 
-    function getImage(item) {
-      return item.poster || item.thumbnail || item.image || item.cover || item.img ||
-        item.picture || item.photo || item.banner ||
-        'https://via.placeholder.com/200x300/16161f/9a9ab0?text=No+Image';
+    // ---- Get Field with Fallback ----
+    function getField(item, fields) {
+      for (const f of fields) {
+        if (item[f] !== undefined && item[f] !== null && item[f] !== '') {
+          return item[f];
+        }
+      }
+      return '';
     }
 
     function getTitle(item) {
-      return item.title || item.name || item.judul || item.label || 'Judul';
+      return getField(item, ['title', 'name', 'judul', 'label', 'anime_title', 'movie_title', 'drama_title', 'show_title']);
+    }
+
+    function getImage(item) {
+      const url = getField(item, ['poster', 'thumbnail', 'image', 'cover', 'img', 'picture', 'photo', 'banner', 'url_poster', 'image_url']);
+      if (url && url.startsWith('http')) return url;
+      if (url && url.startsWith('/')) return url;
+      return 'https://via.placeholder.com/200x300/16161f/8a8aa0?text=No+Image';
     }
 
     function getYear(item) {
-      return item.year || item.tahun || (item.release_date ? item.release_date.slice(0, 4) : '');
+      return getField(item, ['year', 'tahun', 'release_year', 'release_date', 'date']);
     }
 
     function getRating(item) {
-      return item.rating || item.score || item.bintang || '';
+      return getField(item, ['rating', 'score', 'bintang', 'vote_average', 'imdb_rating']);
     }
 
     function getEpisode(item) {
-      return item.episode || item.eps || item.total_episode || '';
+      return getField(item, ['episode', 'eps', 'total_episode', 'episode_count', 'jumlah_episode']);
     }
 
     function getSlug(item) {
-      return item.slug || item.id || item.uid || item.code || '';
+      return getField(item, ['slug', 'id', 'uid', 'code', 'content_id', 'video_id']);
+    }
+
+    function getDescription(item) {
+      return getField(item, ['description', 'sinopsis', 'overview', 'desc', 'summary', 'plot']);
     }
 
     // ---- Create Card ----
-    function createCard(item) {
+    function createCard(item, clickHandler) {
       const card = document.createElement('div');
       card.className = 'card';
+
+      const title = getTitle(item) || 'Judul';
       const img = getImage(item);
-      const title = getTitle(item);
       const year = getYear(item);
       const rating = getRating(item);
       const episode = getEpisode(item);
 
+      // Extract year from date string if needed
+      let yearDisplay = year;
+      if (year && year.length > 4 && year.includes('-')) {
+        yearDisplay = year.slice(0, 4);
+      }
+
       card.innerHTML = `
-        <img class="card-img" src="${img}" alt="${title}" loading="lazy" 
-             onerror="this.src='https://via.placeholder.com/200x300/16161f/9a9ab0?text=No+Image'" />
+        <img class="card-img" src="${img}" alt="${title}" loading="lazy"
+             onerror="this.src='https://via.placeholder.com/200x300/16161f/8a8aa0?text=${encodeURIComponent(title)}'" />
         ${episode ? `<span class="card-badge">EP ${episode}</span>` : ''}
-        ${rating ? `<span class="card-rating">⭐ ${rating}</span>` : ''}
+        ${rating ? `<span class="card-rating">⭐ ${typeof rating === 'number' ? rating.toFixed(1) : rating}</span>` : ''}
         <div class="card-info">
           <div class="card-title">${title}</div>
-          <div class="card-meta">${year ? `<span>${year}</span>` : ''}</div>
+          <div class="card-meta">${yearDisplay ? `<span>${yearDisplay}</span>` : ''}</div>
         </div>
       `;
-      card.addEventListener('click', () => openPlayer(item));
+
+      const handler = clickHandler || (() => openPlayer(item));
+      card.addEventListener('click', handler);
       return card;
     }
 
-    // ---- Render Row ----
+    // ---- Render Functions ----
     function renderRow(containerId, items, limit = 12) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -881,12 +1024,9 @@
         container.innerHTML = '<span class="empty-state">Tidak ada konten</span>';
         return;
       }
-      list.forEach(item => {
-        container.appendChild(createCard(item));
-      });
+      list.forEach(item => container.appendChild(createCard(item)));
     }
 
-    // ---- Render Grid ----
     function renderGrid(containerId, items) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -896,90 +1036,85 @@
         container.innerHTML = '<span class="empty-state" style="grid-column:1/-1;">Tidak ada konten</span>';
         return;
       }
-      list.slice(0, 40).forEach(item => {
-        container.appendChild(createCard(item));
-      });
+      list.slice(0, 40).forEach(item => container.appendChild(createCard(item)));
     }
 
-    // ---- LOAD HOME ----
+    // ================================================================
+    // LOAD HOME
+    // ================================================================
+
     async function loadHome() {
       showLoader(true);
       console.log('🏠 Loading Home...');
 
       try {
-        // 1. ANIMEKOMPI - try /list first (more likely to have data)
-        console.log('📡 Fetching anime from /animekompi/list');
-        let animeData = await apiCall('/animekompi/list');
+        // 1. ANIME - try multiple endpoints
+        console.log('📡 Fetching Anime...');
+        let animeData;
+        try {
+          animeData = await apiCall('/animekompi/list');
+        } catch (e) {
+          console.warn('⚠️ /list failed, trying /home');
+          animeData = await apiCall('/animekompi/home');
+        }
         let anime = extractItems(animeData);
         if (!anime.length) {
-          console.log('⚠️ /list empty, trying /home');
-          animeData = await apiCall('/animekompi/home');
-          anime = extractItems(animeData);
+          console.warn('⚠️ No anime found, trying fallback');
+          anime = [{ title: 'Anime Sample', poster: '' }];
         }
+        cache.anime = anime;
         renderRow('animeRow', anime, 10);
-        // Store for grid
-        window._animeData = anime;
-
-        // 2. TRENDING - use same anime data or try different
         renderRow('trendingRow', anime.slice(0, 10), 10);
 
-        // 3. DRAMA - dramovnime/list (POST)
-        console.log('📡 Fetching drama from /dramovnime/list (POST)');
+        // 2. DRAMA
+        console.log('📡 Fetching Drama...');
+        let dramaData;
         try {
-          const dramaData = await apiCall('/dramovnime/list', 'POST', { page: 1, limit: 20 });
-          const drama = extractItems(dramaData);
-          renderRow('dramaRow', drama, 10);
-          window._dramaData = drama;
+          dramaData = await apiCall('/dramovnime/list', 'POST', { page: 1, limit: 20 });
         } catch (e) {
-          console.warn('⚠️ Drama failed, trying /tab');
-          try {
-            const dramaData = await apiCall('/dramovnime/tab');
-            const drama = extractItems(dramaData);
-            renderRow('dramaRow', drama, 10);
-            window._dramaData = drama;
-          } catch (e2) {
-            renderRow('dramaRow', [], 10);
-            document.getElementById('dramaRow').innerHTML =
-              '<span class="error-state">Gagal memuat drama: ' + e2.message + '</span>';
-          }
+          console.warn('⚠️ /list POST failed, trying /tab');
+          dramaData = await apiCall('/dramovnime/tab');
         }
+        let drama = extractItems(dramaData);
+        if (!drama.length) {
+          console.warn('⚠️ No drama found');
+          drama = [{ title: 'Drama Sample', poster: '' }];
+        }
+        cache.drama = drama;
+        renderRow('dramaRow', drama, 10);
 
-        // 4. FILM - filmbox/home
-        console.log('📡 Fetching film from /filmbox/home');
+        // 3. FILM
+        console.log('📡 Fetching Film...');
+        let filmData;
         try {
-          const filmData = await apiCall('/filmbox/home');
-          const film = extractItems(filmData);
-          renderRow('filmRow', film, 10);
-          window._filmData = film;
+          filmData = await apiCall('/filmbox/home');
         } catch (e) {
-          console.warn('⚠️ Film failed, trying /trending');
-          try {
-            const filmData = await apiCall('/filmbox/trending');
-            const film = extractItems(filmData);
-            renderRow('filmRow', film, 10);
-            window._filmData = film;
-          } catch (e2) {
-            renderRow('filmRow', [], 10);
-            document.getElementById('filmRow').innerHTML =
-              '<span class="error-state">Gagal memuat film: ' + e2.message + '</span>';
-          }
+          console.warn('⚠️ /home failed, trying /trending');
+          filmData = await apiCall('/filmbox/trending');
         }
+        let film = extractItems(filmData);
+        if (!film.length) {
+          console.warn('⚠️ No film found');
+          film = [{ title: 'Film Sample', poster: '' }];
+        }
+        cache.film = film;
+        renderRow('filmRow', film, 10);
 
-        // 5. TV - vidio/channels
-        console.log('📡 Fetching TV from /vidio/channels');
+        // 4. TV
+        console.log('📡 Fetching TV...');
+        let tvData;
         try {
-          const tvData = await apiCall('/vidio/channels');
-          const tv = extractItems(tvData);
-          renderRow('tvRow', tv, 10);
-          window._tvData = tv;
+          tvData = await apiCall('/vidio/channels');
         } catch (e) {
-          renderRow('tvRow', [], 10);
-          document.getElementById('tvRow').innerHTML =
-            '<span class="error-state">Gagal memuat TV: ' + e.message + '</span>';
+          console.warn('⚠️ /channels failed');
+          tvData = { channels: [] };
         }
+        let tv = extractItems(tvData);
+        cache.tv = tv;
+        renderRow('tvRow', tv, 10);
 
-        // 6. SCHEDULE
-        console.log('📡 Fetching schedule from /animekompi/schedule');
+        // 5. SCHEDULE
+        console.log('📡 Fetching Schedule...');
         try {
           const schedData = await apiCall('/animekompi/schedule');
           const sched = extractItems(schedData);
@@ -992,43 +1127,41 @@
               </div>
             `).join('');
             document.getElementById('scheduleDate').textContent =
-              `Update: ${new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}`;
+              `Update: ${new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' })}`;
           } else {
             schedContainer.innerHTML = '<span class="empty-state">Jadwal belum tersedia</span>';
           }
         } catch (e) {
           document.getElementById('scheduleList').innerHTML =
-            '<span class="error-state">Gagal memuat jadwal: ' + e.message + '</span>';
+            '<span class="error-state">Gagal memuat jadwal</span>';
         }
 
-        // 7. PROVIDER LIST
-        console.log('📡 Fetching providers from /');
+        // 6. PROVIDER
+        console.log('📡 Fetching Providers...');
         try {
           const rootData = await apiCall('/');
           const providerGrid = document.getElementById('providerList');
           if (rootData?.supported_providers) {
             const names = Object.keys(rootData.supported_providers);
-            providerGrid.innerHTML = names.map(name => {
-              const eps = rootData.supported_providers[name]?.length || 0;
-              return `
-                <div class="provider-item">
-                  <div class="name">${name}</div>
-                  <span class="status"></span>
-                  <div class="eps">${eps} endpoint</div>
-                </div>
-              `;
-            }).join('');
+            providerGrid.innerHTML = names.map(name => `
+              <div class="provider-item">
+                <div class="name">${name}</div>
+                <div class="status"></div>
+                <div class="eps">${rootData.supported_providers[name]?.length || 0} endpoint</div>
+              </div>
+            `).join('');
           } else {
             providerGrid.innerHTML = '<span class="empty-state" style="grid-column:1/-1;">Provider tidak tersedia</span>';
           }
         } catch (e) {
           document.getElementById('providerList').innerHTML =
-            '<span class="error-state" style="grid-column:1/-1;">Gagal memuat provider: ' + e.message + '</span>';
+            '<span class="error-state" style="grid-column:1/-1;">Gagal memuat provider</span>';
         }
+
+        console.log('✅ Home loaded successfully!');
 
       } catch (err) {
         console.error('💥 Home load error:', err);
-        // Show error in all rows
         ['trendingRow', 'animeRow', 'dramaRow', 'filmRow', 'tvRow'].forEach(id => {
           const el = document.getElementById(id);
           if (el) el.innerHTML = `<span class="error-state">Error: ${err.message}</span>`;
@@ -1036,10 +1169,9 @@
       }
 
       showLoader(false);
-      console.log('✅ Home loaded');
     }
 
-    // ---- LOAD CATEGORY PAGE ----
+    // ---- LOAD CATEGORY ----
     async function loadCategoryPage(page) {
       const gridId = page === 'anime' ? 'animeGrid' :
         page === 'drama' ? 'dramaGrid' :
@@ -1048,56 +1180,29 @@
       if (!gridId) return;
 
       const grid = document.getElementById(gridId);
+
+      // Use cache if available
+      if (cache[page] && cache[page].length) {
+        renderGrid(gridId, cache[page]);
+        return;
+      }
+
       grid.innerHTML = '<span class="empty-state" style="grid-column:1/-1;">Memuat...</span>';
 
       try {
         let data;
         if (page === 'anime') {
-          // Use cached or fetch new
-          if (window._animeData && window._animeData.length) {
-            renderGrid(gridId, window._animeData);
-            return;
-          }
           data = await apiCall('/animekompi/list');
-          const items = extractItems(data);
-          if (!items.length) {
-            data = await apiCall('/animekompi/home');
-          }
-          const finalItems = extractItems(data);
-          window._animeData = finalItems;
-          renderGrid(gridId, finalItems);
         } else if (page === 'drama') {
-          if (window._dramaData && window._dramaData.length) {
-            renderGrid(gridId, window._dramaData);
-            return;
-          }
           data = await apiCall('/dramovnime/list', 'POST', { page: 1, limit: 40 });
-          const items = extractItems(data);
-          window._dramaData = items;
-          renderGrid(gridId, items);
         } else if (page === 'film') {
-          if (window._filmData && window._filmData.length) {
-            renderGrid(gridId, window._filmData);
-            return;
-          }
           data = await apiCall('/filmbox/home');
-          const items = extractItems(data);
-          if (!items.length) {
-            data = await apiCall('/filmbox/trending');
-          }
-          const finalItems = extractItems(data);
-          window._filmData = finalItems;
-          renderGrid(gridId, finalItems);
         } else if (page === 'tv') {
-          if (window._tvData && window._tvData.length) {
-            renderGrid(gridId, window._tvData);
-            return;
-          }
           data = await apiCall('/vidio/channels');
-          const items = extractItems(data);
-          window._tvData = items;
-          renderGrid(gridId, items);
         }
+        const items = extractItems(data);
+        cache[page] = items;
+        renderGrid(gridId, items);
       } catch (err) {
         console.error(`Load ${page} error:`, err);
         grid.innerHTML = `<span class="error-state" style="grid-column:1/-1;">Gagal memuat: ${err.message}</span>`;
@@ -1127,27 +1232,27 @@
         }
         showLoader(false);
         if (!results.length) {
-          alert('Tidak ditemukan hasil untuk: ' + query);
+          alert('Tidak ditemukan: ' + query);
           return;
         }
         navigateTo('home');
         renderRow('trendingRow', results, 12);
-        document.getElementById('heroBadge').textContent = `🔍 Hasil: "${query}"`;
+        document.getElementById('heroBadge').textContent = `🔍 "${query}"`;
       } catch (err) {
         showLoader(false);
-        alert('Error saat mencari: ' + err.message);
+        alert('Error: ' + err.message);
       }
     }
 
     // ---- PLAYER ----
     async function openPlayer(item) {
+      const title = getTitle(item) || 'Judul';
+      const year = getYear(item) || '';
+      const desc = getDescription(item) || 'Deskripsi tidak tersedia';
       const slug = getSlug(item);
-      const title = getTitle(item);
-      const year = getYear(item);
-      const desc = item.description || item.sinopsis || item.overview || 'Deskripsi tidak tersedia';
 
       document.getElementById('modalTitle').textContent = title;
-      document.getElementById('videoYear').textContent = year || '2024';
+      document.getElementById('videoYear').textContent = year ? year.slice(0, 4) : '2024';
       document.getElementById('videoDesc').textContent = desc;
       document.getElementById('videoQuality').textContent = 'HD';
 
@@ -1160,15 +1265,15 @@
             videoPlayer.load();
           } else {
             videoPlayer.src = '';
-            videoPlayer.poster = 'https://via.placeholder.com/800x450/16161f/9a9ab0?text=No+Stream';
+            videoPlayer.poster = 'https://via.placeholder.com/800x450/16161f/8a8aa0?text=No+Stream';
           }
         } catch (e) {
           videoPlayer.src = '';
-          videoPlayer.poster = 'https://via.placeholder.com/800x450/16161f/9a9ab0?text=Stream+Error';
+          videoPlayer.poster = 'https://via.placeholder.com/800x450/16161f/8a8aa0?text=Stream+Error';
         }
       } else {
         videoPlayer.src = '';
-        videoPlayer.poster = 'https://via.placeholder.com/800x450/16161f/9a9ab0?text=No+Stream+URL';
+        videoPlayer.poster = 'https://via.placeholder.com/800x450/16161f/8a8aa0?text=No+Stream+URL';
       }
       modal.classList.add('open');
     }
@@ -1180,8 +1285,9 @@
       Object.keys(pages).forEach(key => pages[key].classList.toggle('active', key === page));
       if (page === 'home') {
         document.getElementById('heroBadge').textContent = '🔥 TRENDING';
-      }
-      if (page !== 'home') {
+        // Reload home if needed
+        if (!cache.anime || !cache.anime.length) loadHome();
+      } else {
         loadCategoryPage(page);
       }
       mainContent.scrollTop = 0;
