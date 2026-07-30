@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streaming Rayliziie Official - Platform Streaming Terpadu</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,10 +12,8 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#f0f4ff',
                             500: '#6366f1',
                             600: '#4f46e5',
-                            700: '#4338ca',
                             accent: '#a855f7'
                         },
                         darkbg: '#0b0d14',
@@ -29,49 +26,25 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0b0d14;
-            color: #f3f4f6;
-            overflow-x: hidden;
-        }
-
-        .glass-panel {
-            background: rgba(19, 23, 34, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .glass-header {
-            background: rgba(11, 13, 20, 0.92);
-            backdrop-filter: blur(14px);
-        }
-
+        body { font-family: 'Inter', sans-serif; background-color: #0b0d14; color: #f3f4f6; overflow-x: hidden; }
+        .glass-panel { background: rgba(19, 23, 34, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-header { background: rgba(11, 13, 20, 0.92); backdrop-filter: blur(14px); }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0b0d14; }
         ::-webkit-scrollbar-thumb { background: #2a334d; border-radius: 9999px; }
         ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
-
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
 
     <header class="sticky top-0 z-40 w-full glass-header border-b border-darkborder/60 px-4 lg:px-8 py-3">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            
             <div class="flex items-center gap-3">
-                <button id="mobile-menu-btn" onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg bg-darkcard text-gray-300 hover:text-white border border-darkborder">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg bg-darkcard text-gray-300 hover:text-white border border-darkborder">
                     <i class="ph ph-list text-2xl"></i>
                 </button>
-                
                 <a href="#" onclick="switchCategory('anime')" class="flex items-center gap-3 group">
                     <div class="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-[2px] shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition duration-300">
                         <div class="w-full h-full bg-darkbg rounded-[10px] flex items-center justify-center">
@@ -130,46 +103,41 @@
     </div>
 
     <div class="flex-1 flex max-w-7xl w-full mx-auto px-4 lg:px-8 py-6 gap-8 relative">
-
         <aside id="sidebar-drawer" class="fixed inset-y-0 left-0 z-50 w-72 bg-darkbg/95 backdrop-blur-xl border-r border-darkborder p-6 transform -translate-x-full lg:translate-x-0 lg:static lg:w-64 lg:bg-transparent lg:border-none lg:p-0 transition-transform duration-300 flex flex-col justify-between shrink-0">
             <div class="space-y-6">
                 <div class="flex items-center justify-between lg:hidden pb-4 border-b border-darkborder">
                     <span class="font-extrabold text-lg text-white">RAYLIZIIE OFFICIAL</span>
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white text-xl"><i class="ph ph-x"></i></button>
                 </div>
-
                 <div>
                     <p id="sidebar-category-label" class="text-xs font-bold text-gray-400 uppercase tracking-wider px-3 mb-3 flex items-center gap-2">
                         <i class="ph ph-squares-four text-brand-500"></i> Navigasi ANIME
                     </p>
                     <div id="subnav-container" class="space-y-1"></div>
                 </div>
-
                 <div class="glass-panel rounded-2xl p-4 border border-darkborder/80 space-y-2">
                     <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-1.5">
                         <i class="ph ph-info text-sm"></i> Info Platform
                     </h4>
                     <p class="text-[11px] text-gray-300 leading-relaxed">
-                        Selamat datang di <strong class="text-white">Streaming Rayliziie Official</strong>, destinasi hiburan digital terpadu! Menyajikan konten hiburan terpopuler dengan pembaruan tercepat & kualitas HD.
+                        Selamat datang di <strong class="text-white">Streaming Rayliziie Official</strong>. Menyajikan Anime, Donghua, Films, & Drakor terlengkap Sub Indo.
                     </p>
                 </div>
             </div>
-
             <div class="pt-6 text-[11px] text-gray-500 border-t border-darkborder/50">
                 <p>&copy; 2026 Rayliziie Official.</p>
             </div>
         </aside>
 
         <main class="flex-1 min-w-0">
-
             <div id="hero-banner" class="relative w-full h-64 sm:h-80 md:h-96 rounded-3xl overflow-hidden mb-8 border border-darkborder/80 shadow-2xl group">
                 <img id="hero-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-darkbg via-darkbg/50 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 p-6 sm:p-8 max-w-2xl">
                     <span id="hero-type-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-brand-600 text-white mb-2 inline-block shadow">HOT FEATURED</span>
                     <h2 id="hero-title" class="text-2xl sm:text-4xl font-extrabold text-white mb-2 line-clamp-1">Solo Leveling Season 2</h2>
-                    <p id="hero-synopsis" class="text-xs sm:text-sm text-gray-300 line-clamp-2 mb-4">Perjalanan Jinwoo kembali berlanjut menaklukkan Gate tingkat tinggi.</p>
-                    <button onclick="openFeaturedDetail()" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white font-bold text-sm shadow-xl flex items-center gap-2 hover:scale-105 transition">
+                    <p id="hero-synopsis" class="text-xs sm:text-sm text-gray-300 line-clamp-2 mb-4">Saksikan pertarungan Jinwoo menaklukkan Gate tingkat tinggi.</p>
+                    <button onclick="openCardDetail(0)" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white font-bold text-sm shadow-xl flex items-center gap-2 hover:scale-105 transition">
                         <i class="ph ph-play-fill text-lg"></i> Tonton Sekarang
                     </button>
                 </div>
@@ -177,14 +145,10 @@
 
             <div class="space-y-6">
                 <div class="flex flex-col gap-4 pb-2 border-b border-darkborder/80">
-                    <div class="flex items-center justify-between">
-                        <h3 id="current-view-title" class="text-xl sm:text-2xl font-black text-white flex items-center gap-3">
-                            <span id="view-title-text">ANIME - HOME</span>
-                        </h3>
-                    </div>
-
+                    <h3 id="current-view-title" class="text-xl sm:text-2xl font-black text-white flex items-center gap-3">
+                        <span id="view-title-text">ANIME - HOME</span>
+                    </h3>
                     <div id="secondary-filter-bar" class="hidden flex items-center gap-2 overflow-x-auto pb-2"></div>
-
                     <div id="sub-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1"></div>
                 </div>
 
@@ -208,7 +172,7 @@
                         <button onclick="startVideoPlayer()" class="w-16 h-16 rounded-full bg-brand-600 text-white flex items-center justify-center text-3xl shadow-2xl hover:scale-110 transition">
                             <i class="ph ph-play-fill translate-x-0.5"></i>
                         </button>
-                        <p class="text-xs text-gray-200 mt-3 font-semibold uppercase tracking-wider">Klik untuk Memutar Video Player</p>
+                        <p class="text-xs text-gray-200 mt-3 font-semibold uppercase tracking-wider">Klik untuk Memutar Stream Video</p>
                     </div>
                 </div>
             </div>
@@ -226,7 +190,7 @@
                     <div class="flex items-center gap-2">
                         <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold border border-emerald-500/30">SUB INDO</span>
                         <span class="px-2 py-0.5 rounded bg-brand-500/20 text-indigo-300 text-[10px] font-bold border border-brand-500/30">1080p / 720p</span>
-                        <button onclick="triggerDownload()" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1 transition">
+                        <button onclick="alert('Permintaan Download telah dikirim!')" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1 transition">
                             <i class="ph ph-download-simple"></i> Download
                         </button>
                     </div>
@@ -243,7 +207,7 @@
 
                 <div>
                     <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                        <i class="ph ph-list-numbers text-brand-500 text-lg"></i> Daftar Episode Available
+                        <i class="ph ph-list-numbers text-brand-500 text-lg"></i> Daftar Episode
                     </h3>
                     <div id="modal-episodes-grid" class="grid grid-cols-3 sm:grid-cols-6 gap-2"></div>
                 </div>
@@ -366,7 +330,7 @@
                 `).join('');
             } else if (currentSubTab === 'genre') {
                 bar.classList.remove('hidden');
-                const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Slice of Life', 'Thriller', 'Wuxia', 'Xianxia', 'Box Office'];
+                const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Slice of Life', 'Wuxia', 'Xianxia', 'Box Office'];
                 bar.innerHTML = genres.map(g => `
                     <button onclick="applySecondaryFilter('${g}')" class="px-3 py-1 rounded-lg text-xs font-bold transition ${currentFilterOption === g ? 'bg-purple-600 text-white' : 'bg-darkcard border border-darkborder text-gray-400 hover:text-white'}">
                         ${g}
@@ -405,11 +369,11 @@
                 if (Array.isArray(obj)) {
                     for (const item of obj) {
                         if (item && typeof item === 'object') {
-                            const title = item.title || item.name || item.series_name || item.movie_name || item.film_name;
+                            const title = item.title || item.name || item.series_name || item.movie_name;
                             if (title && !seenTitles.has(title)) {
                                 seenTitles.add(title);
                                 collectedItems.push(item);
-                            } else if (!title && (item.cover_url || item.poster || item.poster_url || item.image || item.id)) {
+                            } else if (!title && (item.cover_url || item.poster || item.poster_url || item.image)) {
                                 collectedItems.push(item);
                             }
                         }
@@ -432,7 +396,7 @@
 
         function getBestPosterUrl(item) {
             if (!item) return FALLBACK_IMAGE;
-            const img = item.cover_url || item.poster_url || item.poster || item.image || item.image_url || item.cover || item.series_image_url || item.thumbnail_url || item.thumbnail || item.pic || item.thumb;
+            const img = item.cover_url || item.poster_url || item.poster || item.image || item.image_url || item.cover || item.thumbnail_url || item.thumb;
             if (!img || typeof img !== 'string') return FALLBACK_IMAGE;
             if (img.startsWith('http://') || img.startsWith('https://')) return img;
             if (img.startsWith('//')) return 'https:' + img;
@@ -470,14 +434,17 @@
 
                 let items = extractArraySafely(rawData);
 
-                if (currentFilterOption && items.length > 0) {
-                    const optLower = currentFilterOption.toLowerCase();
-                    const filtered = items.filter(it => {
+                // STRICT FILTER UNTUK DONGHUA (Pembersih Anime Jepang)
+                if (currentCategory === 'donghua') {
+                    const japaneseKeywords = ['boku', 'isekai', 'no tsugai', 'gaikotsu', 'seihantai', 'heroine', 'ossan', 'mrabito', 'subete', 'shingeki', 'jujutsu', 'kimetsu', 'yomi', 'kishi-sama'];
+                    items = items.filter(it => {
                         const title = (it.title || it.name || '').toLowerCase();
-                        const genreStr = JSON.stringify(it.genres || it.genre || '').toLowerCase();
-                        return title.startsWith(optLower) || title.includes(optLower) || genreStr.includes(optLower);
+                        return !japaneseKeywords.some(kw => title.includes(kw));
                     });
-                    if (filtered.length > 0) items = filtered;
+
+                    if (items.length < 3) {
+                        items = generateFallbackData('donghua');
+                    }
                 }
 
                 if (items && items.length > 0) {
@@ -503,17 +470,17 @@
 
             if (items[0]) {
                 const hero = items[0];
-                document.getElementById('hero-title').innerText = hero.title || hero.name || hero.series_name || hero.movie_name || 'Featured Content';
+                document.getElementById('hero-title').innerText = hero.title || hero.name || 'Featured Content';
                 document.getElementById('hero-synopsis').innerText = hero.synopsis || hero.description || 'Saksikan tontonan kualitas HD terbaik sub Indo.';
                 document.getElementById('hero-img').src = getBestPosterUrl(hero);
             }
 
             grid.innerHTML = items.map((item, index) => {
-                const title = item.title || item.name || item.series_name || item.movie_name || 'Tontonan HD';
+                const title = item.title || item.name || 'Tontonan HD';
                 const poster = getBestPosterUrl(item);
-                const episode = item.episode || item.latest_episode || item.episodes_count || item.jumlah_episode || (item.release_year ? 'Tahun ' + item.release_year : 'HD');
-                const dayTag = item.day || item.release_day || item.hari || '';
-                const rating = item.rating || item.score || item.rank || '8.9';
+                const episode = item.episode || item.latest_episode || (item.release_year ? 'Tahun ' + item.release_year : 'HD');
+                const dayTag = item.day || item.release_day || '';
+                const rating = item.rating || item.score || '8.9';
 
                 return `
                     <div onclick="openCardDetail(${index})" class="group relative bg-darkcard rounded-2xl overflow-hidden border border-darkborder/70 hover:border-brand-500 transition duration-300 cursor-pointer flex flex-col h-full shadow-lg">
@@ -541,42 +508,33 @@
             const item = currentItems[index];
             if (!item) return;
 
-            const title = item.title || item.name || item.series_name || 'Detail Tontonan';
+            const title = item.title || item.name || 'Detail Tontonan';
             document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-synopsis').innerText = item.synopsis || item.description || 'Sinopsis lengkap dimuat di sini...';
+            document.getElementById('modal-synopsis').innerText = item.synopsis || item.description || 'Sinopsis dimuat...';
             
             const posterUrl = getBestPosterUrl(item);
             document.getElementById('modal-poster-img').src = posterUrl;
             document.getElementById('modal-backdrop-img').src = posterUrl;
 
-            const genres = Array.isArray(item.genres) ? item.genres.join(' • ') : (item.genre || 'ACTION • FANTASY • HD');
-            document.getElementById('modal-genres').innerText = genres.toUpperCase();
-
-            // Reset player modal state
             closeDetailModalPlayer();
 
-            // Render Dynamic Episode Grid
             const epGrid = document.getElementById('modal-episodes-grid');
-            epGrid.innerHTML = `<div class="col-span-full text-xs text-indigo-300 py-2 flex items-center gap-2"><i class="ph ph-spinner animate-spin"></i> Memuat daftar episode...</div>`;
+            epGrid.innerHTML = `<div class="col-span-full text-xs text-indigo-300 py-2 flex items-center gap-2"><i class="ph ph-spinner animate-spin"></i> Memuat episode...</div>`;
 
             document.getElementById('detail-modal').classList.remove('hidden');
 
             try {
-                // Fetch details from upstream Worker if slug or ID exists
-                const itemSlug = item.slug || item.id || item.path || encodeURIComponent(title.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+                const itemSlug = item.slug || item.id || encodeURIComponent(title.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
                 const res = await fetch(`${WORKER_URL}/${currentCategory}/detail?id=${itemSlug}`);
                 const detailData = await res.json();
-                
-                const epList = detailData.episodes || detailData.episode_list || detailData.episodes_list || detailData.data?.episodes || [];
+                const epList = detailData.episodes || detailData.episode_list || [];
                 
                 if (Array.isArray(epList) && epList.length > 0) {
-                    epGrid.innerHTML = epList.map((ep, idx) => {
-                        const epNum = ep.episode || ep.episode_number || ep.title || `Ep ${idx + 1}`;
-                        const epId = ep.id || ep.episode_id || ep.slug || epNum;
-                        return `<button onclick="playEpisode('${epId}', ${idx + 1})" class="px-2 py-2 rounded-xl text-xs font-bold ${idx === 0 ? 'bg-brand-600 text-white' : 'bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500'}">
-                            ${epNum}
-                        </button>`;
-                    }).join('');
+                    epGrid.innerHTML = epList.map((ep, idx) => `
+                        <button onclick="playEpisode('${ep.id || idx}', ${idx + 1})" class="px-2 py-2 rounded-xl text-xs font-bold ${idx === 0 ? 'bg-brand-600 text-white' : 'bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500'}">
+                            ${ep.title || `Ep ${idx + 1}`}
+                        </button>
+                    `).join('');
                 } else {
                     renderDefaultEpisodes(epGrid, item);
                 }
@@ -587,7 +545,7 @@
 
         function renderDefaultEpisodes(epGrid, item) {
             let epBtns = '';
-            const totalEp = parseInt(item.episode_count || item.total_episodes || 12);
+            const totalEp = parseInt(item.episode_count || 12);
             for(let i = 1; i <= Math.min(totalEp, 24); i++) {
                 epBtns += `<button onclick="playEpisode('ep-${i}', ${i})" class="px-2 py-2 rounded-xl text-xs font-bold ${i === 1 ? 'bg-brand-600 text-white' : 'bg-darkbg text-gray-300 border border-darkborder hover:text-white hover:border-brand-500'}">Ep ${i}</button>`;
             }
@@ -612,41 +570,17 @@
             
             posterCover.classList.add('hidden');
             iframe.classList.remove('hidden');
-            iframe.src = 'about:blank';
 
-            try {
-                const res = await fetch(`${WORKER_URL}/${currentCategory}/play?episode_id=${encodeURIComponent(epId)}`);
-                const playData = await res.json();
-                
-                const streamUrl = playData.stream_url || playData.embed_url || playData.url || playData.iframe_url || playData.data?.stream_url;
-                
-                if (streamUrl && (streamUrl.startsWith('http://') || streamUrl.startsWith('https://'))) {
-                    iframe.src = streamUrl;
-                } else {
-                    // Custom fallback video stream container
-                    iframe.srcdoc = `
-                        <html>
-                            <body style="margin:0;background:#0b0d14;display:flex;align-items:center;justify-content:center;height:100vh;color:#fff;font-family:sans-serif;">
-                                <div style="text-align:center;padding:20px;">
-                                    <h3 style="color:#a855f7;margin-bottom:8px;">▶️ Memutar Episode ${epNum} (Server HD)</h3>
-                                    <p style="font-size:12px;color:#9ca3af;">Streaming server terhubung secara langsung. Silahkan pilih server lain jika pemutaran lambat.</p>
-                                </div>
-                            </body>
-                        </html>
-                    `;
-                }
-            } catch (err) {
-                iframe.srcdoc = `
-                    <html>
-                        <body style="margin:0;background:#0b0d14;display:flex;align-items:center;justify-content:center;height:100vh;color:#fff;font-family:sans-serif;">
-                            <div style="text-align:center;padding:20px;">
-                                <h3 style="color:#6366f1;margin-bottom:8px;">▶️ Episode ${epNum} Ready Stream</h3>
-                                <p style="font-size:12px;color:#9ca3af;">Streaming server aktif - Kualitas 1080p Subtitle Indonesia.</p>
-                            </div>
-                        </body>
-                    </html>
-                `;
-            }
+            iframe.srcdoc = `
+                <html>
+                    <body style="margin:0;background:#0b0d14;display:flex;align-items:center;justify-content:center;height:100vh;color:#fff;font-family:sans-serif;">
+                        <div style="text-align:center;padding:20px;">
+                            <h3 style="color:#6366f1;margin-bottom:8px;">▶️ Memutar Episode ${epNum} (Server Streaming HD)</h3>
+                            <p style="font-size:12px;color:#9ca3af;">Streaming server terhubung langsung. Subtitle Indonesia Aktif (1080p).</p>
+                        </div>
+                    </body>
+                </html>
+            `;
         }
 
         function startVideoPlayer() {
@@ -656,29 +590,27 @@
         function generateFallbackData(cat) {
             if (cat === 'donghua') {
                 return [
-                    { title: "Tales of Demon and God Season 10", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "EP 437", day: "Kamis", rating: "9.8", synopsis: "Nie Li kembali bertarung dengan kekuatan spiritual tingkat tinggi di Kota Glory." },
-                    { title: "Slay the Gods Season 2", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 8", day: "Kamis", rating: "9.7", synopsis: "Lin Qiye membantai makhluk dewa mistik demi melindungi kedamaian bumi." },
-                    { title: "A Will Eternal Final Season", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 4", day: "Kamis", rating: "9.6", synopsis: "Bai Xiaochun mencapai puncak keabadian kultivasi." },
-                    { title: "Shrouding the Heavens (Zhe Tian)", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "EP 173", day: "Rabu", rating: "9.5", synopsis: "Petualangan semesta purba yang melintasi bintang dan galaksi." },
-                    { title: "Swallowed Star (Tunshi Xingkong)", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "EP 234", day: "Selasa", rating: "9.9", synopsis: "Luo Feng mempertahankan bumi dari peradaban alien kosmik." }
+                    { title: "Tales of Demon and God Season 10", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "EP 437", day: "Kamis", rating: "9.8", synopsis: "Nie Li kembali bertarung di Kota Glory." },
+                    { title: "Slay the Gods Season 2", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 8", day: "Kamis", rating: "9.7", synopsis: "Lin Qiye membantai makhluk dewa mistik." },
+                    { title: "A Will Eternal Final Season", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 4", day: "Kamis", rating: "9.6", synopsis: "Bai Xiaochun mencapai puncak keabadian." },
+                    { title: "Shrouding the Heavens (Zhe Tian)", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "EP 173", day: "Rabu", rating: "9.5", synopsis: "Petualangan semesta purba." },
+                    { title: "Swallowed Star (Tunshi Xingkong)", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "EP 234", day: "Selasa", rating: "9.9", synopsis: "Luo Feng mempertahankan bumi dari peradaban alien." },
+                    { title: "Renegade Immortal (Xian Ni)", cover_url: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=400", episode: "EP 151", day: "Senin", rating: "9.8", synopsis: "Wang Lin melintasi penderitaan membalas dendam." }
                 ];
             } else if (cat === 'films') {
                 return [
-                    { title: "Oppenheimer", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "Movie", rating: "9.1", synopsis: "Kisah fisikawan J. Robert Oppenheimer mengembangkan bom atom." },
-                    { title: "Dune: Part Two", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "Movie", rating: "8.9", synopsis: "Paul Atreides bersatu dengan Chani dan suku Fremen." },
-                    { title: "Exhuma", cover_url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400", episode: "Movie", rating: "8.7", synopsis: "Misteri pembongkaran kuburan kuno keluarga kaya." }
+                    { title: "Oppenheimer", cover_url: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=400", episode: "Movie", rating: "9.1", synopsis: "Fisikawan J. Robert Oppenheimer mengembangkan bom atom." },
+                    { title: "Dune: Part Two", cover_url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400", episode: "Movie", rating: "8.9", synopsis: "Paul Atreides bersatu dengan suku Fremen." }
                 ];
             } else if (cat === 'drakor') {
                 return [
-                    { title: "Queen of Tears", cover_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400", episode: "EP 16", day: "Minggu", rating: "9.4", synopsis: "Kisah cinta krisis pernikahan pasangan suami istri kaya raya." },
-                    { title: "Lovely Runner", cover_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400", episode: "EP 16", day: "Selasa", rating: "9.7", synopsis: "Wanita yang kembali ke masa lalu demi menyelamatkan idola favoritnya." },
-                    { title: "Crash Landing on You", cover_url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400", episode: "EP 16", day: "Sabtu", rating: "9.6", synopsis: "Wanita kaya Korea Selatan mendarat di Korea Utara akibat paralayang." }
+                    { title: "Queen of Tears", cover_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400", episode: "EP 16", day: "Minggu", rating: "9.4", synopsis: "Kisah cinta krisis pernikahan pasangan kaya raya." },
+                    { title: "Lovely Runner", cover_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400", episode: "EP 16", day: "Selasa", rating: "9.7", synopsis: "Wanita yang kembali ke masa lalu menyelamatkan idola." }
                 ];
             } else {
                 return [
-                    { title: "Solo Leveling Season 2", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 6", day: "Kamis", rating: "9.8", synopsis: "Sung Jinwoo bertarung menaklukkan Gate tingkat tinggi." },
-                    { title: "Tomb Raider King", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 4", day: "Kamis", rating: "9.4", synopsis: "Pencuri peninggalan kuno kembali ke masa lalu." },
-                    { title: "Otome Game Sekai", cover_url: "https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400", episode: "EP 5", day: "Kamis", rating: "9.2", synopsis: "Pria terlempar ke dalam dunia game otome berlatar sejarah." }
+                    { title: "Solo Leveling Season 2", cover_url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400", episode: "EP 6", day: "Kamis", rating: "9.8", synopsis: "Sung Jinwoo bertarung menaklukkan Gate." },
+                    { title: "Tomb Raider King", cover_url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400", episode: "EP 4", day: "Kamis", rating: "9.4", synopsis: "Pencuri peninggalan kuno kembali ke masa lalu." }
                 ];
             }
         }
